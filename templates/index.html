@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>Encurtador de Url</title>
+</head>
+<body>
+    <main>
+        <h1>Encurtador de Url</h1>
+
+        <form method="post">
+            <label for="url">Cole sua Url longa aqui:</label>
+            <input type="url" name="url" required>
+            <button type="submit">Encurtar</button>
+        </form>
+
+        <h2>Um Encurtador de URL simples e rápido!</h2><br>
+        <p class="Meio">O <strong>Encurtador</strong> é uma ferramenta para encurtar links do Instagram, YouTube, Linked In, WhatsApp, sites etc. Cole a URL longa e clique no botão Encurtar URL. Copie a URL encurtada e compartilhe em sites, chat e emails.</p>
+
+        <h2>Encurte e Compartilhe</h2><br>
+        <div class="icones-container">
+            <div class="icone-item">
+                <img src="/static/assets/icone-curto.png" alt="Link curto" class="icone">
+                <p>Encurte links longos com o Encurtador</p>
+            </div>
+            <div class="icone-item">
+                <img src="/static/assets/icone-gratis.png" alt="Gratuito" class="icone">
+                <p>Crie quantos links encurtados quiser e compartilhe</p>
+            </div>
+            <div class="icone-item">
+                <img src="/static/assets/icone-dispositivos.png" alt="Dispositivos" class="icone">
+                <p>Compatível com desktop, tablets e dispositivos móveis</p>
+            </div>
+        </div>
+
+        {% if url_curta %}
+            <hr>
+            <h3>Sua Url encurtada é:</h3>
+            <form class="url-curta">
+                <a href="{{ url_curta }}" id="texto-para-copiar" target="_blank">{{ url_curta }}</a>
+                <button id="botao-copiar">Copiar</button>
+            </form>
+        {% endif %}
+
+        <div class="ver-urls-container">
+            <p>Gostaria de ver todos os liks encutados?</p>
+            <a href="/urls" class="ver-urls">Clique Aqui.<i class='bx bx-link-external'></i></a>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Encurtador de Url. Todos os direitos reservados.</p>
+        <p>Desenvolvido por <strong>Enio Jr</strong></p>
+    </footer>
+    
+    <script>
+        const botaoCopiar = document.getElementById('botao-copiar');
+        const textoParaCopiar = document.getElementById('texto-para-copiar');
+
+        botaoCopiar.addEventListener('click', function() {
+            navigator.clipboard.writeText(textoParaCopiar.href).then(() => {
+                botaoCopiar.textContent = 'Copiado!';
+
+                setTimeout(() => {
+                    botaoCopiar.textContent = 'Copiar';
+                }, 2000);
+
+            }).catch(err => {
+                console.error('Erro ao copiar texto: ', err);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style2.css">
+     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>Lista de Urls</title>
+</head>
+<body>
+    <header>
+        <h1> Lista de Urls Criadas</h1>
+    </header>
+    <main>
+        <table>
+            <thead>
+                <tr>
+                    <th>Url original</th>
+                    <th>Url Curta</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for url in urls %}
+                <tr>
+                    <td>
+                        <a href="{{ url.original_url }}" target="_blank">{{ url.original_url }}</a>
+                    </td>
+
+                    <td>
+                        <a href="{{ url.short_code }}" target="_blank">{{ request.host_url }}{{ url.short_code }}</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="ver-urls-container">
+            <i class='bx bx-arrow-back'></i><p>Voltar para a página do <a href="/" class="ver-urls">Encurtador</a></p>
+            
+        </div>
+    </main>
+
+    <footer>
+         <p>&copy; 2025 Encurtador de Url. Todos os direitos reservados.</p>
+        <p>Desenvolvido por <strong>Enio Jr</strong></p>
+    </footer>
+</body>
+</html>
