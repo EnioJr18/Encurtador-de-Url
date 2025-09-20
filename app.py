@@ -1,5 +1,4 @@
-# app.py
-
+import os
 import string
 import random
 from flask import Flask, render_template, request, redirect  # type: ignore
@@ -8,8 +7,12 @@ from flask_sqlalchemy import SQLAlchemy  # type: ignore
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///urls.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+uri = os.environ.get('DATABASE_URL')
+if uri and uri.startswith('postgres://'):
+    uri = uri.replace('postgres://', 'postgresql://', 1)
+
+app.config['SQLALCHEMY_DATABASE_URI'] = uri or 'sqlite:///urls.db'
+
 
 db = SQLAlchemy(app)
 
