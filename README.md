@@ -5,7 +5,7 @@ Um encurtador de URLs simples, funcional e elegante, construído com Python e o 
 ## 📸 Demonstração Visual
 
 <p align="center">
-  <img src="" alt="Demonstração animada do Encurtador de URL" width="80%">
+   <img src="static/assets/Encurtador.gif" alt="Demonstração animada do Encurtador de URL" width="80%">
 </p>
 
 ## ✨ Funcionalidades
