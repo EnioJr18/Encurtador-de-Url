@@ -5,7 +5,7 @@ Um encurtador de URLs simples, funcional e elegante, construído com Python e o 
 ## 📸 Demonstração Visual
 
 <p align="center">
-  <img src="https://github.com/EnioJr18/Encurtador-de-Url/issues/1#issue-3437845808" alt="Demonstração animada do Encurtador de URL" width="80%">
+  <img src="" alt="Demonstração animada do Encurtador de URL" width="80%">
 </p>
 
 ## ✨ Funcionalidades
