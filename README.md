@@ -89,10 +89,6 @@ Siga os passos abaixo para executar o projeto em sua máquina.
 6.  Abra seu navegador e acesse `http://127.0.0.1:5000`.
 
 ## 👨‍💻 Autor
+Desenvolvido por Enio Jr como parte de um portfólio de Engenharia de Software Backend.
 
-Feito com ❤️ por **Enio Junior**.
-
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Enio_Junior-0077B5?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/enioeduardojr/)
-[![GitHub](https://img.shields.io/badge/GitHub-EnioJr18-181717?style=for-the-badge&logo=github)](https://github.com/EnioJr18)
-[![E-mail](https://img.shields.io/badge/Email)](eniojr100@gmail.com)
-[![Instagram](https://img.shields.io/badge/Instagram)](https://www.instagram.com/enio_jr100)
+📧 Entre em contato: eniojr100@gmail.com 🔗 LinkedIn: https://www.linkedin.com/in/enioeduardojr/ 📷 Instagram: https://www.instagram.com/enio_juniorrr/
