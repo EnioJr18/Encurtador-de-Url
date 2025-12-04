@@ -91,4 +91,6 @@ Siga os passos abaixo para executar o projeto em sua máquina.
 ## 👨‍💻 Autor
 Desenvolvido por Enio Jr como parte de um portfólio de Engenharia de Software Backend.
 
-📧 Entre em contato: eniojr100@gmail.com 🔗 LinkedIn: https://www.linkedin.com/in/enioeduardojr/ 📷 Instagram: https://www.instagram.com/enio_juniorrr/
+📧 Entre em contato: eniojr100@gmail.com <br>
+🔗 LinkedIn: https://www.linkedin.com/in/enioeduardojr/ <br>
+📷 Instagram: https://www.instagram.com/enio_juniorrr/ <br>
