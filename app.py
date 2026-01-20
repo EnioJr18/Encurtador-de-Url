@@ -4,6 +4,7 @@ from models import db
 from controllers import main
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'uma_senha_muito_dificil_e_secreta'
 
 
 uri = os.environ.get('DATABASE_URL', 'sqlite:///urls.db')

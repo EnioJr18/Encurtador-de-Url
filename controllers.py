@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, current_app # type: ignore
+from flask import Blueprint, render_template, request, redirect, current_app, flash # type: ignore
 from models import db, URL
 from utils import gerar_codigo_curto
 
@@ -14,7 +14,8 @@ def index():
         if codigo_curto:
             existente = URL.query.filter_by(short_code=codigo_curto).first()
             if existente:
-                return render_template('index.html', erro="O código curto personalizado já está em uso. Tente outro.")
+                flash('O código curto personalizado já está em uso. Tente outro.', 'error')
+                return render_template('index.html')
             
             else:
                 codigo_curto = codigo_curto

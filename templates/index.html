@@ -17,6 +17,13 @@
             <button type="submit">Encurtar</button>
             <label for="custom_url">Digite sua url personalizada</label>
             <input type="text" name="custom_url" id="custom_url" placeholder="Opcional">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <p class="{{ category }}">{{ message }}</p>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
         </form>
 
         <h2>Um Encurtador de URL simples e rápido!</h2><br>
