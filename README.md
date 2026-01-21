@@ -1,6 +1,18 @@
-# 🔗 Encurtador de URL com Flask
+# 🔗 Encurtador de URLs com Flask
 
-Um encurtador de URLs simples, funcional e elegante, construído com Python e o micro-framework Flask. Este projeto foi desenvolvido como uma demonstração prática de habilidades full-stack, cobrindo desde a lógica do back-end e manipulação de banco de dados até a criação de uma interface de usuário interativa no front-end.
+![Python](https://img.shields.io/badge/Python-3.13%2B-blue)
+![Flask](https://img.shields.io/badge/Flask-2.0%2B-green)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Neon-336791)
+![Deploy](https://img.shields.io/badge/Deploy-Render-black)
+
+Um serviço completo de encurtamento de URLs, desenvolvido com **Python** e **Flask**, utilizando banco de dados **PostgreSQL** hospedado na nuvem. O projeto inclui funcionalidades de redirecionamento e rastreamento de cliques.
+
+## 🚀 Demo Online
+
+O projeto está rodando em produção! Acesse aqui:
+👉 **https://encurtador-de-url-8ris.onrender.com**
+
+---
 
 ## 📸 Demonstração Visual
 
@@ -8,35 +20,43 @@ Um encurtador de URLs simples, funcional e elegante, construído com Python e o 
    <img src="static/assets/Encurtador.gif" alt="Demonstração animada do Encurtador de URL" width="80%">
 </p>
 
-## ✨ Funcionalidades
+## 📋 Funcionalidades
 
-- **Encurtamento de URLs:** Transforma URLs longas e complexas em links curtos e fáceis de compartilhar.
-- **Redirecionamento Automático:** Acessar um link curto redireciona instantaneamente para a URL original.
-- **Listagem de Links:** Uma página dedicada para visualizar todos os links que já foram encurtados pela aplicação.
-- **Botão "Copiar":** Funcionalidade em JavaScript que permite copiar a URL curta para a área de transferência com um único clique, incluindo feedback visual.
-- **Interface Responsiva:** Design limpo e adaptável para uma boa experiência tanto em desktops quanto em dispositivos móveis.
+- **Encurtamento de Links**: Transforma URLs longas em códigos curtos e compartilháveis.
+- **Códigos Personalizados**: Permite que o usuário escolha seu próprio sufixo (ex: `meusite.com/googlezinho`).
+- **Redirecionamento Rápido**: Redireciona o usuário para a URL original instantaneamente.
+- **Contador de Cliques**: Monitora quantas vezes cada link foi acessado.
+- **Validações**: Impede URLs inválidas ou códigos duplicados.
+
+---
 
 ## 🛠️ Tecnologias Utilizadas
 
 Este projeto foi construído utilizando as seguintes tecnologias:
 
-#### **Back-end**
-* **Python 3**
-* **Flask:** Um micro-framework para a criação da aplicação web e da API.
-* **SQLAlchemy:** ORM para interação com o banco de dados de forma pythonica.
-* **Gunicorn:** Servidor WSGI para rodar a aplicação em produção.
+## 🛠️ Tecnologias Utilizadas
 
-#### **Front-end**
-* **HTML5**
-* **CSS3**
-* **JavaScript (Vanilla JS):** Para manipulação do DOM e interatividade (botão de copiar).
+- **Back-end:** Python, Flask
+- **Banco de Dados:** - Produção: PostgreSQL (via Neon Tech)
+  - Desenvolvimento: SQLite
+- **ORM:** SQLAlchemy (manipulação de dados)
+- **Servidor WSGI:** Gunicorn
+- **Deploy:** Render (PaaS), Git e GitHub
 
-#### **Banco de Dados**
-* **SQLite:** Utilizado para o ambiente de desenvolvimento local.
-* **PostgreSQL:** Utilizado no ambiente de produção.
+---
 
-#### **Deploy**
-* **Git & GitHub:** Para versionamento de código e integração com a plataforma de deploy.
+## 🗂️ Estrutura do Projeto
+
+```bash
+├── controllers.py   # Lógica das rotas (blueprints)
+├── models.py        # Modelos do banco de dados (tabelas)
+├── app.py           # Configuração principal e inicialização
+├── templates/       # Arquivos HTML
+├── static/          # Arquivos CSS e Imagens
+├── requirements.txt # Dependências do projeto
+├── Procfile         # Configuração de inicialização do Render
+└── README.md        # Documentação
+```
 
 ## 🚀 Como Rodar o Projeto Localmente
 
@@ -69,17 +89,9 @@ Siga os passos abaixo para executar o projeto em sua máquina.
     pip install -r requirements.txt
     ```
 
-4.  **Crie o banco de dados:**
-    ```bash
-    # Inicie o shell do Flask
-    flask shell
-    ```
-    Dentro do shell, execute os seguintes comandos Python:
-    ```python
-    >>> from app import db
-    >>> db.create_all()
-    >>> exit()
-    ```
+4. **Configure as variáveis de ambiente**
+Crie um arquivo ```.env (opcional)``` ou exporte as variáveis no terminal. Se não configurar, o projeto usará o SQLite localmente por padrão.
+
 
 5.  **Execute a aplicação:**
     ```bash
@@ -87,6 +99,9 @@ Siga os passos abaixo para executar o projeto em sua máquina.
     ```
 
 6.  Abra seu navegador e acesse `http://127.0.0.1:5000`.
+
+📄 Licença
+Este projeto está sob a licença MIT. Sinta-se à vontade para usar e modificar.
 
 ## 👨‍💻 Autor
 Desenvolvido por Enio Jr como parte de um portfólio de Engenharia de Software Backend.
