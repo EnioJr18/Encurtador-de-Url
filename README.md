@@ -100,7 +100,7 @@ Crie um arquivo ```.env (opcional)``` ou exporte as variáveis no terminal. Se n
 
 6.  Abra seu navegador e acesse `http://127.0.0.1:5000`.
 
-📄 Licença
+## 📄 Licença
 Este projeto está sob a licença MIT. Sinta-se à vontade para usar e modificar.
 
 ## 👨‍💻 Autor
