@@ -26,6 +26,7 @@
             {% endwith %}
         </form>
 
+
         <h2>Um Encurtador de URL simples e rápido!</h2><br>
         <p class="Meio">O <strong>Encurtador</strong> é uma ferramenta para encurtar links do Instagram, YouTube, Linked In, WhatsApp, sites etc. Cole a URL longa e clique no botão Encurtar URL. Copie a URL encurtada e compartilhe em sites, chat e emails.</p>
 
@@ -48,10 +49,13 @@
         {% if url_curta %}
             <hr>
             <h3>Sua Url encurtada é:</h3>
-            <form class="url-curta">
+            <div class="url-curta"> 
                 <a href="{{ url_curta }}" id="texto-para-copiar" target="_blank">{{ url_curta }}</a>
-                <button id="botao-copiar">Copiar</button>
-            </form>
+                
+                <button type="button" id="botao-copiar">Copiar</button>
+                
+                <br><br> <img src="{{ url_for('main.serve_qrcode', short_code=code) }}" alt="QR Code" class="qr-code">
+            </div>
         {% endif %}
 
         <div class="ver-urls-container">

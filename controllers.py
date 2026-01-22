@@ -1,6 +1,8 @@
-from flask import Blueprint, render_template, request, redirect, current_app, flash # type: ignore
+from flask import Blueprint, render_template, request, redirect, current_app, flash, send_file # type: ignore
 from models import db, URL
 from utils import gerar_codigo_curto
+import qrcode # type: ignore
+from io import BytesIO
 
 
 main = Blueprint('main', __name__)
@@ -31,7 +33,7 @@ def index():
         db.session.commit()
 
         url_curta_completa = request.host_url + codigo_curto
-        return render_template('index.html', url_curta=url_curta_completa)
+        return render_template('index.html', url_curta=url_curta_completa, code=codigo_curto)
 
     return render_template('index.html')
 
@@ -51,3 +53,24 @@ def redirecionar_url(codigo_curto):
 def listar_urls():
     urls = URL.query.all()
     return render_template('urls.html', urls=urls)
+
+@main.route('/qrcode/<short_code>')
+def serve_qrcode(short_code):
+    url_entry = URL.query.filter_by(short_code=short_code).first_or_404()
+    url_curta_completa = request.host_url + short_code
+
+    qr = qrcode.QRCode(
+        version=1,
+        error_correction=qrcode.constants.ERROR_CORRECT_L,
+        box_size=10,
+        border=4,
+    )
+    qr.add_data(url_curta_completa)
+    qr.make(fit=True)
+
+    img = qr.make_image(fill_color="black", back_color="white")
+    byte_io = BytesIO()
+    img.save(byte_io, format='PNG')
+    byte_io.seek(0)
+
+    return send_file(byte_io, mimetype='image/png', as_attachment=False, download_name=f'qrcode_{short_code}.png')
