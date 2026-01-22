@@ -10,10 +10,10 @@
 header {
     background: #000046;
     color: #d8e9ff;
-    padding: 15px;
+    padding: 20px;
     text-align: center;
     width: 100%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 main {
@@ -21,45 +21,33 @@ main {
     color: #778899;
     min-height: 100vh;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start; /* Começa do topo */
     align-items: center;
     flex-direction: column;
-    padding: 20px;
+    padding: 40px 20px;
 }
 
 h1 {
-    font-size: 4rem;
-    margin-bottom: 25px;
+    font-size: 3.5rem; /* Levemente menor para caber melhor */
+    margin-bottom: 0;
     text-align: center;
     color: #5e78ce;
-    backdrop-filter: blur(15px);
     font-family: 'Audiowide', cursive;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
 }
 
+/* Estilo Moderno da Tabela */
 table {
     width: 100%;
-    max-width: 800px;
-    border-collapse: collapse;
-    margin-top: 15px;
-    background: #DCDCDC;
-    border-radius: 8px 2px 8px 2px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border: #000046 2px solid;
-    font-size: 1rem;
-}
-
-td {
-    padding: 12px 15px;
-    text-align: center;
-    border-bottom: 1px solid #ccc;
-    word-break: break-all;
-    font-weight: 460;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-    text-decoration: none;
-    color: #233571;
-    transition: color 0.3s ease;
-    border: #000046 1px solid;
+    max-width: 900px;
+    border-collapse: separate; /* Permite bordas arredondadas */
+    border-spacing: 0;
+    margin-top: 40px;
+    background: #ffffff; /* Fundo branco limpo */
+    border-radius: 15px; /* Arredonda a tabela inteira */
+    overflow: hidden; /* Garante que o conteúdo não vaze */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* Sombra suave */
+    border: none; /* Remove bordas grossas */
 }
 
 th {
@@ -67,59 +55,75 @@ th {
     color: #fff;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    padding: 12px 15px;
-    border-bottom: 2px solid #000046;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-    font-size: 1.1rem;
-    text-decoration: none;
-    color: #d8e9ff;
-    transition: color 0.3s ease;
+    letter-spacing: 1px;
+    padding: 18px 15px;
+    border: none;
+    font-size: 0.9rem;
 }
 
-tr:hover {
-    background-color: #c9def6;
-}
-
-.ver-urls-container {
-    margin-top: 100px;
+td {
+    padding: 18px 15px;
     text-align: center;
-    width: 100%;
+    border-bottom: 1px solid #f0f0f0; /* Linha divisória bem sutil */
+    color: #233571;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+/* Remove a borda da última linha */
+tr:last-child td {
+    border-bottom: none;
+}
+
+/* Efeito ao passar o mouse na linha */
+tbody tr:hover {
+    background-color: #f4f9ff;
+    transform: scale(1.005); /* Um micro zoom sutil */
+}
+
+/* Links dentro da tabela */
+td a {
+    color: #394e91;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+td a:hover {
+    color: #0000CD;
+    text-decoration: underline;
+}
+
+/* Botão Voltar */
+.ver-urls-container {
+    margin-top: 50px;
+    text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
+    background: white;
+    padding: 10px 20px;
+    border-radius: 30px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
 
 .ver-urls-container p {
-    font-size: 1.1rem;
-    color: #262f2f;
-    margin-bottom: 0;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-}
-
-.ver-urls-container i {
-    vertical-align: middle;
-    font-size: 1.5rem;
+    font-size: 1rem;
+    color: #555;
+    margin: 0;
 }
 
 .ver-urls {
     text-decoration: none;
-    color: #394e91;
-    font-weight: 600;
-    transition: color 0.3s ease;
+    color: #0000CD;
+    font-weight: 700;
 }
 
 footer {
     text-align: center;
-    justify-content: center;
     color: #d8e9ff;
     padding: 15px;
     background: #000046;
     width: 100%;
-}
-
-footer p {
-    margin: 5px 0;
-    font-size: 1rem;
+    margin-top: auto;
 }

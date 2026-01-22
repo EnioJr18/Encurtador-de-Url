@@ -23,100 +23,98 @@ h1 {
     margin-bottom: 25px;
     text-align: center;
     color: #394e91;
-    backdrop-filter: blur(15px);
     font-family: 'Audiowide', cursive;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Sombra mais suave */
 }
 
+/* Transformando o formulário em um Card Moderno */
 form {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
     max-width: 620px;
-    max-height: 460px;
-    margin-top: 30px;
-    background: #DCDCDC;
-    padding: 25px;
-    margin: 35px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: #ffffff; /* Mudei de cinza para branco para ficar limpo */
+    padding: 40px; /* Mais espaço interno */
+    margin: 35px 0;
+    border-radius: 20px; /* Bordas bem arredondadas */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Sombra flutuante elegante */
 }
 
 label {
-    font-size: 1.2rem;
-    margin-bottom: 10px;
+    font-size: 1.1rem;
+    margin-bottom: 8px;
     color: #002134;
     align-self: flex-start;
-    font-weight: 500;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+    font-weight: 600;
 }
 
-input[type="url"] {
+input[type="url"], input[type="text"] { /* Aplica estilo também para o campo de texto opcional */
     width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    border: none;
-    border-radius: 4px;
-    background-color: #ffffff;
+    padding: 12px 15px; /* Inputs mais "gordinhos" */
+    margin-bottom: 20px;
+    border: 2px solid #e0e0e0; /* Borda sutil */
+    border-radius: 10px;
+    background-color: #f9f9f9;
     color: #002134;
     outline: none;
     font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+input[type="url"]:focus, input[type="text"]:focus {
+    border-color: #0000CD;
+    background-color: #fff;
+    box-shadow: 0 0 0 4px rgba(0, 0, 205, 0.1); /* Brilho ao clicar */
 }
 
 button {
-    padding: 10px 20px;
+    padding: 12px 30px;
     border: none;
-    border-radius: 4px;
+    border-radius: 50px; /* Botão estilo pílula */
     background-color: #0000CD;
-    color: rgb(0, 18, 46);
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
     color: #d8e9ff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.3s;
+    box-shadow: 0 4px 10px rgba(0, 0, 205, 0.3);
 }
 
 button:hover {
     background-color: #00008B;
+    transform: translateY(-2px); /* Efeito de levantar */
 }
 
+/* Correção de Layout para Textos Explicativos */
 h2 {
-    font-size: 1.6rem;
-    margin-bottom: 10px;
+    font-size: 1.8rem;
+    margin-bottom: 15px;
     color: #000000;
-    text-align: left;
-    align-self: flex-start;
-    margin-top: 10px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    padding: 0 5px;
-    margin-inline-start: 250px;
-    margin-inline-end: 250px;
-    word-break: break-word;
-    margin-bottom: 10px;
-
+    text-align: center; /* Centralizado */
+    margin-top: 30px;
+    width: 100%;
+    max-width: 800px; /* Limita a largura para não esticar demais */
 }
 
 .Meio {
     font-size: 1.1rem;
-    color: #383c41;
-    text-align: left;
-    align-self: flex-start;
-    padding: 0 5px;
-    word-break: break-word;
-    margin-bottom: 10px;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-    margin-inline-start: 250px;
-    margin-inline-end: 250px;
+    color: #555; /* Cinza um pouco mais suave para leitura */
+    text-align: center;
+    line-height: 1.6; /* Espaçamento entre linhas para leitura */
+    width: 100%;
+    max-width: 800px;
+    margin-bottom: 30px;
 }
 
+/* Área dos ícones */
 .icones-container {
     display: flex;
-    align-items: flex-start;
-    gap: 130px;
-    justify-content: center;
-    margin-top: 10px;
+    justify-content: center; /* Centraliza os itens */
+    gap: 60px; /* Espaço uniforme */
     flex-wrap: wrap;
-    margin-bottom: 12px;
+    margin-top: 20px;
+    margin-bottom: 40px;
     width: 100%;
 }
 
@@ -125,72 +123,69 @@ h2 {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    max-width: 150px;
+    width: 200px;
 }
 
 .icone-item img {
-    font-size: 3.5rem;
-    margin-bottom: 10px;
+    height: 60px; /* Tamanho controlado da imagem */
+    width: auto;
+    margin-bottom: 15px;
+    transition: transform 0.3s;
+}
+
+.icone-item:hover img {
+    transform: scale(1.1);
 }
 
 .icone-item p {
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: #383c41;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+    font-weight: 500;
 }
 
-h3 {
-    margin-top: 20px;
-    color: #445694;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-    font-size: 1.3rem;
-}
-
+/* Resultado (URL Curta) */
 .url-curta {
-    margin-top: 10px;
+    margin-top: 20px;
     font-size: 1.2rem;
     word-break: break-all;
-    background: #d8e9ff;
-    padding: 10px;
-    border-radius: 8px;
-    border: #000000 solid 1px;
+    background: #eef6ff;
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px dashed #0000CD; /* Borda tracejada moderna */
     width: 100%;
+    text-align: center;
+    color: #0000CD;
+    font-weight: bold;
 }
-a {
-    color: #262f2f;
+
+/* Links e Footer */
+.ver-urls-container {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.ver-urls-container a {
+    color: #0000CD;
+    font-weight: bold;
     text-decoration: none;
 }
 
-.ver-urls-container {
-    margin-top: 25px;
-    text-align: center;
-    width: 100%;
-}
-
-.ver-urls-container p {
-    font-size: 1.1rem;
-    color: #262f2f;
-    margin-bottom: 5px;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+.ver-urls-container a:hover {
+    text-decoration: underline;
 }
 
 .error {  
     color: #ff4d4d;
     font-size: 0.9em;
-    margin-top: 5px;
+    margin-top: 10px;
     font-weight: bold;
 }
 
 footer {
     text-align: center;
-    justify-content: center;
     color: #d8e9ff;
-    padding: 15px;
+    padding: 20px;
     background: #000046;
     width: 100%;
-}
-
-footer p {
-    margin: 5px 0;
-    font-size: 1rem;
+    margin-top: auto; /* Garante que o footer fique embaixo */
 }
