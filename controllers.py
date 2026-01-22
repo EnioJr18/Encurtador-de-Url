@@ -74,3 +74,26 @@ def serve_qrcode(short_code):
     byte_io.seek(0)
 
     return send_file(byte_io, mimetype='image/png', as_attachment=False, download_name=f'qrcode_{short_code}.png')
+
+
+@main.route('/urls', methods=['GET', 'POST'])
+def stats():
+    url_encontrada = None
+    erro = None
+
+    if request.method == 'POST':
+        codigo_curto = request.form['short_code']
+        url_entry = URL.query.filter_by(short_code=codigo_curto).first()
+        
+        if url_entry:
+            url_encontrada = url_entry
+        else:
+            erro = 'Código curto não encontrado.'
+
+    return render_template('stats.html', link=url_encontrada, error=erro)
+
+
+@main.app_errorhandler(404)
+def page_not_found(e):
+    
+    return render_template('404.html'), 404
