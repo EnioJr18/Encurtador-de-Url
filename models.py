@@ -1,7 +1,15 @@
 from flask_sqlalchemy import SQLAlchemy # type: ignore
+from flask_login import UserMixin # type: ignore
 
 
 db = SQLAlchemy()
+
+class User(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(150), unique=True, nullable=False)
+    password = db.Column(db.String(200), nullable=False)
+    urls = db.relationship('URL', backref='user', lazy=True)
+
 
 class URL(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -9,3 +17,5 @@ class URL(db.Model):
     short_code = db.Column(db.String(100), unique=True, nullable=False)
     click_count = db.Column(db.Integer, default=0)
     acesso_data = db.Column(db.DateTime)
+
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)

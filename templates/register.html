@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css">
+    <title>Cadastro - Encurtador</title>
+</head>
+<body>
+
+    <main>
+        <h1>Criar Conta</h1>
+
+        <form method="POST" action="/register">
+            
+            <label for="username">Usuário</label>
+            <input type="text" name="username" id="username" placeholder="Escolha um nome de usuário" required>
+
+            <label for="password">Senha</label>
+            <input type="password" name="password" id="password" placeholder="Sua senha secreta" required style="width: 100%; padding: 12px 15px; margin-bottom: 20px; border: 2px solid #e0e0e0; border-radius: 10px; background-color: #f9f9f9; outline: none;">
+
+            <button type="submit">Cadastrar</button>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <p class="error" style="color: {{ 'green' if category == 'success' else 'red' }};">
+                            {{ message }}
+                        </p>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <div class="ver-urls-container" style="margin-top: 20px;">
+                <p>Já tem uma conta?</p>
+                <a href="/login" class="ver-urls">Fazer Login</a>
+            </div>
+        </form>
+    </main>
+
+    <footer>
+         <p>&copy; 2025 Encurtador de Url. Todos os direitos reservados.</p>
+        <p>Desenvolvido por <strong>Enio Jr</strong></p>
+    </footer>
+
+</body>
+</html>

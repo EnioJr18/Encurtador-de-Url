@@ -9,6 +9,19 @@
 </head>
 <body>
     <main>
+        <div class="menu-usuario" style="position: absolute; top: 20px; right: 20px;">
+    
+            {% if current_user.is_authenticated %}
+                <span>Olá, <strong>{{ current_user.username }}</strong>!</span>
+                <a href="/logout" style="margin-left: 10px; color: red;">Sair</a>
+            
+            {% else %}
+                <a href="/login">Login</a> | 
+                <a href="/register">Criar Conta</a>
+            {% endif %}
+
+        </div>
+
         <h1>Encurtador de Url</h1>
 
         <form method="post">
