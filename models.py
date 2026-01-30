@@ -18,4 +18,4 @@ class URL(db.Model):
     click_count = db.Column(db.Integer, default=0)
     acesso_data = db.Column(db.DateTime)
 
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)

@@ -11,6 +11,7 @@ main = Blueprint('main', __name__)
 @main.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
+        usuario_atual = current_user if current_user.is_authenticated else None
         url_original = request.form['url']
         codigo_curto = request.form.get('custom_url')
 
@@ -29,7 +30,7 @@ def index():
 
         
 
-        nova_url = URL(original_url=url_original, short_code=codigo_curto)
+        nova_url = URL(original_url=url_original, short_code=codigo_curto, user_id=usuario_atual.id if usuario_atual else None)
         db.session.add(nova_url)
         db.session.commit()
 
@@ -51,8 +52,9 @@ def redirecionar_url(codigo_curto):
     return redirect(url_entry.original_url)
 
 @main.route('/urls')
+@login_required
 def listar_urls():
-    urls = URL.query.all()
+    urls = URL.query.filter_by(user_id=current_user.id).all()
     return render_template('urls.html', urls=urls)
 
 @main.route('/qrcode/<short_code>')
