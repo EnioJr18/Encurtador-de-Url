@@ -8,8 +8,22 @@
     <title>Lista de Urls</title>
 </head>
 <body>
-    <header>
-        <h1> Lista de Urls Criadas</h1>
+    <header class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <img src="/static/assets/logo-encurtarjr.png" alt="Logo EncurtarJR" class="logo-img">
+            </a>
+            <nav class="menu">
+                {% if current_user.is_authenticated %}
+                    <span class="user-hello">Olá, {{ current_user.username }}</span>
+                    <a href="/urls">Meus Links</a>
+                    <a href="/logout" class="btn-nav btn-logout">Sair</a>
+                {% else %}
+                    <a href="/login" class="btn-nav btn-login">Login</a>
+                    <a href="/register" class="btn-nav btn-register">Criar Conta</a>
+                {% endif %}
+            </nav>
+        </div>
     </header>
     <main>
         <table>

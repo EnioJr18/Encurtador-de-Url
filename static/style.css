@@ -7,15 +7,175 @@
     font-family: 'Poppins', sans-serif;
 }
 
-main {
+body {
     background: #F0F8FF;
     color: #778899;
     min-height: 100vh;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+}
+
+.navbar {
+    background-color: #c7f2ff;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    padding: 0; /* ZERADO: A barra terá a altura exata do seu logo */
+    height: auto;
+    display: flex; /* Garante alinhamento vertical */
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-container {
+    width: 95%;
+    max-width: 100%;
+    height: 100px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex; /* Garante alinhamento */
+    align-items: center;
+    padding: 1px 0;
+}
+
+.logo img {
+    height: 280px;
+    width: auto;
+    display: block;
+    margin: 0;
+}
+
+.logo i { font-size: 1.6rem; color: #0000CD; }
+
+.menu { display: flex; align-items: center; gap: 20px; }
+.menu a { text-decoration: none; color: #555; font-weight: 600; font-size: 0.95rem; transition: 0.3s; }
+.menu a:hover { color: #0000CD; }
+.user-hello { font-weight: bold; color: #394e91; }
+
+/* Botões do Menu */
+.btn-nav { 
+    padding: 10px 25px;
+    border-radius: 6px;
+    transition: 0.3s;
+    font-size: 1rem;
+    font-weight: 700;
+
+}
+.btn-login { color: #0000CD; border: 1px solid transparent;  }
+.btn-login:hover { border-color: #0000CD; }
+.btn-register { background-color: #0000CD; color: white !important; box-shadow: 0 4px 6px rgba(0,0,205,0.2); }
+.btn-register:hover { background-color: #00008B; transform: translateY(-2px); }
+.btn-logout { color: #ff4d4d !important; }
+
+/* --- 3. CONTEÚDO PRINCIPAL --- */
+main {
+    display: flex;    
+    min-height: calc(100vh - 70px); /* Ajusta para altura da navbar */
+    justify-content: flex-start; /* Mudado para não centralizar tudo verticalmente */
     align-items: center;
     flex-direction: column;
-    padding: 20px;
+    padding: 40px 20px;
+    background: #F0F8FF;
+}
+
+/* Título Principal */
+.hero-title {
+    max-width: 1200px;
+    font-size: 3rem; /* Ajustado para caber melhor */
+    margin-bottom: 10px;
+    text-align: center;
+    color: #394e91;
+    font-family: 'Audiowide', cursive;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* --- 4. HERO CARD (O Formulário Moderno) --- */
+.hero-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    background: #ffffff;
+    padding: 40px;
+    margin: 20px 0;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.hero-card h2 {
+    font-size: 2.5rem;
+    color: #002134;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.encurtar-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* INPUT GROUP: Input colado no Botão (Igual ao Print) */
+.input-group {
+    display: flex;
+    width: 100%;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.input-group input[type="url"] {
+    flex: 1;
+    padding: 18px;
+    border: 1px solid #e0e0e0;
+    border-right: none; /* Remove borda direita para colar no botão */
+    border-radius: 8px 0 0 8px; /* Arredonda só a esquerda */
+    font-size: 1rem;
+    margin-bottom: 0;
+    background-color: #fff;
+}
+
+.input-group button {
+    width: auto;
+    padding: 0 40px;
+    border-radius: 0 8px 8px 0; /* Arredonda só a direita */
+    margin: 0;
+    box-shadow: none; /* Sombra já está no grupo */
+    background-color: #0000CD;
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+.input-group button:hover { background-color: #00008B; transform: none; }
+
+/* Input Personalizado (Opcional) */
+.custom-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #eee;
+    background-color: #fcfcfc;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    color: #555;
+    outline: none;
+    transition: 0.3s;
+}
+.custom-input:focus { border-color: #0000CD; background: white; }
+
+/* Texto de descrição */
+.desc {
+    margin-top: 20px;
+    color: #666;
+    text-align: center;
+    line-height: 1.6;
+    font-size: 1rem;
 }
 
 h1 {
@@ -98,13 +258,14 @@ h2 {
 }
 
 .Meio {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     color: #555; /* Cinza um pouco mais suave para leitura */
     text-align: center;
     line-height: 1.6; /* Espaçamento entre linhas para leitura */
     width: 100%;
     max-width: 800px;
     margin-bottom: 30px;
+    padding: 0 10px;
 }
 
 /* Área dos ícones */
@@ -127,7 +288,7 @@ h2 {
 }
 
 .icone-item img {
-    height: 60px; /* Tamanho controlado da imagem */
+    height: 75px; /* Tamanho controlado da imagem */
     width: auto;
     margin-bottom: 15px;
     transition: transform 0.3s;
@@ -138,7 +299,7 @@ h2 {
 }
 
 .icone-item p {
-    font-size: 1rem;
+    font-size: 1.1rem;
     color: #383c41;
     font-weight: 500;
 }
@@ -181,6 +342,70 @@ h2 {
     font-weight: bold;
 }
 
+/* --- 5. ÁREA PREMIUM (NOVO) --- */
+.premium-call {
+    text-align: center;
+    background: #fdfdfd;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px dashed #ddd;
+    width: 100%;
+}
+
+.premium-call h3 {
+    font-size: 1.3rem;
+    color: #394e91;
+    margin-bottom: 10px;
+}
+.premium-call p { font-size: 0.95rem; margin-bottom: 20px; color: #777; }
+
+.btn-cta {
+    display: inline-block;
+    padding: 12px 25px;
+    background-color: #0000CD;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+.btn-cta:hover { background-color: #00008B; }
+
+/* --- 6. RESULTADO E EXTRAS --- */
+.result-card {
+    width: 100%;
+    max-width: 1200px;
+    background: white;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    text-align: center;
+    border: 1px solid #e0e0e0;
+}
+
+.result-box {
+    background: #eef6ff;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 15px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px dashed #0000CD;
+    flex-wrap: wrap; gap: 10px;
+}
+
+.result-box a { color: #0000CD; font-weight: bold; font-size: 1.1rem; text-decoration: none; word-break: break-all; }
+.btn-visitar { background: #0000CD; color: white !important; padding: 8px 20px; border-radius: 4px; font-size: 0.9rem; }
+.qr-mini { max-width: 120px; margin-top: 15px; }
+
+/* Mensagens de Erro/Sucesso */
+.flash-messages { width: 100%; max-width: 800px; margin-bottom: 20px; }
+.alert { padding: 15px; border-radius: 6px; margin-bottom: 10px; text-align: center; font-weight: 500; }
+.alert.error { background-color: #ffe6e6; color: #cc0000; border: 1px solid #ffcccc; }
+.alert.success { background-color: #e6ffe6; color: #006600; border: 1px solid #ccffcc; }
+
 footer {
     text-align: center;
     color: #d8e9ff;
@@ -188,4 +413,15 @@ footer {
     background: #000046;
     width: 100%;
     margin-top: auto; /* Garante que o footer fique embaixo */
+    box-shadow: 0 -4px 15px rgba(0,0,0,0.1);
+    font-size: 1.1rem;
+}
+
+/* Responsividade Básica */
+@media (max-width: 600px) {
+    .nav-container { flex-direction: column; gap: 15px; }
+    .input-group { flex-direction: column; }
+    .input-group input[type="url"] { border-radius: 8px 8px 0 0; border-right: 1px solid #e0e0e0; border-bottom: none; }
+    .input-group button { border-radius: 0 0 8px 8px; width: 100%; }
+    .result-box { flex-direction: column; }
 }

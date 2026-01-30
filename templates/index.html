@@ -5,45 +5,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/style.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <title>Encurtador de Url</title>
+    <title>EncurtarJR</title>
 </head>
 <body>
-    <main>
-        <div class="menu-usuario" style="position: absolute; top: 20px; right: 20px;">
-    
-            {% if current_user.is_authenticated %}
-                <span>Olá, <strong>{{ current_user.username }}</strong>!</span>
-                <a href="/logout" style="margin-left: 10px; color: red;">Sair</a>
-            
-            {% else %}
-                <a href="/login">Login</a> | 
-                <a href="/register">Criar Conta</a>
-            {% endif %}
-
-        </div>
-
-        <h1>Encurtador de Url</h1>
-
-        <form method="post">
-            <label for="url">Cole sua Url longa aqui:</label>
-            <input type="url" name="url" required>
-            <button type="submit">Encurtar</button>
-            <label for="custom_url">Digite sua url personalizada</label>
-            <input type="text" name="custom_url" id="custom_url" placeholder="Opcional">
-            {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                    {% for category, message in messages %}
-                        <p class="{{ category }}">{{ message }}</p>
-                    {% endfor %}
+    <header class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <img src="/static/assets/Logo_EncurtaJr.png" alt="Logo EncurtarJR" class="logo-img">
+            </a>
+            <nav class="menu">
+                {% if current_user.is_authenticated %}
+                    <span class="user-hello">Olá, {{ current_user.username }}</span>
+                    <a href="/urls">Meus Links</a>
+                    <a href="/logout" class="btn-nav btn-logout">Sair</a>
+                {% else %}
+                    <a href="/login" class="btn-nav btn-login">Login</a>
+                    <a href="/register" class="btn-nav btn-register">Criar Conta</a>
                 {% endif %}
-            {% endwith %}
-        </form>
+            </nav>
+        </div>
+    </header>
+    <main>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                {% for category, message in messages %}
+                    <div class="alert {{ category }}">{{ message }}</div>
+                {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <section class="hero-card">
+            <h2>Cole a URL para ser encurtada</h2>
+            
+            <form method="post" class="encurtar-form">
+                <div class="input-group">
+                    <input type="url" name="url" placeholder="Cole um link para encurtar" required>
+                    <button type="submit">Encurtar</button>
+                </div>
+                
+                <input type="text" name="custom_url" class="custom-input" placeholder="Personalizar (opcional): seunome">
+            </form>
 
 
         <h2>Um Encurtador de URL simples e rápido!</h2><br>
         <p class="Meio">O <strong>Encurtador</strong> é uma ferramenta para encurtar links do Instagram, YouTube, Linked In, WhatsApp, sites etc. Cole a URL longa e clique no botão Encurtar URL. Copie a URL encurtada e compartilhe em sites, chat e emails.</p>
 
         <h2>Encurte e Compartilhe</h2><br>
+        <p class="Meio">Suas URLs encurtadas podem ser compartilhadas com facilidade e monitoradas, acompanhando o número de acessos e estatísticas de uso.</p>
         <div class="icones-container">
             <div class="icone-item">
                 <img src="/static/assets/icone-curto.png" alt="Link curto" class="icone">
@@ -56,6 +66,14 @@
             <div class="icone-item">
                 <img src="/static/assets/icone-dispositivos.png" alt="Dispositivos" class="icone">
                 <p>Compatível com qualquer desktop, tablets e dispositivos móveis</p>
+            </div>
+            <div class="icone-item">
+                <img src="/static/assets/icone-seguro.png" alt="Seguro" class="icone">
+                <p>Links encurtados são seguros e protegidos</p>
+            </div>
+            <div class="icone-item">
+                <img src="/static/assets/icone-estatisticas.png" alt="Estatísticas" class="icone">
+                <p>Veja estatísticas de acesso aos seus links</p>
             </div>
         </div>
 
@@ -78,7 +96,7 @@
     </main>
 
     <footer>
-        <p>&copy; 2025 Encurtador de Url. Todos os direitos reservados.</p>
+        <p>&copy; 2025 EncurtarJR. Todos os direitos reservados.</p>
         <p>Desenvolvido por <strong>Enio Jr</strong></p>
     </footer>
     

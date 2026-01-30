@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, current_app, flash, send_file # type: ignore
+from flask import Blueprint, render_template, request, redirect, current_app, flash, send_file, session # type: ignore
 from models import db, URL, User
 from flask_login import login_user, current_user, logout_user, login_required # type: ignore
 from utils import gerar_codigo_curto
@@ -11,6 +11,12 @@ main = Blueprint('main', __name__)
 @main.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
+        if not current_user.is_authenticated:
+            links_anonimos = session.get('anon_links', [])
+            
+            if len(links_anonimos) >= 20:
+                flash('Você atingiu o limite gratuito de 20 links! Crie uma conta para continuar.', 'error')
+                return redirect('/register')
         usuario_atual = current_user if current_user.is_authenticated else None
         url_original = request.form['url']
         codigo_curto = request.form.get('custom_url')
@@ -33,6 +39,11 @@ def index():
         nova_url = URL(original_url=url_original, short_code=codigo_curto, user_id=usuario_atual.id if usuario_atual else None)
         db.session.add(nova_url)
         db.session.commit()
+
+        if not current_user.is_authenticated:
+            links_anonimos = session.get('anon_links', [])
+            links_anonimos.append(codigo_curto)
+            session['anon_links'] = links_anonimos
 
         url_curta_completa = request.host_url + codigo_curto
         return render_template('index.html', url_curta=url_curta_completa, code=codigo_curto)
