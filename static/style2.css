@@ -10,15 +10,23 @@
 }
 
 .navbar {
-    background-color: #495ea4;
+    background-color: #c7f2ff;
     box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    padding: 0; /* ZERADO: A barra terá a altura exata do seu logo */
+    padding: 0; 
     height: auto;
-    display: flex; /* Garante alinhamento vertical */
+    display: flex; 
     align-items: center;
-    position: sticky;
+    position: fixed;
     top: 0;
+    width: 100%;
+    left: 0;
+    transition: transform 0.3s ease-in-out;
     z-index: 1000;
+}
+
+.navbar--hidden {
+    transform: translateY(-100%); 
+    box-shadow: none;
 }
 
 .nav-container {
@@ -32,13 +40,13 @@
 }
 
 .logo {
-    display: flex; /* Garante alinhamento */
+    display: flex; 
     align-items: center;
     padding: 1px 0;
 }
 
 .logo img {
-    height: 280px;
+    height: 220px;
     width: auto;
     display: block;
     margin: 0;
@@ -49,11 +57,11 @@
 .menu { display: flex; align-items: center; gap: 20px; }
 .menu a { text-decoration: none; color: #d11414; font-weight: 600; font-size: 0.95rem; transition: 0.3s; }
 .menu a:hover { color: #82cd00; }
-.user-hello { font-weight: bold; color: #fff700; }
+.user-hello { font-weight: bold; color: #394e91; }
 
 /* Botões do Menu */
 .btn-nav { 
-    padding: 10px 25px;
+    padding: 8px 15px;
     border-radius: 6px;
     transition: 0.3s;
     font-size: 1.1rem;
@@ -67,30 +75,33 @@
 main {
     background: #F0F8FF;
     color: #778899;
-    min-height: 100vh;
+    min-height: calc(100vh - 70px);
     display: flex;
-    justify-content: flex-start; /* Começa do topo */
+    justify-content: flex-start; 
     align-items: center;
     flex-direction: column;
     padding: 40px 20px;
 }
 
-h1 {
-    font-size: 3.5rem; /* Levemente menor para caber melhor */
+h2 {
+    font-size: 3rem; /* Levemente menor para caber melhor */
     margin-bottom: 0;
     text-align: center;
     color: #5e78ce;
     font-family: 'Anta', sans-serif;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+    padding: 10px;
+    width: 100%;
+    margin-top: 80px;
 }
 
 /* Estilo Moderno da Tabela */
 table {
     width: 100%;
-    max-width: 900px;
+    max-width: 700px;
     border-collapse: separate; /* Permite bordas arredondadas */
     border-spacing: 0;
-    margin-top: 40px;
+    margin-top: 120px;
     background: #ffffff; /* Fundo branco limpo */
     border-radius: 15px; /* Arredonda a tabela inteira */
     overflow: hidden; /* Garante que o conteúdo não vaze */
@@ -174,4 +185,12 @@ footer {
     background: #000046;
     width: 100%;
     margin-top: auto;
+}
+
+@media (max-width: 768px) {
+    .nav-container { flex-direction: column; gap: 15px; padding: 0 15px; }
+    .input-group { flex-direction: column; }
+    .input-group input[type="url"] { border-radius: 8px 8px 0 0; border-right: 1px solid #e0e0e0; border-bottom: none; }
+    .input-group button { border-radius: 0 0 8px 8px; width: 100%; }
+    .result-box { flex-direction: column; }
 }

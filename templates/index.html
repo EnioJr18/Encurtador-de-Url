@@ -10,7 +10,7 @@
 <body>
     <header class="navbar">
         <div class="container nav-container">
-            <a href="index.html" class="logo">
+            <a href="/" class="logo">
                 <img src="/static/assets/Logo_EncurtaJr1.png" alt="Logo EncurtarJR" class="logo-img">
             </a>
             <nav class="menu">
@@ -52,6 +52,7 @@
         <h2>Um Encurtador de URL simples e rápido!</h2><br>
         <p class="Meio">O <strong>Encurtador</strong> é uma ferramenta para encurtar links do Instagram, YouTube, Linked In, WhatsApp, sites etc. Cole a URL longa e clique no botão Encurtar URL. Copie a URL encurtada e compartilhe em sites, chat e emails.</p>
 
+        
         <h2>Encurte e Compartilhe</h2><br>
         <p class="Meio">Suas URLs encurtadas podem ser compartilhadas com facilidade e monitoradas, acompanhando o número de acessos e estatísticas de uso.</p>
         <div class="icones-container">
@@ -116,6 +117,44 @@
                 console.error('Erro ao copiar texto: ', err);
             });
         });
+
+        document.addEventListener("DOMContentLoaded", function() {
+        // 1. Tenta achar a navbar
+        const navbar = document.querySelector('.navbar');
+        
+        // Debug: Avisa se não achou
+        if (!navbar) {
+            console.error("ERRO: O script não encontrou a classe .navbar no HTML!");
+            return;
+        }
+
+        let lastScrollTop = 0;
+
+        // 2. Adiciona o evento de rolagem
+        window.addEventListener('scroll', function() {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+            // Debug: Mostra no console se está detectando a rolagem
+            // (Pode remover essa linha depois que funcionar)
+            // console.log("Rolando...", scrollTop); 
+
+            // ZONA DE SEGURANÇA: No topo da página (0 a 50px), sempre mostra a barra
+            if (scrollTop < 50) {
+                navbar.classList.remove('navbar--hidden');
+                return;
+            }
+
+            if (scrollTop > lastScrollTop) {
+                // Descendo -> Esconde
+                navbar.classList.add('navbar--hidden');
+            } else {
+                // Subindo -> Mostra
+                navbar.classList.remove('navbar--hidden');
+            }
+            
+            lastScrollTop = Math.max(0, scrollTop); 
+        });
+    });
     </script>
 </body>
 </html>

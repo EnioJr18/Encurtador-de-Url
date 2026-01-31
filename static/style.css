@@ -15,17 +15,21 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    padding-top: 80px; 
 }
 
 .navbar {
     background-color: #c7f2ff;
     box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    padding: 0; /* ZERADO: A barra terá a altura exata do seu logo */
+    padding: 0; 
     height: auto;
-    display: flex; /* Garante alinhamento vertical */
+    display: flex; 
     align-items: center;
-    position: sticky;
+    position: fixed;
     top: 0;
+    width: 100%;
+    left: 0;
+    transition: transform 0.3s ease-in-out;
     z-index: 1000;
 }
 
@@ -39,6 +43,11 @@ body {
     align-items: center;
 }
 
+.navbar--hidden {
+    transform: translateY(-100%); 
+    box-shadow: none;
+}
+
 .logo {
     display: flex; /* Garante alinhamento */
     align-items: center;
@@ -46,7 +55,7 @@ body {
 }
 
 .logo img {
-    height: 280px;
+    height: 220px;
     width: auto;
     display: block;
     margin: 0;
@@ -61,7 +70,7 @@ body {
 
 /* Botões do Menu */
 .btn-nav { 
-    padding: 10px 25px;
+    padding: 8px 15px;
     border-radius: 6px;
     transition: 0.3s;
     font-size: 1rem;
@@ -77,8 +86,8 @@ body {
 /* --- 3. CONTEÚDO PRINCIPAL --- */
 main {
     display: flex;    
-    min-height: calc(100vh - 70px); /* Ajusta para altura da navbar */
-    justify-content: flex-start; /* Mudado para não centralizar tudo verticalmente */
+    min-height: calc(100vh - 70px); 
+    justify-content: flex-start; 
     align-items: center;
     flex-direction: column;
     padding: 40px 20px;
@@ -87,13 +96,14 @@ main {
 
 /* Título Principal */
 .hero-title {
-    max-width: 1200px;
-    font-size: 3rem; /* Ajustado para caber melhor */
+    max-width: 1000px;
+    font-size: 3.2rem; /* Ajustado para caber melhor */
     margin-bottom: 10px;
+    margin-top: 20px;
     text-align: center;
-    color: #394e91;
-    font-family: 'Audiowide', cursive;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    color: #00165d;
+    font-family: 'Anta', sans-serif;
+    text-shadow: 3px 3px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* --- 4. HERO CARD (O Formulário Moderno) --- */
@@ -102,7 +112,7 @@ main {
     flex-direction: column;
     align-items: center;
     width: 100%;
-    max-width: 1200px;
+    max-width: 1000px;
     background: #ffffff;
     padding: 40px;
     margin: 20px 0;
@@ -115,6 +125,11 @@ main {
     color: #002134;
     margin-bottom: 25px;
     text-align: center;
+    padding: 20px;
+    margin-top: 50px;
+    margin: 0 auto;
+    width: 100%;
+    font-family: 'Times New Roman', Times, serif;
 }
 
 .encurtar-form {
@@ -129,25 +144,28 @@ main {
     display: flex;
     width: 100%;
     box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    flex-direction: column;
 }
 
 .input-group input[type="url"] {
     flex: 1;
     padding: 18px;
     border: 1px solid #e0e0e0;
-    border-right: none; /* Remove borda direita para colar no botão */
-    border-radius: 8px 0 0 8px; /* Arredonda só a esquerda */
+    border-right: 1px solid #e0e0e0; 
+    border-radius: 8px 8px 0 0; 
     font-size: 1rem;
     margin-bottom: 0;
     background-color: #fff;
 }
 
 .input-group button {
-    width: auto;
+    width: 100%;
     padding: 0 40px;
-    border-radius: 0 8px 8px 0; /* Arredonda só a direita */
+    border-radius: 0 0 8px 8px; 
     margin: 0;
-    box-shadow: none; /* Sombra já está no grupo */
+    margin-top: -1px;
+    padding: 15px;
+    box-shadow: none; 
     background-color: #0000CD;
     color: white;
     font-weight: bold;
@@ -180,14 +198,6 @@ main {
     font-size: 1rem;
 }
 
-h1 {
-    font-size: 4.2rem;
-    margin-bottom: 25px;
-    text-align: center;
-    color: #394e91;
-    font-family: 'Anta', sans-serif;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Sombra mais suave */
-}
 
 /* Transformando o formulário em um Card Moderno */
 form {
@@ -195,12 +205,12 @@ form {
     flex-direction: column;
     align-items: center;
     width: 100%;
-    max-width: 620px;
-    background: #ffffff; /* Mudei de cinza para branco para ficar limpo */
-    padding: 40px; /* Mais espaço interno */
-    margin: 35px 0;
-    border-radius: 20px; /* Bordas bem arredondadas */
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Sombra flutuante elegante */
+    max-width: 580px;
+    background: #ffffff; 
+    padding: 40px; 
+    margin: 25px 0;
+    border-radius: 20px; 
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
 
 label {
@@ -248,35 +258,25 @@ button:hover {
     transform: translateY(-2px); /* Efeito de levantar */
 }
 
-/* Correção de Layout para Textos Explicativos */
-h2 {
-    font-size: 1.8rem;
-    margin-bottom: 15px;
-    color: #000000;
-    text-align: center; /* Centralizado */
-    margin-top: 30px;
-    width: 100%;
-    max-width: 800px; /* Limita a largura para não esticar demais */
-}
-
 .Meio {
-    font-size: 1.2rem;
-    color: #555; /* Cinza um pouco mais suave para leitura */
-    text-align: center;
-    line-height: 1.6; /* Espaçamento entre linhas para leitura */
+    font-size: 1.1rem;
+    color: #555;
+    text-align: left;
+    line-height: 1.5; 
     width: 100%;
     max-width: 800px;
     margin-bottom: 30px;
-    padding: 0 10px;
+    padding: 0;
+    margin: 0;
 }
 
 /* Área dos ícones */
 .icones-container {
     display: flex;
-    justify-content: center; /* Centraliza os itens */
-    gap: 60px; /* Espaço uniforme */
+    justify-content: center; 
+    gap: 50px; 
     flex-wrap: wrap;
-    margin-top: 20px;
+    margin-top: 50px;
     margin-bottom: 40px;
     width: 100%;
 }
@@ -286,11 +286,12 @@ h2 {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    width: 200px;
+    width: 100%;
+    max-width: 150px;
 }
 
 .icone-item img {
-    height: 75px; /* Tamanho controlado da imagem */
+    height: 55px; /* Tamanho controlado da imagem */
     width: auto;
     margin-bottom: 15px;
     transition: transform 0.3s;
@@ -301,7 +302,7 @@ h2 {
 }
 
 .icone-item p {
-    font-size: 1.1rem;
+    font-size: 0.9rem;
     color: #383c41;
     font-weight: 500;
 }
@@ -420,8 +421,8 @@ footer {
 }
 
 /* Responsividade Básica */
-@media (max-width: 600px) {
-    .nav-container { flex-direction: column; gap: 15px; }
+@media (max-width: 768px) {
+    .nav-container { flex-direction: column; gap: 15px; padding: 0 15px; }
     .input-group { flex-direction: column; }
     .input-group input[type="url"] { border-radius: 8px 8px 0 0; border-right: 1px solid #e0e0e0; border-bottom: none; }
     .input-group button { border-radius: 0 0 8px 8px; width: 100%; }
