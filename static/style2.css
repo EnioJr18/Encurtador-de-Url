@@ -9,14 +9,60 @@
     font-family: 'Poppins', sans-serif;
 }
 
-header {
-    background: #000046;
-    color: #d8e9ff;
-    padding: 20px;
-    text-align: center;
-    width: 100%;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+.navbar {
+    background-color: #495ea4;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    padding: 0; /* ZERADO: A barra terá a altura exata do seu logo */
+    height: auto;
+    display: flex; /* Garante alinhamento vertical */
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
+
+.nav-container {
+    width: 95%;
+    max-width: 100%;
+    height: 100px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex; /* Garante alinhamento */
+    align-items: center;
+    padding: 1px 0;
+}
+
+.logo img {
+    height: 280px;
+    width: auto;
+    display: block;
+    margin: 0;
+}
+
+.logo i { font-size: 1.6rem; color: #0000CD; }
+
+.menu { display: flex; align-items: center; gap: 20px; }
+.menu a { text-decoration: none; color: #d11414; font-weight: 600; font-size: 0.95rem; transition: 0.3s; }
+.menu a:hover { color: #82cd00; }
+.user-hello { font-weight: bold; color: #fff700; }
+
+/* Botões do Menu */
+.btn-nav { 
+    padding: 10px 25px;
+    border-radius: 6px;
+    transition: 0.3s;
+    font-size: 1.1rem;
+    font-weight: 700;
+
+}
+
+.btn-logout { color: #ff4d4d !important; transition: 0.3s; }
+.btn-logout:hover { color: #fff700 !important; }
 
 main {
     background: #F0F8FF;
