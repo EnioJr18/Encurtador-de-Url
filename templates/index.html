@@ -4,27 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <title>EncurtaJR</title>
 </head>
-<body>
-    <header class="navbar">
-        <div class="container nav-container">
-            <a href="/" class="logo">
-                <img src="/static/assets/Logo_EncurtaJr1.png" alt="Logo EncurtarJR" class="logo-img">
+<body style="padding-top: 60px;"> <nav class="navbar navbar-expand-lg fixed-top py-0" style="background-color: #c7f2ff; box-shadow: 0 4px 15px rgba(0,0,0,0.05); height: 90px;">
+        <div class="container h-100"> <a href="/" class="navbar-brand logo d-flex align-items-center h-100 p-0">
+                <img src="/static/assets/Logo_EncurtaJr1.png" alt="Logo EncurtarJR" 
+                     style="height: 220px; width: auto; position: relative; z-index: 1001;">
             </a>
-            <nav class="menu">
-                {% if current_user.is_authenticated %}
-                    <span class="user-hello">Olá, {{ current_user.username }}</span>
-                    <a href="/urls">Meus Links</a>
-                    <a href="/logout" class="btn-nav btn-logout">Sair</a>
-                {% else %}
-                    <a href="/login" class="btn-nav btn-login">Login</a>
-                    <a href="/register" class="btn-nav btn-register">Criar Conta</a>
-                {% endif %}
-            </nav>
+
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#menuMobile">
+                <span class="navbar-toggler-icon" style="font-size: 0.9rem;"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-end bg-lg-transparent" id="menuMobile" style="border-radius: 0 0 10px 10px;">
+                <div class="navbar-nav align-items-center gap-3 p-3 p-lg-0">
+                    {% if current_user.is_authenticated %}
+                        <span class="user-hello fw-bold" style="color: #394e91; font-size: 0.9rem;">Olá, {{ current_user.username }}</span>
+                        <a href="/urls" class="nav-link text-dark fw-bold" style="font-size: 0.95rem;">Meus Links</a>
+                        <a href="/logout" class="btn btn-danger btn-sm text-white px-3" style="border-radius: 6px;">Sair</a>
+                    {% else %}
+                        <a href="/login" class="nav-link text-primary fw-bold" style="font-size: 0.95rem;">Login</a>
+                        <a href="/register" class="btn btn-primary text-white px-3" style="background-color: #0000CD; border: none;">Criar Conta</a>
+                    {% endif %}
+                </div>
+            </div>
         </div>
-    </header>
+    </nav>
     <main>
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
@@ -37,7 +44,7 @@
         {% endwith %}
 
         <section class="hero-card">
-            <h2>Cole a URL para ser encurtada</h2>
+            <h2 class="hero-title">Cole a URL para ser encurtada</h2>
             
             <form method="post" class="encurtar-form">
                 <div class="input-group">
@@ -49,11 +56,11 @@
             </form>
 
 
-        <h2>Um Encurtador de URL simples e rápido!</h2><br>
+        <h3>Um Encurtador de URL simples e rápido!</h3><br>
         <p class="Meio">O <strong>Encurtador</strong> é uma ferramenta para encurtar links do Instagram, YouTube, Linked In, WhatsApp, sites etc. Cole a URL longa e clique no botão Encurtar URL. Copie a URL encurtada e compartilhe em sites, chat e emails.</p>
 
         
-        <h2>Encurte e Compartilhe</h2><br>
+        <h3>Encurte e Compartilhe</h3><br>
         <p class="Meio">Suas URLs encurtadas podem ser compartilhadas com facilidade e monitoradas, acompanhando o número de acessos e estatísticas de uso.</p>
         <div class="icones-container">
             <div class="icone-item">
@@ -101,60 +108,41 @@
         <p>Desenvolvido por <strong>Enio Jr</strong></p>
     </footer>
     
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
     <script>
         const botaoCopiar = document.getElementById('botao-copiar');
         const textoParaCopiar = document.getElementById('texto-para-copiar');
 
-        botaoCopiar.addEventListener('click', function() {
-            navigator.clipboard.writeText(textoParaCopiar.href).then(() => {
-                botaoCopiar.textContent = 'Copiado!';
-
-                setTimeout(() => {
-                    botaoCopiar.textContent = 'Copiar';
-                }, 2000);
-
-            }).catch(err => {
-                console.error('Erro ao copiar texto: ', err);
+        if(botaoCopiar && textoParaCopiar) {
+            botaoCopiar.addEventListener('click', function() {
+                navigator.clipboard.writeText(textoParaCopiar.href).then(() => {
+                    botaoCopiar.textContent = 'Copiado!';
+                    setTimeout(() => { botaoCopiar.textContent = 'Copiar'; }, 2000);
+                }).catch(err => { console.error('Erro ao copiar texto: ', err); });
             });
-        });
-
-        document.addEventListener("DOMContentLoaded", function() {
-        // 1. Tenta achar a navbar
-        const navbar = document.querySelector('.navbar');
-        
-        // Debug: Avisa se não achou
-        if (!navbar) {
-            console.error("ERRO: O script não encontrou a classe .navbar no HTML!");
-            return;
         }
 
-        let lastScrollTop = 0;
-
-        // 2. Adiciona o evento de rolagem
-        window.addEventListener('scroll', function() {
-            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-            // Debug: Mostra no console se está detectando a rolagem
-            // (Pode remover essa linha depois que funcionar)
-            // console.log("Rolando...", scrollTop); 
-
-            // ZONA DE SEGURANÇA: No topo da página (0 a 50px), sempre mostra a barra
-            if (scrollTop < 50) {
-                navbar.classList.remove('navbar--hidden');
-                return;
-            }
-
-            if (scrollTop > lastScrollTop) {
-                // Descendo -> Esconde
-                navbar.classList.add('navbar--hidden');
-            } else {
-                // Subindo -> Mostra
-                navbar.classList.remove('navbar--hidden');
-            }
+        document.addEventListener("DOMContentLoaded", function() {
+            const navbar = document.querySelector('.navbar'); // Agora busca a classe correta do bootstrap
             
-            lastScrollTop = Math.max(0, scrollTop); 
+            if (!navbar) return;
+
+            let lastScrollTop = 0;
+            window.addEventListener('scroll', function() {
+                let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                if (scrollTop < 50) {
+                    navbar.classList.remove('navbar--hidden');
+                    return;
+                }
+                if (scrollTop > lastScrollTop) {
+                    navbar.classList.add('navbar--hidden');
+                } else {
+                    navbar.classList.remove('navbar--hidden');
+                }
+                lastScrollTop = Math.max(0, scrollTop); 
+            });
         });
-    });
     </script>
 </body>
 </html>

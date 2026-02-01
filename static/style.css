@@ -2,6 +2,8 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Anta&family=Audiowide&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+@import url('https://fonts.googleapis.com/css2?family=Anta&family=Audiowide&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Texturina:ital,opsz,wght@0,12..72,100..900;1,12..72,100..900&display=swap');
+
 * {
     margin: 0;
     padding: 0;
@@ -49,12 +51,12 @@ body {
 }
 
 .logo {
-    display: flex; /* Garante alinhamento */
+    display: flex; 
     align-items: center;
     padding: 1px 0;
 }
 
-.logo img {
+.nav-container img {
     height: 220px;
     width: auto;
     display: block;
@@ -102,7 +104,9 @@ main {
     margin-top: 20px;
     text-align: center;
     color: #00165d;
-    font-family: 'Anta', sans-serif;
+    font-family: 'Times New Roman', Times, serif;
+    font-style: normal;
+    font-weight: 750;
     text-shadow: 3px 3px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -121,13 +125,26 @@ main {
 }
 
 .hero-card h2 {
-    font-size: 2.5rem;
+    font-size: 2.8rem;
     color: #002134;
     margin-bottom: 25px;
     text-align: center;
     padding: 20px;
     margin-top: 50px;
     margin: 0 auto;
+    width: 100%;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.hero-card h3 {
+    font-size: 2.4rem;
+    color: #002134;
+    margin-bottom: 25px;
+    text-align: left;
+    padding: 40px;
+    margin-top: 50px;
+    max-width: 880px;
+    margin: 0;
     width: 100%;
     font-family: 'Times New Roman', Times, serif;
 }
@@ -259,7 +276,7 @@ button:hover {
 }
 
 .Meio {
-    font-size: 1.1rem;
+    font-size: 1rem;
     color: #555;
     text-align: left;
     line-height: 1.5; 
@@ -268,6 +285,7 @@ button:hover {
     margin-bottom: 30px;
     padding: 0;
     margin: 0;
+    margin-top: -60px;
 }
 
 /* Área dos ícones */

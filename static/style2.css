@@ -83,16 +83,30 @@ main {
     padding: 40px 20px;
 }
 
-h2 {
-    font-size: 3rem; /* Levemente menor para caber melhor */
-    margin-bottom: 0;
+.hero-card .hero-title {
+    max-width: 1000px;
+    font-size: 3.2rem; /* Ajustado para caber melhor */
+    margin-bottom: 10px;
+    margin-top: 20px;
     text-align: center;
-    color: #5e78ce;
-    font-family: 'Anta', sans-serif;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
-    padding: 10px;
+    color: #00165d;
+    font-family: 'Times New Roman', Times, serif;
+    font-style: normal;
+    font-weight: 750;
+    text-shadow: 3px 3px 4px rgba(0, 0, 0, 0.1);
+}
+
+.Meio2{
+    font-size: 1.1rem;
+    color: #0078e0;
+    text-align: center;
+    line-height: 1.5; 
     width: 100%;
-    margin-top: 80px;
+    max-width: 800px;
+    margin-bottom: 30px;
+    padding: 0;
+    margin: 0;
+    margin-top: -10px;
 }
 
 /* Estilo Moderno da Tabela */
@@ -181,10 +195,12 @@ td a:hover {
 footer {
     text-align: center;
     color: #d8e9ff;
-    padding: 15px;
+    padding: 20px;
     background: #000046;
     width: 100%;
-    margin-top: auto;
+    margin-top: auto; 
+    box-shadow: 0 -4px 15px rgba(0,0,0,0.1);
+    font-size: 1.1rem;
 }
 
 @media (max-width: 768px) {
