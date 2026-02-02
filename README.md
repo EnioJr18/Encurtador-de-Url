@@ -17,7 +17,7 @@ O projeto está rodando em produção! Acesse aqui:
 
 ## 📸 Demonstração Visual
 
-![Image](https://github.com/user-attachments/assets/d47dc998-a11e-4ade-be49-81f88692b42b)
+![Image](https://github.com/user-attachments/assets/44767606-6ed7-45f9-a1d7-43b39ee4d26d)
 
 ---
 
