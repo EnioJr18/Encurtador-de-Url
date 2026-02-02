@@ -8,10 +8,10 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <title>EncurtaJR</title>
 </head>
-<body style="padding-top: 60px;"> <nav class="navbar navbar-expand-lg fixed-top py-0" style="background-color: #c7f2ff; box-shadow: 0 4px 15px rgba(0,0,0,0.05); height: 90px;">
+<body style="padding-top: 100px;"> <nav class="navbar navbar-expand-lg fixed-top py-0" style="background-color: #c7f2ff; box-shadow: 0 4px 15px rgba(0,0,0,0.05); height: 90px;">
         <div class="container h-100"> <a href="/" class="navbar-brand logo d-flex align-items-center h-100 p-0">
                 <img src="/static/assets/Logo_EncurtaJr1.png" alt="Logo EncurtarJR" 
-                     style="height: 220px; width: auto; position: relative; z-index: 1001;">
+                     style="height: 180px; width: auto; position: relative; z-index: 1001;">
             </a>
 
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#menuMobile">
@@ -21,24 +21,26 @@
             <div class="collapse navbar-collapse justify-content-end bg-lg-transparent" id="menuMobile" style="border-radius: 0 0 10px 10px;">
                 <div class="navbar-nav align-items-center gap-3 p-3 p-lg-0">
                     {% if current_user.is_authenticated %}
-                        <span class="user-hello fw-bold" style="color: #394e91; font-size: 0.9rem;">Olá, {{ current_user.username }}</span>
-                        <a href="/urls" class="nav-link text-dark fw-bold" style="font-size: 0.95rem;">Meus Links</a>
+                        <span class="user-hello fw-bold" style="color: #394e91; font-size: 0.85rem;">Olá, {{ current_user.username }}</span>
+                        <a href="/urls" class="nav-link text-dark fw-bold" style="font-size: 0.9rem;">Meus Links</a>
                         <a href="/logout" class="btn btn-danger btn-sm text-white px-3" style="border-radius: 6px;">Sair</a>
                     {% else %}
-                        <a href="/login" class="nav-link text-primary fw-bold" style="font-size: 0.95rem;">Login</a>
+                        <a href="/login" class="nav-link text-primary fw-bold" style="font-size: 0.9rem;">Login</a>
                         <a href="/register" class="btn btn-primary text-white px-3" style="background-color: #0000CD; border: none;">Criar Conta</a>
                     {% endif %}
                 </div>
             </div>
         </div>
     </nav>
-    <main>
+    <main class="container-fluid py-4" style="max-width: 1200px;"> 
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
-                <div class="flash-messages">
-                {% for category, message in messages %}
-                    <div class="alert {{ category }}">{{ message }}</div>
-                {% endfor %}
+                <div class="row justify-content-center">
+                    <div class="col-12 col-md-8">
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }} text-center">{{ message }}</div>
+                        {% endfor %}
+                    </div>
                 </div>
             {% endif %}
         {% endwith %}
@@ -46,60 +48,60 @@
         <section class="hero-card">
             <h2 class="hero-title">Cole a URL para ser encurtada</h2>
             
-            <form method="post" class="encurtar-form">
-                <div class="input-group">
-                    <input type="url" name="url" placeholder="Cole um link para encurtar" required>
-                    <button type="submit">Encurtar</button>
+            <form method="post" class="encurtar-form w-100">
+                <div class="input-group input-group-lg mb-3 shadow-sm">
+                    <input type="url" name="url" placeholder="Cole um link para encurtar" required style="border: 2px solid #e0e0e0;">
+                    <button class="btn btn-primary fw-bold px-4" type="submit" style="background-color: #0000CD; border-color: #0000CD;">Encurtar</button>
                 </div>
-                
-                <input type="text" name="custom_url" class="custom-input" placeholder="Personalizar (opcional): seunome">
+                <input type="text" name="custom_url" class="form-control mt-2" placeholder="Personalizar (opcional): seunome" style="background-color: #f9f9f9;">
             </form>
 
 
         <h3>Um Encurtador de URL simples e rápido!</h3><br>
-        <p class="Meio">O <strong>Encurtador</strong> é uma ferramenta para encurtar links do Instagram, YouTube, Linked In, WhatsApp, sites etc. Cole a URL longa e clique no botão Encurtar URL. Copie a URL encurtada e compartilhe em sites, chat e emails.</p>
+        <p class="Meio mx-auto text-muted" style="max-width: 800px;">O <strong>Encurtador</strong> é uma ferramenta para encurtar links do Instagram, YouTube, Linked In, WhatsApp, sites etc. Cole a URL longa e clique no botão Encurtar URL. Copie a URL encurtada e compartilhe em sites, chat e emails.</p>
 
         
         <h3>Encurte e Compartilhe</h3><br>
-        <p class="Meio">Suas URLs encurtadas podem ser compartilhadas com facilidade e monitoradas, acompanhando o número de acessos e estatísticas de uso.</p>
-        <div class="icones-container">
-            <div class="icone-item">
+        <p class="Meio mx-auto text-muted" style="max-width: 800px;">Suas URLs encurtadas podem ser compartilhadas com facilidade e monitoradas, acompanhando o número de acessos e estatísticas de uso.</p> <br>
+        <div class="icones-container row justify-content-center text-center gy-4">
+            <div class="icone-item col-6 col-md-4 col-lg-2">
                 <img src="/static/assets/icone-curto.png" alt="Link curto" class="icone">
                 <p>Encurte links longos com o Encurtador</p>
             </div>
-            <div class="icone-item">
+            <div class="icone-item col-6 col-md-4 col-lg-2">
                 <img src="/static/assets/icone-gratis.png" alt="Gratuito" class="icone">
                 <p>Crie quantos links encurtados quiser e compartilhe</p>
             </div>
-            <div class="icone-item">
+            <div class="icone-item col-6 col-md-4 col-lg-2">
                 <img src="/static/assets/icone-dispositivos.png" alt="Dispositivos" class="icone">
                 <p>Compatível com qualquer desktop, tablets e dispositivos móveis</p>
             </div>
-            <div class="icone-item">
+            <div class="icone-item col-6 col-md-4 col-lg-2">
                 <img src="/static/assets/icone-seguro.png" alt="Seguro" class="icone">
                 <p>Links encurtados são seguros e protegidos</p>
             </div>
-            <div class="icone-item">
+            <div class="icone-item col-6 col-md-4 col-lg-2">
                 <img src="/static/assets/icone-estatisticas.png" alt="Estatísticas" class="icone">
                 <p>Veja estatísticas de acesso aos seus links</p>
             </div>
         </div>
 
         {% if url_curta %}
-            <hr>
-            <h3>Sua Url encurtada é:</h3>
-            <div class="url-curta"> 
-                <a href="{{ url_curta }}" id="texto-para-copiar" target="_blank">{{ url_curta }}</a>
-                
-                <button type="button" id="botao-copiar">Copiar</button>
-                
-                <br><br> <img src="{{ url_for('main.serve_qrcode', short_code=code) }}" alt="QR Code" class="qr-code">
+            <div class="card mt-4 p-3 text-center shadow-sm mx-auto" style="max-width: 600px; border: 1px dashed #0000CD;">
+                <h3>Sua Url encurtada é:</h3>
+                <div class="url-curta mt-2 d-flex flex-column align-items-center gap-2"> 
+                    <a href="{{ url_curta }}" id="texto-para-copiar" target="_blank" class="fw-bold fs-5 text-break text-decoration-none">{{ url_curta }}</a>
+                    
+                    <button type="button" id="botao-copiar" class="btn btn-sm btn-outline-primary rounded-pill px-3">Copiar</button>
+                    
+                    <img src="{{ url_for('main.serve_qrcode', short_code=code) }}" alt="QR Code" class="img-fluid mt-3 border p-1 rounded" style="max-width: 150px;">
+                </div>
             </div>
         {% endif %}
 
-        <div class="ver-urls-container">
-            <p>Gostaria de ver todos os liks encutados?</p>
-            <a href="/urls" class="ver-urls">Clique Aqui.<i class='bx bx-link-external'></i></a>
+        <div class="ver-urls-container text-center mt-5 mb-3">
+            <p class="mb-2">Gostaria de ver todos os links encurtados?</p>
+            <a href="/urls" class="btn btn-sm">Clique Aqui <i class='bx bx-link-external'></i></a>
         </div>
     </main>
 
@@ -116,30 +118,37 @@
 
         if(botaoCopiar && textoParaCopiar) {
             botaoCopiar.addEventListener('click', function() {
-                navigator.clipboard.writeText(textoParaCopiar.href).then(() => {
-                    botaoCopiar.textContent = 'Copiado!';
-                    setTimeout(() => { botaoCopiar.textContent = 'Copiar'; }, 2000);
-                }).catch(err => { console.error('Erro ao copiar texto: ', err); });
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(textoParaCopiar.textContent).then(() => {
+                        botaoCopiar.textContent = 'Copiado!';
+                        botaoCopiar.classList.replace('btn-outline-primary', 'btn-success');
+                        setTimeout(() => { 
+                            botaoCopiar.textContent = 'Copiar'; 
+                            botaoCopiar.classList.replace('btn-success', 'btn-outline-primary');
+                        }, 2000);
+                    }).catch(err => { console.error('Erro ao copiar texto: ', err); });
+                } else {
+                    // Fallback para celulares antigos
+                    const textarea = document.createElement('textarea');
+                    textarea.value = textoParaCopiar.textContent;
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textarea);
+                    alert("Copiado!");
+                }
             });
         }
 
         document.addEventListener("DOMContentLoaded", function() {
-            const navbar = document.querySelector('.navbar'); // Agora busca a classe correta do bootstrap
-            
+            const navbar = document.querySelector('.navbar');
             if (!navbar) return;
-
             let lastScrollTop = 0;
             window.addEventListener('scroll', function() {
                 let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                if (scrollTop < 50) {
-                    navbar.classList.remove('navbar--hidden');
-                    return;
-                }
-                if (scrollTop > lastScrollTop) {
-                    navbar.classList.add('navbar--hidden');
-                } else {
-                    navbar.classList.remove('navbar--hidden');
-                }
+                if (scrollTop < 50) { navbar.classList.remove('navbar--hidden'); return; }
+                if (scrollTop > lastScrollTop) { navbar.classList.add('navbar--hidden'); } 
+                else { navbar.classList.remove('navbar--hidden'); }
                 lastScrollTop = Math.max(0, scrollTop); 
             });
         });
