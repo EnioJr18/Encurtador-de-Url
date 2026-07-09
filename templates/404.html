@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <title>Página não encontrada</title>
     <style>
@@ -40,7 +40,7 @@
     <h2>Ops! Página não encontrada.</h2>
     <p>O link que você tentou acessar não existe ou foi movido.</p>
 
-    <a href="/" class="btn-voltar">
+    <a href="{{ url_for('main.index') }}" class="btn-voltar">
         <i class='bx bx-home'></i> Voltar para o Início
     </a>
 

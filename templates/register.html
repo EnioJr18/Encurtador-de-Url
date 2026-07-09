@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <title>Cadastro - EncurtaJr</title>
 </head>
 <body>
@@ -11,7 +11,7 @@
     <main>
         <h1 class="hero-title">Criar Conta</h1>
 
-        <form method="POST" action="/register">
+        <form method="POST" action="{{ url_for('main.register') }}">
             
             <label for="username">Usuário</label>
             <input type="text" name="username" id="username" placeholder="Escolha um nome de usuário" required>
@@ -33,7 +33,7 @@
 
             <div class="ver-urls-container" style="margin-top: 20px;">
                 <p>Já tem uma conta?</p>
-                <a href="/login" class="ver-urls">Fazer Login</a>
+                <a href="{{ url_for('main.login') }}" class="ver-urls">Fazer Login</a>
             </div>
         </form>
     </main>

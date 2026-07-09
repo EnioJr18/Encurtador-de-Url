@@ -111,7 +111,7 @@ Siga os passos abaixo para executar o projeto em sua máquina.
     ```
 
 5. **Configure as variáveis de ambiente**
-Crie um arquivo ```.env (opcional)``` ou exporte as variáveis no terminal. Se não configurar, o projeto usará o SQLite localmente por padrão.
+Copie o arquivo `.env.example` para `.env` em desenvolvimento, ou exporte as variáveis no terminal. Se não configurar `DATABASE_URL`, o projeto usa SQLite localmente por padrão. Em produção, defina obrigatoriamente `SECRET_KEY`.
 
 
 6.  **Execute a aplicação:**
