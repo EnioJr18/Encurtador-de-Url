@@ -104,15 +104,15 @@ Siga os passos abaixo para executar o projeto em sua máquina.
     pip install -r requirements.txt
     ```
 
-4.  **Configure o Banco de Dados:**
-    ```bash
-    O projeto está configurado para criar o banco SQLite automaticamente na primeira execução.
-    *Certifique-se de deletar qualquer arquivo `.db` antigo se houver mudanças na estrutura.*
-    ```
-
-5. **Configure as variáveis de ambiente**
+4. **Configure as variáveis de ambiente**
 Copie o arquivo `.env.example` para `.env` em desenvolvimento, ou exporte as variáveis no terminal. Se não configurar `DATABASE_URL`, o projeto usa SQLite localmente por padrão. Em produção, defina obrigatoriamente `SECRET_KEY`.
 
+5.  **Prepare o Banco de Dados:**
+    ```bash
+    flask db upgrade
+    ```
+    Em uma máquina nova, este comando cria ou atualiza as tabelas usando as migrations versionadas.
+    Para futuras mudanças nos models, gere uma nova migration com `flask db migrate -m "descrição"` e aplique com `flask db upgrade`.
 
 6.  **Execute a aplicação:**
     ```bash
@@ -120,6 +120,14 @@ Copie o arquivo `.env.example` para `.env` em desenvolvimento, ou exporte as var
     ```
 
 7.  Abra seu navegador e acesse `http://127.0.0.1:5000`.
+
+## Testes
+
+Execute a suíte com:
+
+```bash
+pytest
+```
 
 ## 📄 Licença
 Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.

@@ -11,7 +11,7 @@
     <main>
         <h1 class="hero-title">Fazer Login</h1>
 
-        <form method="POST" action="{{ url_for('main.login') }}">
+        <form method="POST" action="{{ url_for('auth.login') }}">
             
             <label for="username">Usuário</label>
             <input type="text" name="username" id="username" placeholder="Escolha um nome de usuário" required>
@@ -33,7 +33,7 @@
 
             <div class="ver-urls-container" style="margin-top: 20px;">
                 <p>Não tem uma conta? Cadastre-se</p>
-                <a href="{{ url_for('main.register') }}" class="ver-urls">Criar Conta</a>
+                <a href="{{ url_for('auth.register') }}" class="ver-urls">Criar Conta</a>
             </div>
         </form>
     </main>

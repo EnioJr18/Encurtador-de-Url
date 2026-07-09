@@ -6,6 +6,7 @@ env/
 # Arquivos compilados do Python
 __pycache__/
 *.py[cod]
+.pytest_cache/
 
 # Bancos de dados locais (SQLite)
 *.db
