@@ -71,7 +71,10 @@ def get_config():
     app_env = get_app_env()
     config_class = CONFIG_BY_ENV.get(app_env, DevelopmentConfig)
 
-    if config_class is ProductionConfig and not config_class.SECRET_KEY:
-        raise RuntimeError("SECRET_KEY deve ser definida em ambiente de produção.")
+    if config_class is ProductionConfig:
+        if not config_class.SECRET_KEY:
+            raise RuntimeError("SECRET_KEY deve ser definida em ambiente de produção.")
+        if not os.getenv("DATABASE_URL"):
+            raise RuntimeError("DATABASE_URL deve ser definida em ambiente de produção.")
 
     return config_class

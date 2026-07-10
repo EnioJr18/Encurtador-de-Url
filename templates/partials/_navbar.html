@@ -1,0 +1,24 @@
+<nav class="navbar navbar-expand-lg fixed-top py-0" style="background-color: #c7f2ff; box-shadow: 0 4px 15px rgba(0,0,0,0.05); height: 90px;">
+    <div class="container h-100">
+        <a href="{{ url_for('main.index') }}" class="navbar-brand logo d-flex align-items-center h-100 p-0">
+            <img src="{{ url_for('static', filename='assets/Logo_EncurtaJr1.png') }}" alt="Logo EncurtarJR" style="height: 180px; width: auto; position: relative; z-index: 1001;">
+        </a>
+
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#menuMobile" aria-controls="menuMobile" aria-expanded="false" aria-label="Alternar navegação">
+            <span class="navbar-toggler-icon" style="font-size: 0.9rem;"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-end bg-lg-transparent" id="menuMobile" style="border-radius: 0 0 10px 10px;">
+            <div class="navbar-nav align-items-center gap-3 p-3 p-lg-0">
+                {% if current_user.is_authenticated %}
+                    <span class="user-hello fw-bold" style="color: #394e91; font-size: 0.85rem;">Olá, {{ current_user.username }}</span>
+                    <a href="{{ url_for('urls.listar_urls') }}" class="nav-link text-dark fw-bold" style="font-size: 0.9rem;">Meus Links</a>
+                    <a href="{{ url_for('auth.logout') }}" class="btn btn-danger btn-sm text-white px-3" style="border-radius: 6px;">Sair</a>
+                {% else %}
+                    <a href="{{ url_for('auth.login') }}" class="nav-link text-primary fw-bold" style="font-size: 0.9rem;">Login</a>
+                    <a href="{{ url_for('auth.register') }}" class="btn btn-primary text-white px-3" style="background-color: #0000CD; border: none;">Criar Conta</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</nav>

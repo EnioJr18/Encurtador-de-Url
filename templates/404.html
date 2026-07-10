@@ -1,48 +1,25 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <title>Página não encontrada</title>
+{% extends "base.html" %}
+
+{% block title %}Página não encontrada - EncurtaJR{% endblock %}
+
+{% block navbar %}{% endblock %}
+{% block footer %}{% endblock %}
+
+{% block extra_css %}
     <style>
-        /* Um CSS inline só para centralizar tudo nesta página específica */
-        body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            text-align: center;
-        }
+        body { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; text-align: center; }
         h1 { font-size: 3rem; margin-bottom: 10px; color: #333; }
         p { font-size: 1.2rem; color: #666; margin-bottom: 20px; }
-        .btn-voltar {
-            background-color: #007bff; /* Use a cor principal do seu site */
-            color: white;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
+        .btn-voltar { background-color: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-flex; align-items: center; gap: 5px; }
         .btn-voltar:hover { background-color: #0056b3; }
         .erro-icon { font-size: 5rem; color: #ff6b6b; }
     </style>
-</head>
-<body>
+{% endblock %}
 
-    <i class='bx bx-error-circle erro-icon'></i>
+{% block content %}
+    <i class="bx bx-error-circle erro-icon"></i>
     <h1>404</h1>
     <h2>Ops! Página não encontrada.</h2>
     <p>O link que você tentou acessar não existe ou foi movido.</p>
-
-    <a href="{{ url_for('main.index') }}" class="btn-voltar">
-        <i class='bx bx-home'></i> Voltar para o Início
-    </a>
-
-</body>
-</html>
+    <a href="{{ url_for('main.index') }}" class="btn-voltar"><i class="bx bx-home"></i> Voltar para o Início</a>
+{% endblock %}

@@ -106,7 +106,10 @@ Siga os passos abaixo para executar o projeto em sua máquina.
     ```
 
 4. **Configure as variáveis de ambiente**
-Copie o arquivo `.env.example` para `.env` em desenvolvimento, ou exporte as variáveis no terminal. Se não configurar `DATABASE_URL`, o projeto usa SQLite localmente por padrão. Em produção, defina obrigatoriamente `SECRET_KEY`.
+Copie o arquivo `.env.example` para `.env` em desenvolvimento, ou exporte as variáveis no terminal. O `.env` é ignorado pelo Git e não deve ser commitado. Para desenvolvimento local, use `APP_ENV=development` e `DATABASE_URL=sqlite:///urls.db`; se a variável não for definida, o projeto também usa SQLite por padrão.
+
+Use PostgreSQL/Neon somente em produção ou em um ambiente remoto controlado. Se `DATABASE_URL` apontar para Neon, comandos como `flask db upgrade` atuarão nesse banco. Em produção, `SECRET_KEY` e `DATABASE_URL` são obrigatórias.
+
 Opcionalmente, configure `RATELIMIT_STORAGE_URI`; por padrão o projeto usa `memory://` em desenvolvimento.
 
 5.  **Prepare o Banco de Dados:**
@@ -115,6 +118,7 @@ Opcionalmente, configure `RATELIMIT_STORAGE_URI`; por padrão o projeto usa `mem
     ```
     Em uma máquina nova, este comando cria ou atualiza as tabelas usando as migrations versionadas.
     Para futuras mudanças nos models, gere uma nova migration com `flask db migrate -m "descrição"` e aplique com `flask db upgrade`.
+    Para um banco antigo criado antes do Flask-Migrate, use `flask db stamp head` somente após confirmar que as tabelas existentes correspondem à migration inicial e que o banco é local ou de desenvolvimento.
 
 6.  **Execute a aplicação:**
     ```bash
