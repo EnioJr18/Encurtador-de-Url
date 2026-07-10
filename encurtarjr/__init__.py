@@ -1,7 +1,8 @@
-from flask import Flask
+from flask import Flask, flash, redirect, request, url_for
+from flask_wtf.csrf import CSRFError
 
 from config import get_config
-from encurtarjr.extensions import bcrypt, db, login_manager, migrate
+from encurtarjr.extensions import bcrypt, csrf, db, limiter, login_manager, migrate
 from encurtarjr.models import User
 from encurtarjr.routes.auth_routes import auth_bp
 from encurtarjr.routes.main_routes import main_bp
@@ -16,6 +17,8 @@ def create_app(config_object=None):
     bcrypt.init_app(app)
     login_manager.init_app(app)
     migrate.init_app(app, db)
+    csrf.init_app(app)
+    limiter.init_app(app)
 
     login_manager.login_view = "auth.login"
     login_manager.login_message_category = "info"
@@ -23,6 +26,18 @@ def create_app(config_object=None):
     app.register_blueprint(main_bp)
     app.register_blueprint(auth_bp)
     app.register_blueprint(url_bp)
+
+    @app.errorhandler(CSRFError)
+    def handle_csrf_error(error):
+        flash("Sua sessão expirou ou o formulário é inválido. Tente novamente.", "danger")
+        return redirect(request.referrer or url_for("main.index"))
+
+    @app.errorhandler(429)
+    def handle_rate_limit(error):
+        flash("Muitas tentativas em pouco tempo. Aguarde um pouco e tente novamente.", "danger")
+        if request.referrer:
+            return redirect(request.referrer)
+        return "Muitas tentativas em pouco tempo. Aguarde um pouco e tente novamente.", 429
 
     return app
 

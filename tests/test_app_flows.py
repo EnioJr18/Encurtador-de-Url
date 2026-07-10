@@ -1,4 +1,5 @@
 from encurtarjr.extensions import db
+from encurtarjr import create_app
 from encurtarjr.models import URL, User
 
 
@@ -152,3 +153,59 @@ def test_invalid_inputs_do_not_return_500(client):
     ]
 
     assert all(response.status_code < 500 for response in responses)
+
+
+def test_csrf_is_enabled_outside_testing():
+    class CSRFEnabledConfig:
+        TESTING = False
+        SECRET_KEY = "csrf-test-secret"
+        SQLALCHEMY_DATABASE_URI = "sqlite:///:memory:"
+        SQLALCHEMY_TRACK_MODIFICATIONS = False
+        WTF_CSRF_ENABLED = True
+        SESSION_COOKIE_SECURE = False
+        SESSION_COOKIE_HTTPONLY = True
+        SESSION_COOKIE_SAMESITE = "Lax"
+
+    app = create_app(CSRFEnabledConfig)
+
+    with app.app_context():
+        db.create_all()
+        response = app.test_client().post("/login", data={"username": "usuario", "password": "123456"})
+        db.session.remove()
+        db.drop_all()
+
+    assert response.status_code == 302
+
+
+def test_rate_limit_is_disabled_in_testing(app):
+    assert app.config["RATELIMIT_ENABLED"] is False
+
+
+def test_rate_limit_returns_friendly_response_outside_testing():
+    class RateLimitConfig:
+        TESTING = False
+        SECRET_KEY = "rate-limit-test-secret"
+        SQLALCHEMY_DATABASE_URI = "sqlite:///:memory:"
+        SQLALCHEMY_TRACK_MODIFICATIONS = False
+        WTF_CSRF_ENABLED = False
+        RATELIMIT_ENABLED = True
+        RATELIMIT_STORAGE_URI = "memory://"
+        RATELIMIT_HEADERS_ENABLED = True
+        SESSION_COOKIE_SECURE = False
+        SESSION_COOKIE_HTTPONLY = True
+        SESSION_COOKIE_SAMESITE = "Lax"
+
+    app = create_app(RateLimitConfig)
+
+    with app.app_context():
+        db.create_all()
+        client = app.test_client()
+        responses = [
+            client.post("/login", data={"username": "usuario", "password": "123456"})
+            for _ in range(6)
+        ]
+        db.session.remove()
+        db.drop_all()
+
+    assert responses[-1].status_code == 429
+    assert b"Muitas tentativas" in responses[-1].data

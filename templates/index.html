@@ -49,6 +49,7 @@
             <h2 class="hero-title">Cole a URL para ser encurtada</h2>
             
             <form method="post" class="encurtar-form w-100">
+                {{ form.hidden_tag() }}
                 <div class="input-group input-group-lg mb-3 shadow-sm">
                     <input type="url" name="url" placeholder="Cole um link para encurtar" required style="border: 2px solid #e0e0e0;">
                     <button class="btn btn-primary fw-bold px-4" type="submit" style="background-color: #0000CD; border-color: #0000CD;">Encurtar</button>

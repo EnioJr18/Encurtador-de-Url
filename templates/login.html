@@ -12,6 +12,7 @@
         <h1 class="hero-title">Fazer Login</h1>
 
         <form method="POST" action="{{ url_for('auth.login') }}">
+            {{ form.hidden_tag() }}
             
             <label for="username">Usuário</label>
             <input type="text" name="username" id="username" placeholder="Escolha um nome de usuário" required>

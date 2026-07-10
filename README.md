@@ -49,6 +49,7 @@ O projeto foi construído utilizando as melhores práticas do ecossistema Python
     * *Produção:* PostgreSQL (Hospedado no Neon Tech)
 * **ORM:** SQLAlchemy (Gerenciamento eficiente do banco)
 * **Autenticação:** Flask-Login + Flask-Bcrypt (Gestão de sessão e Hash de senhas)
+* **Proteção:** Flask-WTF (CSRF) + Flask-Limiter (rate limit básico)
 * **Frontend:** HTML5, CSS3 Moderno (Responsivo), Jinja2 Templates.
 * **Deploy:** Render (Aplicação) + Neon (Banco de Dados).
 
@@ -106,6 +107,7 @@ Siga os passos abaixo para executar o projeto em sua máquina.
 
 4. **Configure as variáveis de ambiente**
 Copie o arquivo `.env.example` para `.env` em desenvolvimento, ou exporte as variáveis no terminal. Se não configurar `DATABASE_URL`, o projeto usa SQLite localmente por padrão. Em produção, defina obrigatoriamente `SECRET_KEY`.
+Opcionalmente, configure `RATELIMIT_STORAGE_URI`; por padrão o projeto usa `memory://` em desenvolvimento.
 
 5.  **Prepare o Banco de Dados:**
     ```bash
@@ -128,6 +130,8 @@ Execute a suíte com:
 ```bash
 pytest
 ```
+
+No ambiente de testes, a proteção CSRF fica desativada por configuração para facilitar os fluxos automatizados.
 
 ## 📄 Licença
 Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.

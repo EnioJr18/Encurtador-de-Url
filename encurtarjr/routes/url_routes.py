@@ -4,6 +4,7 @@ import qrcode
 from flask import Blueprint, redirect, render_template, request, send_file
 from flask_login import current_user, login_required
 
+from encurtarjr.extensions import limiter
 from encurtarjr.models import URL
 from encurtarjr.services.url_service import registrar_clique
 
@@ -19,6 +20,7 @@ def listar_urls():
 
 
 @url_bp.route("/qrcode/<short_code>")
+@limiter.limit("60 per minute")
 def serve_qrcode(short_code):
     URL.query.filter_by(short_code=short_code).first_or_404()
     url_curta_completa = request.host_url + short_code

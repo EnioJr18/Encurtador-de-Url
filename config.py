@@ -33,6 +33,10 @@ class Config:
     SESSION_COOKIE_SECURE = False
     SESSION_COOKIE_HTTPONLY = True
     SESSION_COOKIE_SAMESITE = "Lax"
+    WTF_CSRF_ENABLED = True
+    RATELIMIT_ENABLED = True
+    RATELIMIT_STORAGE_URI = os.getenv("RATELIMIT_STORAGE_URI", "memory://")
+    RATELIMIT_HEADERS_ENABLED = True
 
 
 class DevelopmentConfig(Config):
@@ -44,6 +48,8 @@ class TestingConfig(Config):
     TESTING = True
     SQLALCHEMY_DATABASE_URI = normalize_database_url(os.getenv("DATABASE_URL", "sqlite:///:memory:"))
     SECRET_KEY = os.getenv("SECRET_KEY") or secrets.token_urlsafe(32)
+    WTF_CSRF_ENABLED = False
+    RATELIMIT_ENABLED = False
 
 
 class ProductionConfig(Config):
