@@ -13,7 +13,7 @@ jobs:
     env:
       APP_ENV: testing
       SECRET_KEY: test-secret-key
-      DATABASE_URL: sqlite:///:memory:
+      DATABASE_URL: "sqlite:///:memory:"
       FLASK_APP: app.py
 
     steps:
