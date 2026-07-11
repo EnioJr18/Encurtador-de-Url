@@ -1,98 +1,87 @@
 {% extends "base.html" %}
 
 {% block title %}EncurtaJR{% endblock %}
-
-{% block body_attributes %} style="padding-top: 100px;"{% endblock %}
-{% block main_attributes %} class="container-fluid py-4" style="max-width: 1200px;"{% endblock %}
+{% block main_attributes %} class="container py-4 py-md-5"{% endblock %}
 
 {% block content %}
-    <section class="hero-card">
-        <h2 class="hero-title">Cole a URL para ser encurtada</h2>
+<section class="hero-section text-center">
+    <p class="eyebrow">Encurtador de URLs</p>
+    <h1 class="hero-title">Links curtos, prontos para compartilhar.</h1>
+    <p class="hero-lead">Transforme URLs longas em links simples, personalizados e acompanhados por voce.</p>
 
-        <form method="post" class="encurtar-form w-100">
-            {{ form.hidden_tag() }}
-            <div class="input-group input-group-lg mb-3 shadow-sm">
-                <input type="url" name="url" placeholder="Cole um link para encurtar" required style="border: 2px solid #e0e0e0;">
-                <button class="btn btn-primary fw-bold px-4" type="submit" style="background-color: #0000CD; border-color: #0000CD;">Encurtar</button>
-            </div>
-            <input type="text" name="custom_url" class="form-control mt-2" placeholder="Personalizar (opcional): seunome" style="background-color: #f9f9f9;">
-        </form>
-
-        <h3>Um Encurtador de URL simples e rápido!</h3><br>
-        <p class="Meio mx-auto text-muted" style="max-width: 800px;">O <strong>Encurtador</strong> é uma ferramenta para encurtar links do Instagram, YouTube, Linked In, WhatsApp, sites etc. Cole a URL longa e clique no botão Encurtar URL. Copie a URL encurtada e compartilhe em sites, chat e emails.</p>
-
-        <h3>Encurte e Compartilhe</h3><br>
-        <p class="Meio mx-auto text-muted" style="max-width: 800px;">Suas URLs encurtadas podem ser compartilhadas com facilidade e monitoradas, acompanhando o número de acessos e estatísticas de uso.</p><br>
-        <div class="icones-container row justify-content-center text-center gy-4">
-            <div class="icone-item col-6 col-md-4 col-lg-2">
-                <img src="{{ url_for('static', filename='assets/icone-curto.png') }}" alt="Link curto" class="icone">
-                <p>Encurte links longos com o Encurtador</p>
-            </div>
-            <div class="icone-item col-6 col-md-4 col-lg-2">
-                <img src="{{ url_for('static', filename='assets/icone-gratis.png') }}" alt="Gratuito" class="icone">
-                <p>Crie quantos links encurtados quiser e compartilhe</p>
-            </div>
-            <div class="icone-item col-6 col-md-4 col-lg-2">
-                <img src="{{ url_for('static', filename='assets/icone-dispositivos.png') }}" alt="Dispositivos" class="icone">
-                <p>Compatível com qualquer desktop, tablets e dispositivos móveis</p>
-            </div>
-            <div class="icone-item col-6 col-md-4 col-lg-2">
-                <img src="{{ url_for('static', filename='assets/icone-seguro.png') }}" alt="Seguro" class="icone">
-                <p>Links encurtados são seguros e protegidos</p>
-            </div>
-            <div class="icone-item col-6 col-md-4 col-lg-2">
-                <img src="{{ url_for('static', filename='assets/icone-estatisticas.png') }}" alt="Estatísticas" class="icone">
-                <p>Veja estatísticas de acesso aos seus links</p>
-            </div>
+    <div class="shorten-panel card border-0 shadow-sm mx-auto">
+        <div class="card-body p-4 p-md-5 text-start">
+            <h2 class="h4 text-center mb-4">Cole a URL que deseja encurtar</h2>
+            {% include "partials/_url_form.html" %}
         </div>
+    </div>
 
-        {% if url_curta %}
-            <div class="card mt-4 p-3 text-center shadow-sm mx-auto" style="max-width: 600px; border: 1px dashed #0000CD;">
-                <h3>Sua URL encurtada é:</h3>
-                <div class="url-curta mt-2 d-flex flex-column align-items-center gap-2">
-                    <a href="{{ url_curta }}" id="texto-para-copiar" target="_blank" class="fw-bold fs-5 text-break text-decoration-none">{{ url_curta }}</a>
-                    <button type="button" id="botao-copiar" class="btn btn-sm btn-outline-primary rounded-pill px-3">Copiar</button>
-                    <img src="{{ url_for('urls.serve_qrcode', short_code=code) }}" alt="QR Code" class="img-fluid mt-3 border p-1 rounded" style="max-width: 150px;">
-                </div>
-            </div>
-        {% endif %}
+    {% if url_curta %}{% include "partials/_url_result.html" %}{% endif %}
+</section>
 
-        <div class="ver-urls-container text-center mt-5 mb-3">
-            <p class="mb-2">Gostaria de ver todos os links encurtados?</p>
-            <a href="{{ url_for('urls.listar_urls') }}" class="btn btn-sm">Clique Aqui <i class="bx bx-link-external"></i></a>
+<section class="benefits-section" aria-labelledby="benefits-title">
+    <div class="text-center mb-4">
+        <h2 id="benefits-title" class="section-title">Feito para compartilhar com clareza</h2>
+        <p class="section-lead">Crie seu link em segundos e use os recursos ja disponiveis na plataforma.</p>
+    </div>
+    <div class="row justify-content-center text-center g-4">
+        <div class="icone-item col-6 col-md-4 col-lg">
+            <img src="{{ url_for('static', filename='assets/icone-curto.png') }}" alt="Link curto" class="icone">
+            <p>Encurte links longos para compartilhar com facilidade.</p>
         </div>
-    </section>
+        <div class="icone-item col-6 col-md-4 col-lg">
+            <img src="{{ url_for('static', filename='assets/icone-gratis.png') }}" alt="Uso gratuito" class="icone">
+            <p>Crie links gratuitamente antes de criar sua conta.</p>
+        </div>
+        <div class="icone-item col-6 col-md-4 col-lg">
+            <img src="{{ url_for('static', filename='assets/icone-dispositivos.png') }}" alt="Compatibilidade com dispositivos" class="icone">
+            <p>Compartilhe em computadores, tablets e celulares.</p>
+        </div>
+        <div class="icone-item col-6 col-md-4 col-lg">
+            <img src="{{ url_for('static', filename='assets/icone-seguro.png') }}" alt="Seguranca" class="icone">
+            <p>Validacoes ajudam a manter seus links seguros.</p>
+        </div>
+        <div class="icone-item col-6 col-md-4 col-lg">
+            <img src="{{ url_for('static', filename='assets/icone-estatisticas.png') }}" alt="Contador de acessos" class="icone">
+            <p>Acompanhe os acessos no painel da sua conta.</p>
+        </div>
+    </div>
+    <div class="account-callout text-center mt-5">
+        <p class="mb-2">Tem uma conta? Acompanhe todos os links que voce criou.</p>
+        <a href="{{ url_for('urls.listar_urls') }}" class="btn btn-outline-primary">Ver meus links</a>
+    </div>
+</section>
 {% endblock %}
 
 {% block extra_js %}
-    <script>
-        const botaoCopiar = document.getElementById('botao-copiar');
-        const textoParaCopiar = document.getElementById('texto-para-copiar');
+<script>
+    const botaoCopiar = document.getElementById('botao-copiar');
+    const textoParaCopiar = document.getElementById('texto-para-copiar');
 
-        if (botaoCopiar && textoParaCopiar) {
-            botaoCopiar.addEventListener('click', function() {
-                const texto = textoParaCopiar.textContent;
-                if (navigator.clipboard) {
-                    navigator.clipboard.writeText(texto).then(() => {
-                        botaoCopiar.textContent = 'Copiado!';
-                        botaoCopiar.classList.replace('btn-outline-primary', 'btn-success');
-                        setTimeout(() => {
-                            botaoCopiar.textContent = 'Copiar';
-                            botaoCopiar.classList.replace('btn-success', 'btn-outline-primary');
-                        }, 2000);
-                    }).catch(() => {});
-                    return;
-                }
+    if (botaoCopiar && textoParaCopiar) {
+        botaoCopiar.addEventListener('click', () => {
+            const marcarComoCopiado = () => {
+                botaoCopiar.textContent = 'Copiado';
+                botaoCopiar.classList.replace('btn-primary', 'btn-success');
+                setTimeout(() => {
+                    botaoCopiar.textContent = 'Copiar link';
+                    botaoCopiar.classList.replace('btn-success', 'btn-primary');
+                }, 2000);
+            };
 
-                const textarea = document.createElement('textarea');
-                textarea.value = texto;
-                document.body.appendChild(textarea);
-                textarea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textarea);
-                botaoCopiar.textContent = 'Copiado!';
-                setTimeout(() => { botaoCopiar.textContent = 'Copiar'; }, 2000);
-            });
-        }
-    </script>
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(textoParaCopiar.textContent).then(marcarComoCopiado);
+                return;
+            }
+
+            const textarea = document.createElement('textarea');
+            textarea.value = textoParaCopiar.textContent;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            marcarComoCopiado();
+        });
+    }
+</script>
 {% endblock %}

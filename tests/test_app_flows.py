@@ -123,6 +123,17 @@ def test_urls_with_login_returns_200(client):
     assert response.status_code == 200
 
 
+def test_urls_with_links_render_dashboard_components(client):
+    create_logged_user(client)
+    shorten(client, custom_url="painel")
+
+    response = client.get("/urls")
+
+    assert response.status_code == 200
+    assert b"painel" in response.data
+    assert b"QR Code" in response.data
+
+
 def test_existing_short_code_redirects(client):
     shorten(client, custom_url="destino")
     response = client.get("/destino")

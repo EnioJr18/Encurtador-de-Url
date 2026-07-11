@@ -1,56 +1,53 @@
 {% extends "base.html" %}
 
-{% block title %}Lista de URLs - EncurtaJR{% endblock %}
-
-{% block extra_css %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='style2.css') }}">
-{% endblock %}
-
-{% block body_attributes %} style="padding-top: 100px;"{% endblock %}
-{% block main_attributes %} class="container py-4"{% endblock %}
+{% block title %}Meus links - EncurtaJR{% endblock %}
+{% block main_attributes %} class="container py-4 py-md-5"{% endblock %}
 
 {% block content %}
-    <div class="text-center mb-4">
-        <h2 class="hero-title">Meus Links Encurtados</h2>
-        <p class="text-muted">Gerencie seus links encurtados abaixo:</p>
-    </div>
+<section class="dashboard-header text-center mb-4 mb-md-5">
+    <p class="eyebrow">Painel da conta</p>
+    <h1 class="hero-title hero-title--compact">Meus links encurtados</h1>
+    <p class="section-lead">Acesse seus links, abra o QR Code e acompanhe os cliques.</p>
+</section>
 
-    <div class="table-responsive shadow-sm rounded">
-        <table class="table table-hover table-striped align-middle mb-0 bg-white">
-            <thead class="table-primary text-center">
+{% if urls %}
+    <div class="table-responsive url-table-wrapper d-none d-md-block">
+        <table class="table table-hover align-middle mb-0">
+            <thead>
                 <tr>
-                    <th class="py-3">URL original</th>
-                    <th class="py-3">URL curta</th>
-                    <th class="py-3">Acessos</th>
+                    <th scope="col">URL original</th>
+                    <th scope="col">Link curto</th>
+                    <th scope="col" class="text-center">Acessos</th>
+                    <th scope="col" class="text-end">Acoes</th>
                 </tr>
             </thead>
-            <tbody class="text-center">
+            <tbody>
                 {% for url in urls %}
                 <tr>
-                    <td class="text-start text-truncate" style="max-width: 250px;">
-                        <a href="{{ url.original_url }}" target="_blank" class="text-secondary text-decoration-none" title="{{ url.original_url }}">
-                            {{ url.original_url }}
-                        </a>
-                    </td>
-                    <td class="fw-bold">
-                        <a href="{{ request.host_url }}{{ url.short_code }}" target="_blank" class="text-primary text-decoration-none">
-                            {{ request.host_url }}{{ url.short_code }}
-                        </a>
-                    </td>
-                    <td><span class="badge bg-info text-dark rounded-pill">{{ url.click_count }}</span></td>
-                </tr>
-                {% else %}
-                <tr>
-                    <td colspan="3" class="py-4 text-muted">Nenhum link encontrado.</td>
+                    <td class="url-table__original"><a href="{{ url.original_url }}" target="_blank" rel="noopener" title="{{ url.original_url }}">{{ url.original_url }}</a></td>
+                    <td><a class="url-table__short" href="{{ request.host_url }}{{ url.short_code }}" target="_blank" rel="noopener">{{ request.host_url }}{{ url.short_code }}</a></td>
+                    <td class="text-center"><span class="badge text-bg-primary">{{ url.click_count }}</span></td>
+                    <td class="text-end"><a class="btn btn-outline-secondary btn-sm" href="{{ url_for('urls.serve_qrcode', short_code=url.short_code) }}" target="_blank" rel="noopener">QR Code</a></td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
 
-    <div class="ver-urls-container text-center mt-5">
-        <a href="{{ url_for('main.index') }}" class="btn btn-sm text-decoration-none">
-            <i class="bx bx-arrow-back"></i> Voltar para o Encurtador
-        </a>
+    <div class="row g-3 d-md-none">
+        {% for url in urls %}
+            <div class="col-12">{% set url_entry = url %}{% include "partials/_url_card.html" %}</div>
+        {% endfor %}
     </div>
+{% else %}
+    {% set heading = 'Nenhum link criado ainda' %}
+    {% set message = 'Seu proximo link encurtado aparecera aqui.' %}
+    {% set action_url = url_for('main.index') %}
+    {% set action_label = 'Encurtar uma URL' %}
+    {% include "partials/_empty_state.html" %}
+{% endif %}
+
+<div class="text-center mt-5">
+    <a href="{{ url_for('main.index') }}" class="btn btn-outline-primary"><i class="bx bx-arrow-back" aria-hidden="true"></i> Voltar ao encurtador</a>
+</div>
 {% endblock %}

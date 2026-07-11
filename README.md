@@ -61,7 +61,6 @@ O projeto foi construído utilizando as melhores práticas do ecossistema Python
 EncurtarJR/ 
 ├── static/             # Arquivos CSS, Imagens e Assets │ 
     ├── style.css       # Estilização principal 
-    ├── style2.css      # Estilização secundária 
     └── assets/         # Logos e ícones 
 ├── templates/          # Arquivos HTML (Jinja2) │ 
     ├── index.html      # Página inicial │ 
