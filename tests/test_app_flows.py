@@ -136,20 +136,32 @@ def test_urls_with_login_returns_200(client):
     create_logged_user(client)
     response = client.get("/urls")
     assert response.status_code == 200
+    assert b"Nenhum link criado ainda" in response.data
+    assert b"Links criados" in response.data
+    assert b"Total de acessos" in response.data
 
 
 def test_urls_with_links_render_dashboard_components(client):
     create_logged_user(client)
-    shorten(client, custom_url="painel")
+    shorten(client, custom_url="mais-acessado")
+    shorten(client, url="https://example.org", custom_url="sem-acessos")
+    most_clicked = URL.query.filter_by(short_code="mais-acessado").first()
+    most_clicked.click_count = 4
+    db.session.commit()
 
     response = client.get("/urls")
 
     assert response.status_code == 200
-    assert b"painel" in response.data
+    assert b"mais-acessado" in response.data
     assert b"QR Code" in response.data
     assert b"data-copy-link" in response.data
     assert b"data-qr-url" in response.data
     assert b"qrCodeModal" in response.data
+    assert b"Links criados" in response.data
+    assert b"Total de acessos" in response.data
+    assert b"Mais acessado" in response.data
+    assert b"Sem acessos ainda" in response.data
+    assert b"4 acessos" in response.data
 
 
 def test_qrcode_route_returns_png(client):

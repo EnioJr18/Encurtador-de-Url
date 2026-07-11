@@ -1,0 +1,16 @@
+{% set click_count = url_entry.click_count or 0 %}
+{% if click_count %}
+    <div class="click-summary">
+        <span class="click-badge{% if stats.most_clicked and url_entry.id == stats.most_clicked.id %} click-badge--top{% endif %}">
+            <i class="bx bx-bar-chart-alt-2" aria-hidden="true"></i> {{ click_count }} acesso{% if click_count != 1 %}s{% endif %}
+        </span>
+        {% if stats.max_clicks %}
+            {% set progress = (click_count / stats.max_clicks * 100)|round|int %}
+            <div class="click-progress" role="progressbar" aria-label="{{ click_count }} de {{ stats.max_clicks }} acessos do link mais acessado" aria-valuenow="{{ progress }}" aria-valuemin="0" aria-valuemax="100">
+                <span style="width: {{ progress }}%"></span>
+            </div>
+        {% endif %}
+    </div>
+{% else %}
+    <span class="click-badge click-badge--empty"><i class="bx bx-time-five" aria-hidden="true"></i> Sem acessos ainda</span>
+{% endif %}

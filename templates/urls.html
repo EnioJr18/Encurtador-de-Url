@@ -10,6 +10,8 @@
     <p class="section-lead">Acesse seus links, abra o QR Code e acompanhe os cliques.</p>
 </section>
 
+{% include "partials/_stats_summary.html" %}
+
 {% if urls %}
     <div class="table-responsive url-table-wrapper d-none d-md-block">
         <table class="table table-hover align-middle mb-0">
@@ -23,10 +25,10 @@
             </thead>
             <tbody>
                 {% for url in urls %}
-                <tr>
+                <tr{% if stats.most_clicked and url.id == stats.most_clicked.id %} class="url-table__row--top"{% endif %}>
                     <td class="url-table__original"><a href="{{ url.original_url }}" target="_blank" rel="noopener" title="{{ url.original_url }}">{{ url.original_url }}</a></td>
                     <td><a class="url-table__short" href="{{ request.host_url }}{{ url.short_code }}" target="_blank" rel="noopener">{{ request.host_url }}{{ url.short_code }}</a></td>
-                    <td class="text-center"><span class="badge text-bg-primary">{{ url.click_count }}</span></td>
+                    <td class="text-center">{% set url_entry = url %}{% include "partials/_click_badge.html" %}</td>
                     <td class="text-end">
                         <div class="d-inline-flex flex-wrap justify-content-end gap-2">
                             <button type="button" class="btn btn-outline-secondary btn-sm" data-copy-link data-copy-variant="outline" data-copy-text="{{ request.host_url }}{{ url.short_code }}"><i class="bx bx-copy" data-copy-icon aria-hidden="true"></i> <span data-copy-label>Copiar link</span></button>

@@ -15,8 +15,19 @@ url_bp = Blueprint("urls", __name__)
 @url_bp.route("/urls")
 @login_required
 def listar_urls():
-    urls = URL.query.filter_by(user_id=current_user.id).all()
-    return render_template("urls.html", urls=urls)
+    urls = URL.query.filter_by(user_id=current_user.id).order_by(URL.id.desc()).all()
+    total_clicks = sum(url_entry.click_count or 0 for url_entry in urls)
+    most_clicked = max(urls, key=lambda url_entry: url_entry.click_count or 0, default=None)
+
+    stats = {
+        "total_links": len(urls),
+        "total_clicks": total_clicks,
+        "links_without_clicks": sum((url_entry.click_count or 0) == 0 for url_entry in urls),
+        "most_clicked": most_clicked if total_clicks else None,
+        "max_clicks": (most_clicked.click_count or 0) if most_clicked else 0,
+    }
+
+    return render_template("urls.html", urls=urls, stats=stats)
 
 
 @url_bp.route("/qrcode/<short_code>")

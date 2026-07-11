@@ -1,0 +1,35 @@
+<section class="stats-summary row g-3 mb-4 mb-md-5" aria-label="Resumo dos seus links">
+    <div class="col-6 col-lg-3">
+        <article class="stats-card h-100">
+            <span class="stats-card__label"><i class="bx bx-link-alt" aria-hidden="true"></i> Links criados</span>
+            <strong class="stats-card__value">{{ stats.total_links }}</strong>
+            <span class="stats-card__detail">Disponíveis no painel</span>
+        </article>
+    </div>
+    <div class="col-6 col-lg-3">
+        <article class="stats-card h-100">
+            <span class="stats-card__label"><i class="bx bx-bar-chart-alt-2" aria-hidden="true"></i> Total de acessos</span>
+            <strong class="stats-card__value">{{ stats.total_clicks }}</strong>
+            <span class="stats-card__detail">Somando todos os links</span>
+        </article>
+    </div>
+    <div class="col-6 col-lg-3">
+        <article class="stats-card h-100">
+            <span class="stats-card__label"><i class="bx bx-trophy" aria-hidden="true"></i> Mais acessado</span>
+            {% if stats.most_clicked %}
+                <strong class="stats-card__value stats-card__value--link">{{ stats.most_clicked.short_code }}</strong>
+                <span class="stats-card__detail">{{ stats.max_clicks }} acesso{% if stats.max_clicks != 1 %}s{% endif %}</span>
+            {% else %}
+                <strong class="stats-card__value stats-card__value--empty">-</strong>
+                <span class="stats-card__detail">Ainda não há acessos</span>
+            {% endif %}
+        </article>
+    </div>
+    <div class="col-6 col-lg-3">
+        <article class="stats-card h-100">
+            <span class="stats-card__label"><i class="bx bx-time-five" aria-hidden="true"></i> Sem acessos</span>
+            <strong class="stats-card__value">{{ stats.links_without_clicks }}</strong>
+            <span class="stats-card__detail">Link{% if stats.links_without_clicks != 1 %}s{% endif %} aguardando visitas</span>
+        </article>
+    </div>
+</section>

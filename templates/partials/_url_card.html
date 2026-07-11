@@ -1,7 +1,7 @@
 <article class="url-card card border-0 shadow-sm h-100">
     <div class="card-body">
         <div class="d-flex justify-content-between align-items-start gap-3 mb-3">
-            <span class="badge text-bg-primary"><i class="bx bx-bar-chart-alt-2" aria-hidden="true"></i> {{ url_entry.click_count }} acesso{% if url_entry.click_count != 1 %}s{% endif %}</span>
+            {% include "partials/_click_badge.html" %}
             <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#qrCodeModal" data-qr-url="{{ url_for('urls.serve_qrcode', short_code=url_entry.short_code) }}" data-short-url="{{ request.host_url }}{{ url_entry.short_code }}"><i class="bx bx-qr" aria-hidden="true"></i> QR Code</button>
         </div>
         <p class="text-muted small mb-1">Link curto</p>
