@@ -1,5 +1,7 @@
 # EncurtarJR - Encurtador de URLs com Flask
 
+![CI](https://github.com/EnioJr18/Encurtador-de-Url/actions/workflows/ci.yml/badge.svg)
+
 O EncurtarJR nasceu como um dos meus primeiros projetos Flask: um encurtador de links direto ao ponto. Ao longo das refatorações, ele se tornou uma aplicação mais organizada para praticar arquitetura backend, segurança básica, migrations, testes e experiência de uso, sem perder a proposta original.
 
 O foco deste repositório é mostrar essa evolução com decisões técnicas incrementais e uma aplicação web funcional, não se apresentar como uma solução enterprise ou um SaaS completo.
