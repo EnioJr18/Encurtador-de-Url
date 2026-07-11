@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 
+from flask import current_app
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 
 from encurtarjr.extensions import db
@@ -62,6 +63,7 @@ def criar_url_encurtada(original_url, custom_url=None, user_id=None):
         db.session.commit()
     except IntegrityError:
         db.session.rollback()
+        current_app.logger.warning("Short code collision while creating a short link")
         if codigo_personalizado_informado:
             return ShortenResult(success=False, message="Este código curto já está em uso. Escolha outro.")
         return ShortenResult(
@@ -70,6 +72,7 @@ def criar_url_encurtada(original_url, custom_url=None, user_id=None):
         )
     except SQLAlchemyError:
         db.session.rollback()
+        current_app.logger.error("Database error while creating a short link")
         return ShortenResult(success=False, message="Erro inesperado ao salvar o link. Tente novamente.")
 
     return ShortenResult(success=True, short_code=codigo_curto)

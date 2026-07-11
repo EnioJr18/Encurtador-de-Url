@@ -5,7 +5,7 @@
 
 {% block content %}
 <section class="dashboard-header text-center mb-4 mb-md-5">
-    <p class="eyebrow">Painel da conta</p>
+    <p class="eyebrow"><i class="bx bx-grid-alt" aria-hidden="true"></i> Painel da conta</p>
     <h1 class="hero-title hero-title--compact">Meus links encurtados</h1>
     <p class="section-lead">Acesse seus links, abra o QR Code e acompanhe os cliques.</p>
 </section>
@@ -27,7 +27,7 @@
                     <td class="url-table__original"><a href="{{ url.original_url }}" target="_blank" rel="noopener" title="{{ url.original_url }}">{{ url.original_url }}</a></td>
                     <td><a class="url-table__short" href="{{ request.host_url }}{{ url.short_code }}" target="_blank" rel="noopener">{{ request.host_url }}{{ url.short_code }}</a></td>
                     <td class="text-center"><span class="badge text-bg-primary">{{ url.click_count }}</span></td>
-                    <td class="text-end"><a class="btn btn-outline-secondary btn-sm" href="{{ url_for('urls.serve_qrcode', short_code=url.short_code) }}" target="_blank" rel="noopener">QR Code</a></td>
+                    <td class="text-end"><a class="btn btn-outline-secondary btn-sm" href="{{ url_for('urls.serve_qrcode', short_code=url.short_code) }}" target="_blank" rel="noopener"><i class="bx bx-qr" aria-hidden="true"></i> QR Code</a></td>
                 </tr>
                 {% endfor %}
             </tbody>

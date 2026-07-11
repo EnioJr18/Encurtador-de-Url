@@ -1,19 +1,20 @@
-<nav class="navbar navbar-expand-lg navbar-light fixed-top app-navbar">
-    <div class="container">
-        <a href="{{ url_for('main.index') }}" class="navbar-brand logo">
-            <img src="{{ url_for('static', filename='assets/Logo_EncurtaJr1.png') }}" alt="EncurtaJR">
+<nav class="navbar navbar-expand-lg fixed-top app-navbar" aria-label="Navegacao principal">
+    <div class="container app-navbar__inner">
+        <a href="{{ url_for('main.index') }}" class="navbar-brand brand-wordmark" aria-label="EncurtaJR, pagina inicial">
+            <span class="brand-wordmark__icon"><i class="bx bx-link-alt" aria-hidden="true"></i></span>
+            <span>encurta<span>JR</span></span>
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuMobile" aria-controls="menuMobile" aria-expanded="false" aria-label="Alternar navegacao">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuMobile" aria-controls="menuMobile" aria-expanded="false" aria-label="Abrir navegacao">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="menuMobile">
-            <div class="navbar-nav ms-auto align-items-lg-center gap-lg-2 py-3 py-lg-0">
+            <div class="navbar-nav ms-auto align-items-lg-center gap-lg-1 py-3 py-lg-0">
                 {% if current_user.is_authenticated %}
                     <span class="navbar-text me-lg-2">Ola, {{ current_user.username }}</span>
                     <a href="{{ url_for('urls.listar_urls') }}" class="nav-link">Meus links</a>
-                    <a href="{{ url_for('auth.logout') }}" class="btn btn-outline-danger btn-sm ms-lg-2">Sair</a>
+                    <a href="{{ url_for('auth.logout') }}" class="btn btn-quiet btn-sm ms-lg-2">Sair</a>
                 {% else %}
-                    <a href="{{ url_for('auth.login') }}" class="nav-link">Login</a>
+                    <a href="{{ url_for('auth.login') }}" class="nav-link">Entrar</a>
                     <a href="{{ url_for('auth.register') }}" class="btn btn-primary btn-sm ms-lg-2">Criar conta</a>
                 {% endif %}
             </div>

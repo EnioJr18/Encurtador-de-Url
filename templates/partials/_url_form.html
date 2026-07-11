@@ -1,14 +1,14 @@
 <form method="post" class="shorten-form" action="{{ url_for('main.index') }}">
     {{ form.hidden_tag() }}
-    <div class="mb-3">
+    <div class="form-field mb-3">
         {{ form.url.label(class_="form-label") }}
         {{ form.url(class_="form-control form-control-lg", placeholder="https://exemplo.com/link-muito-longo", autocomplete="url") }}
         <div class="form-text">Use um link que comece com http:// ou https://.</div>
     </div>
-    <div class="mb-4">
+    <div class="form-field mb-4">
         {{ form.custom_url.label(class_="form-label") }}
         {{ form.custom_url(class_="form-control", placeholder="meu-link", autocomplete="off") }}
         <div class="form-text">Opcional. Use letras, numeros, hifen ou underscore.</div>
     </div>
-    <button class="btn btn-primary btn-lg w-100" type="submit">Encurtar link</button>
+    <button class="btn btn-primary btn-lg w-100" type="submit">Encurtar link <i class="bx bx-right-arrow-alt" aria-hidden="true"></i></button>
 </form>

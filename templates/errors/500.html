@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Erro interno - EncurtaJR{% endblock %}
+{% block main_attributes %} class="container error-page"{% endblock %}
+{% block content %}
+{% set status_code = 500 %}
+{% set icon = 'bx-wrench' %}
+{% set heading = 'Algo deu errado' %}
+{% set message = 'Ocorreu um erro inesperado. Tente novamente em alguns instantes.' %}
+{% include "errors/_error_state.html" %}
+{% endblock %}

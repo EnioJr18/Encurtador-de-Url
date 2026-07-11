@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Muitas tentativas - EncurtaJR{% endblock %}
+{% block main_attributes %} class="container error-page"{% endblock %}
+{% block content %}
+{% set status_code = 429 %}
+{% set icon = 'bx-time-five' %}
+{% set heading = 'Muitas tentativas em pouco tempo' %}
+{% set message = 'Aguarde um pouco antes de tentar novamente.' %}
+{% include "errors/_error_state.html" %}
+{% endblock %}

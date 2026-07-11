@@ -1,0 +1,7 @@
+<section class="error-state text-center">
+    <div class="state-icon"><i class="bx {{ icon }}" aria-hidden="true"></i></div>
+    <p class="eyebrow">Erro {{ status_code }}</p>
+    <h1 class="hero-title hero-title--compact">{{ heading }}</h1>
+    <p class="section-lead">{{ message }}</p>
+    <a href="{{ url_for('main.index') }}" class="btn btn-primary"><i class="bx bx-home" aria-hidden="true"></i> Voltar ao inicio</a>
+</section>

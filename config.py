@@ -37,11 +37,13 @@ class Config:
     RATELIMIT_ENABLED = True
     RATELIMIT_STORAGE_URI = os.getenv("RATELIMIT_STORAGE_URI", "memory://")
     RATELIMIT_HEADERS_ENABLED = True
+    LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO")
 
 
 class DevelopmentConfig(Config):
     DEBUG = True
     SECRET_KEY = os.getenv("SECRET_KEY") or secrets.token_urlsafe(32)
+    LOG_LEVEL = os.getenv("LOG_LEVEL", "DEBUG")
 
 
 class TestingConfig(Config):
@@ -50,11 +52,13 @@ class TestingConfig(Config):
     SECRET_KEY = os.getenv("SECRET_KEY") or secrets.token_urlsafe(32)
     WTF_CSRF_ENABLED = False
     RATELIMIT_ENABLED = False
+    LOG_LEVEL = "CRITICAL"
 
 
 class ProductionConfig(Config):
     SESSION_COOKIE_SECURE = True
     SECRET_KEY = os.getenv("SECRET_KEY")
+    LOG_LEVEL = os.getenv("LOG_LEVEL", "WARNING")
 
 
 CONFIG_BY_ENV = {

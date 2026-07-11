@@ -1,11 +1,11 @@
 <section class="url-result card border-0 shadow-sm mx-auto" aria-live="polite">
     <div class="card-body p-4 text-center">
-        <p class="eyebrow mb-2">Link criado</p>
-        <h2 class="h4 mb-3">Sua URL encurtada esta pronta</h2>
-        <a href="{{ url_curta }}" id="texto-para-copiar" target="_blank" rel="noopener" class="url-result__link">{{ url_curta }}</a>
+        <div class="url-result__status"><i class="bx bx-check" aria-hidden="true"></i> Link criado</div>
+        <h2 class="h4 mb-3 mt-3">Sua URL encurtada esta pronta</h2>
+        <div class="url-result__link-wrap"><a href="{{ url_curta }}" id="texto-para-copiar" target="_blank" rel="noopener" class="url-result__link">{{ url_curta }}</a></div>
         <div class="d-flex flex-column flex-sm-row align-items-center justify-content-center gap-2 mt-3">
-            <button type="button" id="botao-copiar" class="btn btn-primary">Copiar link</button>
-            <a class="btn btn-outline-secondary" href="{{ url_for('urls.serve_qrcode', short_code=code) }}" target="_blank" rel="noopener">Abrir QR Code</a>
+            <button type="button" id="botao-copiar" class="btn btn-primary"><i class="bx bx-copy" aria-hidden="true"></i> Copiar link</button>
+            <a class="btn btn-outline-secondary" href="{{ url_for('urls.serve_qrcode', short_code=code) }}" target="_blank" rel="noopener"><i class="bx bx-qr" aria-hidden="true"></i> Abrir QR Code</a>
         </div>
     </div>
 </section>

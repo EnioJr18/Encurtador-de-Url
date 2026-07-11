@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Requisicao invalida - EncurtaJR{% endblock %}
+{% block main_attributes %} class="container error-page"{% endblock %}
+{% block content %}
+{% set status_code = 400 %}
+{% set icon = 'bx-error-circle' %}
+{% set heading = 'Requisicao invalida' %}
+{% set message = message or 'Nao foi possivel processar esta solicitacao. Confira os dados e tente novamente.' %}
+{% include "errors/_error_state.html" %}
+{% endblock %}

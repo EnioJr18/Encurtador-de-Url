@@ -1,15 +1,24 @@
 <form method="post" action="{{ form_action }}" class="card auth-card border-0 shadow-sm">
     <div class="card-body p-4 p-md-5">
         {{ form.hidden_tag() }}
-        <div class="mb-3">
-            {{ form.username.label(class_="form-label") }}
-            {{ form.username(class_="form-control form-control-lg", placeholder="Digite seu usuario", autocomplete="username") }}
+        <div class="form-field auth-form-field mb-3">
+            <label class="form-label" for="{{ form.username.id }}"><i class="bx bx-user" aria-hidden="true"></i> {{ form.username.label.text }}</label>
+            <div class="auth-input-wrap">
+                <i class="bx bx-user auth-input-icon" aria-hidden="true"></i>
+                {{ form.username(class_="form-control form-control-lg auth-input--with-icon", placeholder="Digite seu usuario", autocomplete="username") }}
+            </div>
         </div>
-        <div class="mb-4">
-            {{ form.password.label(class_="form-label") }}
-            {{ form.password(class_="form-control form-control-lg", placeholder="Digite sua senha", autocomplete=password_autocomplete) }}
+        <div class="form-field auth-form-field mb-4">
+            <label class="form-label" for="{{ form.password.id }}"><i class="bx bx-lock-alt" aria-hidden="true"></i> {{ form.password.label.text }}</label>
+            <div class="auth-input-wrap">
+                <i class="bx bx-lock-alt auth-input-icon" aria-hidden="true"></i>
+                {{ form.password(class_="form-control form-control-lg auth-input--with-icon auth-input--password", placeholder="Digite sua senha", autocomplete=password_autocomplete) }}
+                <button type="button" class="password-toggle" data-password-toggle="{{ form.password.id }}" aria-label="Mostrar senha" aria-pressed="false">
+                    <i class="bx bx-show" aria-hidden="true"></i>
+                </button>
+            </div>
             {% if password_help %}<div class="form-text">{{ password_help }}</div>{% endif %}
         </div>
-        <button type="submit" class="btn btn-primary btn-lg w-100">{{ submit_label }}</button>
+        <button type="submit" class="btn btn-primary btn-lg w-100">{{ submit_label }} <i class="bx bx-right-arrow-alt" aria-hidden="true"></i></button>
     </div>
 </form>
