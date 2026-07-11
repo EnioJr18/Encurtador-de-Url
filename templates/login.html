@@ -8,13 +8,13 @@
     <div class="text-center mb-4">
         <p class="eyebrow">Acesse sua conta</p>
         <h1 class="hero-title hero-title--compact">Fazer login</h1>
-        <p class="section-lead">Gerencie seus links e acompanhe os acessos em um unico lugar.</p>
+        <p class="section-lead">Gerencie seus links e acompanhe os acessos em um único lugar.</p>
     </div>
     {% set form_action = url_for('auth.login') %}
     {% set submit_label = 'Entrar' %}
     {% set password_autocomplete = 'current-password' %}
     {% set password_help = none %}
     {% include "partials/_auth_form.html" %}
-    <p class="auth-switch text-center mt-4 mb-0">Nao tem uma conta? <a href="{{ url_for('auth.register') }}">Criar conta</a></p>
+    <p class="auth-switch text-center mt-4 mb-0">Não tem uma conta? <a href="{{ url_for('auth.register') }}">Criar conta</a></p>
 </section>
 {% endblock %}

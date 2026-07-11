@@ -20,7 +20,7 @@
                     <th scope="col">URL original</th>
                     <th scope="col">Link curto</th>
                     <th scope="col" class="text-center">Acessos</th>
-                    <th scope="col" class="text-end">Acoes</th>
+                    <th scope="col" class="text-end">Ações</th>
                 </tr>
             </thead>
             <tbody>
@@ -48,7 +48,7 @@
     </div>
 {% else %}
     {% set heading = 'Nenhum link criado ainda' %}
-    {% set message = 'Seu proximo link encurtado aparecera aqui.' %}
+    {% set message = 'Seu próximo link encurtado aparecerá aqui.' %}
     {% set action_url = url_for('main.index') %}
     {% set action_label = 'Encurtar uma URL' %}
     {% include "partials/_empty_state.html" %}

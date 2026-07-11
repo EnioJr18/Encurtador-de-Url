@@ -1,6 +1,6 @@
 from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_login import current_user
-from sqlalchemy import func
+from sqlalchemy import func, or_
 
 from encurtarjr.decorators import admin_required
 from encurtarjr.extensions import bcrypt, db
@@ -10,10 +10,23 @@ from encurtarjr.utils import normalizar_codigo_personalizado, validar_codigo_per
 
 
 admin_bp = Blueprint("admin", __name__, url_prefix="/admin")
+ADMIN_PER_PAGE = 10
 
 
 def user_metrics_query():
     return db.session.query(User.id, User.username, User.is_admin, func.count(URL.id).label("link_count"), func.coalesce(func.sum(URL.click_count), 0).label("total_clicks")).outerjoin(URL, URL.user_id == User.id).group_by(User.id, User.username, User.is_admin)
+
+
+def current_page():
+    try:
+        page = int(request.args.get("page", 1))
+    except (TypeError, ValueError):
+        return 1
+    return max(page, 1)
+
+
+def pagination_args():
+    return {key: value for key, value in request.args.items() if key != "page" and value}
 
 
 def user_choices():
@@ -42,7 +55,19 @@ def dashboard():
 @admin_bp.route("/users")
 @admin_required
 def users():
-    return render_template("admin/users.html", users=user_metrics_query().order_by(User.username.asc()).all())
+    query_text = request.args.get("q", "").strip()
+    role_filter = request.args.get("role", "all").strip().lower()
+    query = user_metrics_query()
+    if query_text:
+        query = query.filter(User.username.ilike(f"%{query_text}%"))
+    if role_filter == "admins":
+        query = query.filter(User.is_admin.is_(True))
+    elif role_filter == "users":
+        query = query.filter(User.is_admin.is_(False))
+    else:
+        role_filter = "all"
+    pagination = query.order_by(User.username.asc()).paginate(page=current_page(), per_page=ADMIN_PER_PAGE, error_out=False)
+    return render_template("admin/users.html", users=pagination.items, pagination=pagination, pagination_args=pagination_args(), filters={"q": query_text, "role": role_filter})
 
 
 @admin_bp.route("/users/new", methods=["GET", "POST"])
@@ -107,7 +132,20 @@ def user_delete(user_id):
 @admin_bp.route("/links")
 @admin_required
 def links():
-    return render_template("admin/links.html", links=URL.query.order_by(URL.click_count.desc(), URL.id.desc()).all())
+    query_text = request.args.get("q", "").strip()
+    clicks_filter = request.args.get("clicks", "all").strip().lower()
+    query = URL.query.outerjoin(User)
+    if query_text:
+        search = f"%{query_text}%"
+        query = query.filter(or_(URL.short_code.ilike(search), URL.original_url.ilike(search), User.username.ilike(search)))
+    if clicks_filter == "clicked":
+        query = query.filter(func.coalesce(URL.click_count, 0) > 0)
+    elif clicks_filter == "unclicked":
+        query = query.filter(func.coalesce(URL.click_count, 0) == 0)
+    else:
+        clicks_filter = "all"
+    pagination = query.order_by(URL.click_count.desc(), URL.id.desc()).paginate(page=current_page(), per_page=ADMIN_PER_PAGE, error_out=False)
+    return render_template("admin/links.html", links=pagination.items, pagination=pagination, pagination_args=pagination_args(), filters={"q": query_text, "clicks": clicks_filter})
 
 
 @admin_bp.route("/links/new", methods=["GET", "POST"])

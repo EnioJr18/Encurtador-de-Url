@@ -215,6 +215,85 @@ def test_admin_link_crud_uses_public_validations(client):
     assert db.session.get(URL, link.id) is None
 
 
+def test_admin_users_list_renders_pagination_and_filters_username(client):
+    register(client, username="admin")
+    make_admin()
+    for index in range(12):
+        db.session.add(User(username=f"usuario-{index}", password="hash"))
+    db.session.commit()
+    login(client, username="admin")
+
+    page = client.get("/admin/users")
+    search = client.get("/admin/users?q=usuario-11")
+
+    assert page.status_code == 200
+    assert b"Paginacao administrativa" in page.data
+    assert b"usuario-11" in search.data
+    assert b"usuario-10" not in search.data
+
+
+def test_admin_users_filter_admins_and_invalid_page(client):
+    register(client, username="admin")
+    make_admin()
+    db.session.add(User(username="comum", password="hash", is_admin=False))
+    db.session.add(User(username="outro-admin", password="hash", is_admin=True))
+    db.session.commit()
+    login(client, username="admin")
+
+    admins = client.get("/admin/users?role=admins")
+    invalid_page = client.get("/admin/users?page=abc")
+
+    assert admins.status_code == 200
+    assert b"outro-admin" in admins.data
+    assert b"comum" not in admins.data
+    assert invalid_page.status_code == 200
+
+
+def test_admin_links_list_renders_pagination_and_filters_short_code(client):
+    register(client, username="admin")
+    admin = make_admin()
+    for index in range(12):
+        db.session.add(URL(original_url=f"https://example.com/{index}", short_code=f"link-{index}", user_id=admin.id))
+    db.session.commit()
+    login(client, username="admin")
+
+    page = client.get("/admin/links")
+    search = client.get("/admin/links?q=link-11")
+
+    assert page.status_code == 200
+    assert b"Paginacao administrativa" in page.data
+    assert b"link-11" in search.data
+    assert b"link-10" not in search.data
+
+
+def test_admin_links_filter_without_clicks_and_invalid_page(client):
+    register(client, username="admin")
+    make_admin()
+    db.session.add(URL(original_url="https://example.com/clicked", short_code="com-clique", click_count=3))
+    db.session.add(URL(original_url="https://example.com/unclicked", short_code="sem-clique", click_count=0))
+    db.session.commit()
+    login(client, username="admin")
+
+    unclicked = client.get("/admin/links?clicks=unclicked")
+    invalid_page = client.get("/admin/links?page=-9")
+
+    assert unclicked.status_code == 200
+    assert b"sem-clique" in unclicked.data
+    assert b"com-clique" not in unclicked.data
+    assert invalid_page.status_code == 200
+
+
+def test_common_user_cannot_access_admin_filters(client):
+    create_logged_user(client)
+
+    responses = [
+        client.get("/admin/users?q=usuario&role=admins"),
+        client.get("/admin/links?q=link&clicks=unclicked"),
+    ]
+
+    assert all(response.status_code == 403 for response in responses)
+
+
 def test_urls_with_login_returns_200(client):
     create_logged_user(client)
     response = client.get("/urls")

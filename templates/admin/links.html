@@ -2,7 +2,72 @@
 {% block title %}Links - Admin{% endblock %}
 {% block main_attributes %} class="container py-4 py-md-5"{% endblock %}
 {% block content %}
-<section class="dashboard-header text-center mb-4"><p class="eyebrow">Administracao</p><h1 class="hero-title hero-title--compact">Links</h1><a class="btn btn-primary mt-3" href="{{ url_for('admin.link_create') }}">Novo link</a></section>
+<section class="dashboard-header text-center mb-4">
+    <p class="eyebrow">Administracao</p>
+    <h1 class="hero-title hero-title--compact">Links</h1>
+    <a class="btn btn-primary mt-3" href="{{ url_for('admin.link_create') }}">Novo link</a>
+</section>
+
 {% include "partials/_admin_nav.html" %}
-<div class="table-responsive url-table-wrapper"><table class="table table-hover align-middle mb-0"><thead><tr><th>Codigo</th><th>Destino</th><th>Dono</th><th>Cliques</th><th class="text-end">Acoes</th></tr></thead><tbody>{% for link in links %}<tr><td><a class="url-table__short" href="{{ request.host_url }}{{ link.short_code }}" target="_blank" rel="noopener">{{ link.short_code }}</a></td><td class="url-table__original"><a href="{{ link.original_url }}" target="_blank" rel="noopener" title="{{ link.original_url }}">{{ link.original_url }}</a></td><td>{{ link.user.username if link.user else 'Anonimo' }}</td><td>{{ link.click_count }}</td><td class="text-end"><a class="btn btn-outline-secondary btn-sm" href="{{ url_for('admin.link_edit', link_id=link.id) }}">Editar</a><button type="button" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#qrCodeModal" data-qr-url="{{ url_for('urls.serve_qrcode', short_code=link.short_code) }}" data-short-url="{{ request.host_url }}{{ link.short_code }}">QR</button><form method="post" action="{{ url_for('admin.link_delete', link_id=link.id) }}" class="d-inline" onsubmit="return confirm('Remover este link?');"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="btn btn-outline-danger btn-sm">Excluir</button></form></td></tr>{% endfor %}</tbody></table></div>
+
+<form class="admin-filters row g-3 align-items-end mb-4" method="get">
+    <div class="col-md-7">
+        <label class="form-label" for="q">Buscar link</label>
+        <input class="form-control" id="q" name="q" value="{{ filters.q }}" placeholder="Codigo, URL ou dono">
+    </div>
+    <div class="col-md-3">
+        <label class="form-label" for="clicks">Cliques</label>
+        <select class="form-select" id="clicks" name="clicks">
+            <option value="all" {% if filters.clicks == "all" %}selected{% endif %}>Todos</option>
+            <option value="clicked" {% if filters.clicks == "clicked" %}selected{% endif %}>Com cliques</option>
+            <option value="unclicked" {% if filters.clicks == "unclicked" %}selected{% endif %}>Sem cliques</option>
+        </select>
+    </div>
+    <div class="col-md-2 d-grid gap-2">
+        <button class="btn btn-primary" type="submit">Filtrar</button>
+        {% if filters.q or filters.clicks != "all" %}
+        <a class="btn btn-outline-secondary" href="{{ url_for('admin.links') }}">Limpar filtros</a>
+        {% endif %}
+    </div>
+</form>
+
+{% if links %}
+<div class="table-responsive url-table-wrapper">
+    <table class="table table-hover align-middle mb-0">
+        <thead>
+            <tr>
+                <th>Codigo</th>
+                <th>Destino</th>
+                <th>Dono</th>
+                <th>Cliques</th>
+                <th class="text-end">Acoes</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for link in links %}
+            <tr>
+                <td><a class="url-table__short" href="{{ request.host_url }}{{ link.short_code }}" target="_blank" rel="noopener">{{ link.short_code }}</a></td>
+                <td class="url-table__original"><a href="{{ link.original_url }}" target="_blank" rel="noopener" title="{{ link.original_url }}">{{ link.original_url }}</a></td>
+                <td>{{ link.user.username if link.user else 'Anonimo' }}</td>
+                <td>{{ link.click_count }}</td>
+                <td class="text-end">
+                    <a class="btn btn-outline-secondary btn-sm" href="{{ url_for('admin.link_edit', link_id=link.id) }}">Editar</a>
+                    <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#qrCodeModal" data-qr-url="{{ url_for('urls.serve_qrcode', short_code=link.short_code) }}" data-short-url="{{ request.host_url }}{{ link.short_code }}">QR</button>
+                    <form method="post" action="{{ url_for('admin.link_delete', link_id=link.id) }}" class="d-inline" onsubmit="return confirm('Remover este link?');">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <button class="btn btn-outline-danger btn-sm">Excluir</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% include "partials/_pagination.html" %}
+{% else %}
+{% with heading="Nenhum link encontrado", message="Ajuste os filtros ou crie um novo link administrativo.", action_url=url_for('admin.link_create'), action_label="Novo link" %}
+    {% include "partials/_empty_state.html" %}
+{% endwith %}
+{% endif %}
 {% endblock %}

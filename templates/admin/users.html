@@ -2,7 +2,77 @@
 {% block title %}Usuarios - Admin{% endblock %}
 {% block main_attributes %} class="container py-4 py-md-5"{% endblock %}
 {% block content %}
-<section class="dashboard-header text-center mb-4"><p class="eyebrow">Administracao</p><h1 class="hero-title hero-title--compact">Usuarios</h1><a class="btn btn-primary mt-3" href="{{ url_for('admin.user_create') }}">Novo usuario</a></section>
+<section class="dashboard-header text-center mb-4">
+    <p class="eyebrow">Administracao</p>
+    <h1 class="hero-title hero-title--compact">Usuarios</h1>
+    <a class="btn btn-primary mt-3" href="{{ url_for('admin.user_create') }}">Novo usuario</a>
+</section>
+
 {% include "partials/_admin_nav.html" %}
-<div class="table-responsive url-table-wrapper"><table class="table table-hover align-middle mb-0"><thead><tr><th>Usuario</th><th>Links</th><th>Cliques</th><th>Perfil</th><th class="text-end">Acoes</th></tr></thead><tbody>{% for user in users %}<tr><td class="fw-semibold">{{ user.username }}</td><td>{{ user.link_count }}</td><td>{{ user.total_clicks }}</td><td>{% if user.is_admin %}<span class="admin-role">Administrador</span>{% else %}<span class="text-muted">Usuario</span>{% endif %}</td><td class="text-end"><a class="btn btn-outline-secondary btn-sm" href="{{ url_for('admin.user_edit', user_id=user.id) }}">Editar</a><form method="post" action="{{ url_for('admin.user_delete', user_id=user.id) }}" class="d-inline" onsubmit="return confirm('Remover este usuario?');"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button class="btn btn-outline-danger btn-sm">Excluir</button></form></td></tr>{% endfor %}</tbody></table></div>
+
+<form class="admin-filters row g-3 align-items-end mb-4" method="get">
+    <div class="col-md-7">
+        <label class="form-label" for="q">Buscar usuario</label>
+        <input class="form-control" id="q" name="q" value="{{ filters.q }}" placeholder="Nome de usuario">
+    </div>
+    <div class="col-md-3">
+        <label class="form-label" for="role">Perfil</label>
+        <select class="form-select" id="role" name="role">
+            <option value="all" {% if filters.role == "all" %}selected{% endif %}>Todos</option>
+            <option value="admins" {% if filters.role == "admins" %}selected{% endif %}>Admins</option>
+            <option value="users" {% if filters.role == "users" %}selected{% endif %}>Usuarios comuns</option>
+        </select>
+    </div>
+    <div class="col-md-2 d-grid gap-2">
+        <button class="btn btn-primary" type="submit">Filtrar</button>
+        {% if filters.q or filters.role != "all" %}
+        <a class="btn btn-outline-secondary" href="{{ url_for('admin.users') }}">Limpar filtros</a>
+        {% endif %}
+    </div>
+</form>
+
+{% if users %}
+<div class="table-responsive url-table-wrapper">
+    <table class="table table-hover align-middle mb-0">
+        <thead>
+            <tr>
+                <th>Usuario</th>
+                <th>Links</th>
+                <th>Cliques</th>
+                <th>Perfil</th>
+                <th class="text-end">Acoes</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td class="fw-semibold">{{ user.username }}</td>
+                <td>{{ user.link_count }}</td>
+                <td>{{ user.total_clicks }}</td>
+                <td>
+                    {% if user.is_admin %}
+                    <span class="admin-role">Administrador</span>
+                    {% else %}
+                    <span class="text-muted">Usuario</span>
+                    {% endif %}
+                </td>
+                <td class="text-end">
+                    <a class="btn btn-outline-secondary btn-sm" href="{{ url_for('admin.user_edit', user_id=user.id) }}">Editar</a>
+                    <form method="post" action="{{ url_for('admin.user_delete', user_id=user.id) }}" class="d-inline" onsubmit="return confirm('Remover este usuario?');">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <button class="btn btn-outline-danger btn-sm">Excluir</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% include "partials/_pagination.html" %}
+{% else %}
+{% with heading="Nenhum usuario encontrado", message="Ajuste os filtros ou cadastre um novo usuario.", action_url=url_for('admin.user_create'), action_label="Novo usuario" %}
+    {% include "partials/_empty_state.html" %}
+{% endwith %}
+{% endif %}
 {% endblock %}
