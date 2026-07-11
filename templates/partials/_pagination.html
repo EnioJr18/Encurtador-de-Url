@@ -1,5 +1,5 @@
 {% if pagination.pages > 1 %}
-<nav class="admin-pagination" aria-label="Paginacao administrativa">
+<nav class="admin-pagination" aria-label="{{ pagination_label|default('Paginacao administrativa') }}">
     <ul class="pagination justify-content-center mb-0">
         <li class="page-item {% if not pagination.has_prev %}disabled{% endif %}">
             <a class="page-link" href="{% if pagination.has_prev %}{{ url_for(request.endpoint, page=pagination.prev_num, **pagination_args) }}{% else %}#{% endif %}" aria-label="Pagina anterior">Anterior</a>

@@ -326,6 +326,91 @@ def test_urls_with_links_render_dashboard_components(client):
     assert b"4 acessos" in response.data
 
 
+def test_urls_with_many_links_render_pagination(client):
+    create_logged_user(client)
+    user = User.query.filter_by(username="usuario").first()
+    for index in range(12):
+        db.session.add(URL(original_url=f"https://example.com/{index}", short_code=f"meu-link-{index}", user_id=user.id))
+    db.session.commit()
+
+    response = client.get("/urls")
+
+    assert response.status_code == 200
+    assert b"Paginacao dos links" in response.data
+    assert b"data-copy-link" in response.data
+    assert b"qrCodeModal" in response.data
+
+
+def test_urls_search_by_short_code_and_original_url(client):
+    create_logged_user(client)
+    user = User.query.filter_by(username="usuario").first()
+    db.session.add(URL(original_url="https://github.com/enio/projeto", short_code="github-projeto", user_id=user.id))
+    db.session.add(URL(original_url="https://example.com/docs", short_code="documentacao", user_id=user.id))
+    db.session.commit()
+
+    by_code = client.get("/urls?q=github-projeto")
+    by_url = client.get("/urls?q=docs")
+
+    assert by_code.status_code == 200
+    assert b"github-projeto" in by_code.data
+    assert b"documentacao" not in by_code.data
+    assert b"documentacao" in by_url.data
+
+
+def test_urls_click_filters(client):
+    create_logged_user(client)
+    user = User.query.filter_by(username="usuario").first()
+    db.session.add(URL(original_url="https://example.com/clicked", short_code="clicado", click_count=5, user_id=user.id))
+    db.session.add(URL(original_url="https://example.com/unclicked", short_code="sem-acesso", click_count=0, user_id=user.id))
+    db.session.commit()
+
+    clicked = client.get("/urls?clicks=clicked")
+    unclicked = client.get("/urls?clicks=unclicked")
+
+    clicked_table = clicked.data.split(b"<tbody>", 1)[1].split(b"</tbody>", 1)[0]
+    unclicked_table = unclicked.data.split(b"<tbody>", 1)[1].split(b"</tbody>", 1)[0]
+    assert b"clicado" in clicked_table
+    assert b"sem-acesso" not in clicked_table
+    assert b"sem-acesso" in unclicked_table
+    assert b"clicado" not in unclicked_table
+
+
+def test_urls_sort_by_most_clicked_and_invalid_page(client):
+    create_logged_user(client)
+    user = User.query.filter_by(username="usuario").first()
+    db.session.add(URL(original_url="https://example.com/low", short_code="baixo", click_count=1, user_id=user.id))
+    db.session.add(URL(original_url="https://example.com/high", short_code="alto", click_count=9, user_id=user.id))
+    db.session.commit()
+
+    sorted_response = client.get("/urls?sort=clicks_desc")
+    invalid_page = client.get("/urls?page=valor-invalido")
+    table = sorted_response.data.split(b"<tbody>", 1)[1].split(b"</tbody>", 1)[0]
+
+    assert sorted_response.status_code == 200
+    assert table.index(b"alto") < table.index(b"baixo")
+    assert invalid_page.status_code == 200
+
+
+def test_urls_are_scoped_to_current_user(client):
+    create_logged_user(client)
+    owner = User.query.filter_by(username="usuario").first()
+    db.session.add(URL(original_url="https://example.com/own", short_code="meu-privado", user_id=owner.id))
+    db.session.commit()
+    client.get("/logout")
+
+    register(client, username="outro")
+    other = User.query.filter_by(username="outro").first()
+    db.session.add(URL(original_url="https://example.com/other", short_code="outro-privado", user_id=other.id))
+    db.session.commit()
+    login(client, username="outro")
+
+    response = client.get("/urls?q=privado")
+
+    assert response.status_code == 200
+    assert b"outro-privado" in response.data
+    assert b"meu-privado" not in response.data
+
+
 def test_qrcode_route_returns_png(client):
     shorten(client, custom_url="imagem-qr")
 

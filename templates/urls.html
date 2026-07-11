@@ -12,6 +12,41 @@
 
 {% include "partials/_stats_summary.html" %}
 
+<form class="admin-filters row g-3 align-items-end mb-4" method="get">
+    <div class="col-lg-5">
+        <label class="form-label" for="q">Buscar link</label>
+        <input class="form-control" id="q" name="q" value="{{ filters.q }}" placeholder="Codigo curto ou URL original">
+    </div>
+    <div class="col-sm-6 col-lg-3">
+        <label class="form-label" for="sort">Ordenar por</label>
+        <select class="form-select" id="sort" name="sort">
+            <option value="recent" {% if filters.sort == "recent" %}selected{% endif %}>Mais recentes</option>
+            <option value="oldest" {% if filters.sort == "oldest" %}selected{% endif %}>Mais antigos</option>
+            <option value="clicks_desc" {% if filters.sort == "clicks_desc" %}selected{% endif %}>Mais acessados</option>
+            <option value="clicks_asc" {% if filters.sort == "clicks_asc" %}selected{% endif %}>Menos acessados</option>
+            <option value="short_code" {% if filters.sort == "short_code" %}selected{% endif %}>Codigo curto A-Z</option>
+        </select>
+    </div>
+    <div class="col-sm-6 col-lg-2">
+        <label class="form-label" for="clicks">Acessos</label>
+        <select class="form-select" id="clicks" name="clicks">
+            <option value="all" {% if filters.clicks == "all" %}selected{% endif %}>Todos</option>
+            <option value="clicked" {% if filters.clicks == "clicked" %}selected{% endif %}>Com acessos</option>
+            <option value="unclicked" {% if filters.clicks == "unclicked" %}selected{% endif %}>Sem acessos</option>
+        </select>
+    </div>
+    <div class="col-lg-2 d-grid gap-2">
+        <button class="btn btn-primary" type="submit">Filtrar</button>
+        {% if filters.q or filters.sort != "recent" or filters.clicks != "all" %}
+        <a class="btn btn-outline-secondary" href="{{ url_for('urls.listar_urls') }}">Limpar filtros</a>
+        {% endif %}
+    </div>
+</form>
+
+{% if pagination.total %}
+<p class="text-muted small mb-3">{{ pagination.total }} link{% if pagination.total != 1 %}s{% endif %} encontrado{% if pagination.total != 1 %}s{% endif %} nesta busca.</p>
+{% endif %}
+
 {% if urls %}
     <div class="table-responsive url-table-wrapper d-none d-md-block">
         <table class="table table-hover align-middle mb-0">
@@ -20,7 +55,7 @@
                     <th scope="col">URL original</th>
                     <th scope="col">Link curto</th>
                     <th scope="col" class="text-center">Acessos</th>
-                    <th scope="col" class="text-end">Ações</th>
+                    <th scope="col" class="text-end">Acoes</th>
                 </tr>
             </thead>
             <tbody>
@@ -46,11 +81,20 @@
             <div class="col-12">{% set url_entry = url %}{% include "partials/_url_card.html" %}</div>
         {% endfor %}
     </div>
+
+    {% include "partials/_pagination.html" %}
 {% else %}
-    {% set heading = 'Nenhum link criado ainda' %}
-    {% set message = 'Seu próximo link encurtado aparecerá aqui.' %}
-    {% set action_url = url_for('main.index') %}
-    {% set action_label = 'Encurtar uma URL' %}
+    {% if filters.q or filters.sort != "recent" or filters.clicks != "all" %}
+        {% set heading = 'Nenhum link encontrado' %}
+        {% set message = 'Ajuste os filtros para encontrar outros links.' %}
+        {% set action_url = url_for('urls.listar_urls') %}
+        {% set action_label = 'Limpar filtros' %}
+    {% else %}
+        {% set heading = 'Nenhum link criado ainda' %}
+        {% set message = 'Seu proximo link encurtado aparecera aqui.' %}
+        {% set action_url = url_for('main.index') %}
+        {% set action_label = 'Encurtar uma URL' %}
+    {% endif %}
     {% include "partials/_empty_state.html" %}
 {% endif %}
 
