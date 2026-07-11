@@ -1,0 +1,5 @@
+<nav class="admin-nav mb-4" aria-label="Navegacao administrativa">
+    <a href="{{ url_for('admin.dashboard') }}" class="{% if request.endpoint == 'admin.dashboard' %}is-active{% endif %}"><i class="bx bx-grid-alt" aria-hidden="true"></i> Visao geral</a>
+    <a href="{{ url_for('admin.users') }}" class="{% if request.endpoint == 'admin.users' %}is-active{% endif %}"><i class="bx bx-user" aria-hidden="true"></i> Usuarios</a>
+    <a href="{{ url_for('admin.links') }}" class="{% if request.endpoint == 'admin.links' %}is-active{% endif %}"><i class="bx bx-link-alt" aria-hidden="true"></i> Links</a>
+</nav>

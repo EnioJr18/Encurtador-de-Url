@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Admin - EncurtaJR{% endblock %}
+{% block main_attributes %} class="container py-4 py-md-5"{% endblock %}
+{% block content %}
+<section class="dashboard-header text-center mb-4"><p class="eyebrow"><i class="bx bx-shield-quarter" aria-hidden="true"></i> Administracao</p><h1 class="hero-title hero-title--compact">Visao geral</h1><p class="section-lead">Metricas globais da aplicacao, sem expor dados sensiveis.</p></section>
+{% include "partials/_admin_nav.html" %}
+{% include "partials/_admin_stats.html" %}
+<div class="row g-4">
+  <section class="col-lg-6"><div class="admin-panel h-100"><h2>Links mais acessados</h2>{% if top_links %}<ol class="admin-ranking">{% for link in top_links %}<li><a href="{{ request.host_url }}{{ link.short_code }}" target="_blank" rel="noopener">{{ link.short_code }}</a><span>{{ link.click_count }} acesso{% if link.click_count != 1 %}s{% endif %}</span></li>{% endfor %}</ol>{% else %}<p class="text-muted mb-0">Ainda nao ha links para exibir.</p>{% endif %}</div></section>
+  <section class="col-lg-6"><div class="admin-panel h-100"><h2>Usuarios com mais links</h2>{% if top_users %}<ol class="admin-ranking">{% for user in top_users %}<li><span>{{ user.username }}</span><span>{{ user.link_count }} link{% if user.link_count != 1 %}s{% endif %}</span></li>{% endfor %}</ol>{% endif %}</div></section>
+</div>
+{% if stats.most_clicked %}<div class="admin-highlight mt-4"><i class="bx bx-trophy" aria-hidden="true"></i><span>Link mais acessado: <strong>{{ stats.most_clicked.short_code }}</strong> com {{ stats.most_clicked.click_count }} acesso{% if stats.most_clicked.click_count != 1 %}s{% endif %}.</span></div>{% endif %}
+{% endblock %}

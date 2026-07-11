@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Acesso restrito - EncurtaJR{% endblock %}
+{% block main_attributes %} class="container error-page"{% endblock %}
+{% block content %}
+{% set status_code = 403 %}
+{% set icon = 'bx-lock-alt' %}
+{% set heading = 'Acesso restrito' %}
+{% set message = 'Sua conta nao possui permissao para acessar esta area.' %}
+{% include "errors/_error_state.html" %}
+{% endblock %}

@@ -18,6 +18,13 @@ def create_logged_user(client, username="usuario", password="123456"):
     return login(client, username, password)
 
 
+def make_admin(username="admin"):
+    user = User.query.filter_by(username=username).first()
+    user.is_admin = True
+    db.session.commit()
+    return user
+
+
 def shorten(client, url="https://example.com", custom_url="meulink"):
     return client.post("/", data={"url": url, "custom_url": custom_url})
 
@@ -130,6 +137,82 @@ def test_urls_without_login_redirects_to_login(client):
     response = client.get("/urls")
     assert response.status_code == 302
     assert "/login" in response.headers["Location"]
+
+
+def test_admin_requires_login(client):
+    response = client.get("/admin/")
+    assert response.status_code == 302
+    assert "/login" in response.headers["Location"]
+
+
+def test_common_user_cannot_access_admin(client):
+    create_logged_user(client)
+    response = client.get("/admin/")
+    assert response.status_code == 403
+    assert b"Acesso restrito" in response.data
+
+
+def test_admin_can_access_admin_pages_and_navbar(client):
+    register(client, username="admin")
+    make_admin()
+    login(client, username="admin")
+
+    assert client.get("/admin/").status_code == 200
+    assert client.get("/admin/users").status_code == 200
+    assert client.get("/admin/links").status_code == 200
+    assert b"Admin" in client.get("/").data
+
+
+def test_admin_promote_command(runner, client):
+    register(client, username="promover")
+    result = runner.invoke(args=["admin", "promote", "promover"])
+    assert result.exit_code == 0
+    assert User.query.filter_by(username="promover").first().is_admin is True
+
+    missing = runner.invoke(args=["admin", "promote", "inexistente"])
+    assert missing.exit_code != 0
+    assert "Usuario nao encontrado" in missing.output
+
+
+def test_common_user_cannot_post_admin_crud(client):
+    create_logged_user(client)
+    responses = [
+        client.post("/admin/users/new", data={"username": "outro", "password": "123456"}),
+        client.post("/admin/links/new", data={"original_url": "https://example.com", "short_code": "bloqueado"}),
+    ]
+    assert all(response.status_code == 403 for response in responses)
+
+
+def test_admin_user_crud_preserves_links_and_hides_password(client):
+    register(client, username="admin")
+    make_admin()
+    login(client, username="admin")
+    assert client.post("/admin/users/new", data={"username": "alvo", "password": "senha-secreta"}).status_code == 302
+    alvo = User.query.filter_by(username="alvo").first()
+    original_hash = alvo.password
+    response = client.post(f"/admin/users/{alvo.id}/edit", data={"username": "editado", "password": "", "is_admin": "on"})
+    assert response.status_code == 302
+    assert db.session.get(User, alvo.id).username == "editado"
+    assert original_hash.encode() not in client.get("/admin/users").data
+    URL.query.filter_by(short_code="vinculado").delete()
+    db.session.add(URL(original_url="https://example.com", short_code="vinculado", user_id=alvo.id))
+    db.session.commit()
+    assert client.post(f"/admin/users/{alvo.id}/delete").status_code == 302
+    assert URL.query.filter_by(short_code="vinculado").first().user_id is None
+
+
+def test_admin_link_crud_uses_public_validations(client):
+    register(client, username="admin")
+    make_admin()
+    login(client, username="admin")
+    assert client.post("/admin/links/new", data={"original_url": "https://example.com", "short_code": "admin-link"}).status_code == 302
+    link = URL.query.filter_by(short_code="admin-link").first()
+    assert client.post("/admin/links/new", data={"original_url": "javascript:alert(1)", "short_code": "invalido"}).status_code == 200
+    assert client.post("/admin/links/new", data={"original_url": "https://example.com", "short_code": "admin"}).status_code == 200
+    assert client.post(f"/admin/links/{link.id}/edit", data={"original_url": "https://example.org", "short_code": "editado"}).status_code == 302
+    assert db.session.get(URL, link.id).short_code == "editado"
+    assert client.post(f"/admin/links/{link.id}/delete").status_code == 302
+    assert db.session.get(URL, link.id) is None
 
 
 def test_urls_with_login_returns_200(client):

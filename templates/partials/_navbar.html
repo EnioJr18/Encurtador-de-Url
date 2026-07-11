@@ -12,6 +12,9 @@
                 {% if current_user.is_authenticated %}
                     <span class="navbar-text me-lg-2">Ola, {{ current_user.username }}</span>
                     <a href="{{ url_for('urls.listar_urls') }}" class="nav-link">Meus links</a>
+                    {% if current_user.is_admin %}
+                    <a href="{{ url_for('admin.dashboard') }}" class="nav-link">Admin</a>
+                    {% endif %}
                     <a href="{{ url_for('auth.logout') }}" class="btn btn-quiet btn-sm ms-lg-2">Sair</a>
                 {% else %}
                     <a href="{{ url_for('auth.login') }}" class="nav-link">Entrar</a>

@@ -35,6 +35,11 @@ def register_error_handlers(app):
         current_app.logger.warning("Bad request for %s %s", request.method, request.path)
         return render_template("errors/400.html"), 400
 
+    @app.errorhandler(403)
+    def handle_forbidden(error):
+        current_app.logger.warning("Forbidden request for %s %s", request.method, request.path)
+        return render_template("errors/403.html"), 403
+
     @app.errorhandler(404)
     def handle_not_found(error):
         current_app.logger.info("Page not found: %s", request.path)
