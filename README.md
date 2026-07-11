@@ -1,14 +1,13 @@
 # 🔗 EncurtarJR - Encurtador de URLs com Flask
-- [Python](https://www.python.org/)
-- [Flask](https://flask.palletsprojects.com/)
-- [PostgreSQL](https://www.postgresql.org/)
-- [Neon](https://neon.com/)
-- [CI](https://github.com/EnioJr18/Encurtador-de-Url/actions/workflows/ci.yml/badge.svg?branch=main)
-- [HTML5](https://developer.mozilla.org/pt-BR/docs/Web/HTML)
-- [CSS3](https://developer.mozilla.org/pt-BR/docs/Web/CSS)
-- [Bootstrap](https://getbootstrap.com/)
-- [Pytest](https://docs.pytest.org/)
-- [Render](https://render.com/)
+
+![CI](https://github.com/EnioJr18/Encurtador-de-Url/actions/workflows/ci.yml/badge.svg?branch=main)
+![Python](https://img.shields.io/badge/Python-3.12%2B-3776AB?style=flat-square&logo=python&logoColor=white)
+![Flask](https://img.shields.io/badge/Flask-3.x-000000?style=flat-square&logo=flask&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Neon-4169E1?style=flat-square&logo=postgresql&logoColor=white)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-5-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white)
+![Pytest](https://img.shields.io/badge/Pytest-26%20tests-0A9EDC?style=flat-square&logo=pytest&logoColor=white)
+![Render](https://img.shields.io/badge/Deploy-Render-46E3B7?style=flat-square&logo=render&logoColor=black)
+![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 
 ## 📌 Sobre o Projeto
 O **EncurtarJR** nasceu como um dos meus primeiros projetos Flask: um encurtador de links direto ao ponto. Ao longo das refatorações, ele se tornou uma aplicação mais organizada para praticar arquitetura backend, segurança básica, migrations, testes e experiência de uso, sem perder a proposta original.
@@ -129,7 +128,7 @@ flask --app app.py run
 
 Depois, acesse `http://127.0.0.1:5000`.
 
-### Linux/macOS
+### 🐧Linux/🍎macOS
 
 ```bash
 git clone https://github.com/EnioJr18/Encurtador-de-Url.git
@@ -252,4 +251,3 @@ Desenvolvido por **Enio Jr.** para estudo, evolução técnica e portfólio back
 - Portfólio: https://eniojr18.github.io
 - Email: eniojr100@gmail.com
 - Instagram: https://www.instagram.com/eniojuniorrr
-
