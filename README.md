@@ -1,157 +1,236 @@
-# 🔗 Encurtador de URLs com Flask
+# EncurtarJR - Encurtador de URLs com Flask
 
-![Status](https://img.shields.io/badge/Status-Concluído-success)
-![Python](https://img.shields.io/badge/Python-3.13%2B-blue)
-![Flask](https://img.shields.io/badge/Flask-2.0%2B-green)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Neon-336791)
-![Deploy](https://img.shields.io/badge/Deploy-Render-black)
+O EncurtarJR nasceu como um dos meus primeiros projetos Flask: um encurtador de links direto ao ponto. Ao longo das refatorações, ele se tornou uma aplicação mais organizada para praticar arquitetura backend, segurança básica, migrations, testes e experiência de uso, sem perder a proposta original.
 
-Um serviço completo de encurtamento de URLs, desenvolvido com **Python** e **Flask**, utilizando banco de dados **PostgreSQL** hospedado na nuvem. O projeto inclui um encurtador de URLs moderno, seguro e multi-usuário com sistema Freemium, geração de QR Codes e análise de cliques.
+O foco deste repositório é mostrar essa evolução com decisões técnicas incrementais e uma aplicação web funcional, não se apresentar como uma solução enterprise ou um SaaS completo.
 
-## 🚀 Demo Online
+## Status
 
-O projeto está rodando em produção! Acesse aqui:
-👉 **https://encurtador-de-url-8ris.onrender.com**
+- Projeto em evolução e preparado para portfólio backend.
+- Testes automatizados locais com Pytest.
+- Demo publicada no Render: [encurtador-de-url-8ris.onrender.com](https://encurtador-de-url-8ris.onrender.com)
 
----
+## Demonstração
 
-## 📸 Demonstração Visual
+![Tela do EncurtarJR](https://github.com/user-attachments/assets/44767606-6ed7-45f9-a1d7-43b39ee4d26d)
 
-![Image](https://github.com/user-attachments/assets/44767606-6ed7-45f9-a1d7-43b39ee4d26d)
+## Funcionalidades
 
----
+- Encurtamento de URLs com validação no backend.
+- Links personalizados com regras de formato e bloqueio de slugs reservados.
+- Redirecionamento por código curto.
+- Geração de QR Code para cada link.
+- Cadastro, login e logout com senha armazenada em hash.
+- Painel do usuário para visualizar os próprios links e seus acessos.
+- Contador de cliques atualizado diretamente no banco.
+- Limite freemium para criação anônima de links.
+- Páginas amigáveis para erros `400`, `404`, `429` e `500`.
+- Interface responsiva com Bootstrap, Jinja2 e componentes reutilizáveis.
 
-## 🚀 Sobre o Projeto
+## Diferenciais Técnicos
 
-O **EncurtarJR** é uma aplicação web completa desenvolvida para transformar URLs longas e complexas em links curtos e amigáveis. 
+- Application factory para inicialização previsível da aplicação.
+- Blueprints para separar rotas de autenticação, página principal e URLs.
+- Camada de service para concentrar a regra de criação de links.
+- Extensões Flask centralizadas em `extensions.py`.
+- Flask-Migrate/Alembic no lugar de criação automática de tabelas ao iniciar.
+- Configuração por ambiente para desenvolvimento, testes e produção.
+- Geração segura de códigos curtos com `secrets` e tratamento de colisões.
+- Proteção CSRF em formulários HTML e rate limit nas ações mais sensíveis.
+- Logging básico e tratamento centralizado de erros.
+- Testes de fluxos reais usando cliente Flask e SQLite em memória.
 
-Diferente de encurtadores simples, este projeto evoluiu para uma plataforma **SaaS (Software as a Service)**, implementando autenticação segura, gestão de links por usuário e um modelo de negócios "Freemium" que limita o uso anônimo para incentivar o cadastro.
+## Tecnologias
 
-### ✨ Funcionalidades Principais
+**Backend**
 
-* **✂️ Encurtamento Rápido:** Gere links curtos instantaneamente.
-* **🎨 Links Personalizados:** O usuário pode escolher o sufixo (ex: `meusite.com/promocao`).
-* **📱 QR Code Automático:** Todo link gera um QR Code para compartilhamento fácil.
-* **📊 Estatísticas de Acesso:** Contador de cliques para monitorar o engajamento.
-* **🔐 Sistema de Login Completo:** Cadastro, Login e Logout seguros com criptografia de senha.
-* **👤 Painel do Usuário:** Área logada onde cada usuário gerencia apenas os seus próprios links.
-* **💎 Modelo Freemium:** Usuários anônimos têm limite de links (Cookies/Session); cadastro desbloqueia recursos.
-* **🛡️ Segurança:** Proteção contra acesso indevido e validação de dados.
+- Python
+- Flask
+- Flask-SQLAlchemy / SQLAlchemy
+- Flask-Login
+- Flask-Bcrypt
+- Flask-Migrate
+- Flask-WTF
+- Flask-Limiter
 
----
+**Banco de dados**
 
-## 🛠️ Tecnologias Utilizadas
+- SQLite no desenvolvimento local
+- PostgreSQL no ambiente de produção, hospedado no Neon
 
-O projeto foi construído utilizando as melhores práticas do ecossistema Python/Web:
+**Frontend**
 
-* **Backend:** [Python](https://www.python.org/) + [Flask](https://flask.palletsprojects.com/)
-* **Banco de Dados:** * *Desenvolvimento:* SQLite (Simples e rápido)
-    * *Produção:* PostgreSQL (Hospedado no Neon Tech)
-* **ORM:** SQLAlchemy (Gerenciamento eficiente do banco)
-* **Autenticação:** Flask-Login + Flask-Bcrypt (Gestão de sessão e Hash de senhas)
-* **Proteção:** Flask-WTF (CSRF) + Flask-Limiter (rate limit básico)
-* **Frontend:** HTML5, CSS3 Moderno (Responsivo), Jinja2 Templates.
-* **Deploy:** Render (Aplicação) + Neon (Banco de Dados).
+- HTML5
+- CSS3
+- Bootstrap
+- Jinja2
+- Boxicons
 
----
+**Qualidade e entrega**
 
-## 🗂️ Estrutura do Projeto
+- Pytest
+- Alembic
+- Git e GitHub
+- Render
 
-```bash
-EncurtarJR/ 
-├── static/             # Arquivos CSS, Imagens e Assets │ 
-    ├── style.css       # Estilização principal 
-    └── assets/         # Logos e ícones 
-├── templates/          # Arquivos HTML (Jinja2) │ 
-    ├── index.html      # Página inicial │ 
-    ├── login.html      # Tela de login │ 
-    ├── register.html   # Tela de cadastro │ 
-    └── urls.html       # Painel de links do usuário 
-├── app.py              # Ponto de entrada da aplicação e configs 
-├── controllers.py      # Lógica das rotas (Backend) 
-├── models.py           # Estrutura do Banco de Dados (Tabelas) 
-└── requirements.txt    # Lista de bibliotecas
+## Arquitetura
+
+```text
+.
+├── app.py                 # ponto de entrada compatível com Flask CLI
+├── config.py              # configurações por ambiente
+├── encurtarjr/
+│   ├── __init__.py        # application factory e registro de blueprints
+│   ├── errors.py          # logging e handlers de erro
+│   ├── extensions.py      # db, bcrypt, login, migrate, csrf e limiter
+│   ├── forms.py           # formulários Flask-WTF
+│   ├── models.py          # modelos SQLAlchemy
+│   ├── utils.py           # validações e geração de short codes
+│   ├── routes/            # blueprints de rotas
+│   └── services/          # regras de negócio do encurtador
+├── migrations/            # histórico Alembic versionado
+├── static/                # CSS e assets
+├── templates/             # páginas, partials e telas de erro
+├── tests/                 # testes Pytest
+└── requirements.txt
 ```
 
-## 🚀 Como Rodar o Projeto Localmente
+As rotas ficam finas e delegam a criação de links ao service. A factory inicializa as extensões e registra os blueprints, enquanto as configurações de ambiente ficam fora da regra de negócio.
 
-Siga os passos abaixo para executar o projeto em sua máquina.
+## Como Rodar Localmente
 
-**Pré-requisitos:**
-* **Python 3.13+**
-* **Git**
+### Pré-requisitos
 
-**Passos:**
-1.  **Clone o repositório:**
-    ```bash
-    git clone [https://github.com/EnioJr18/Encurtador-de-Url.git](https://github.com/EnioJr18/Encurtador-de-Url.git)
-    cd Encurtador-de-Url
-    ```
+- Python 3.13 ou superior
+- Git
 
-2.  **Crie e ative um ambiente virtual:**
-    ```bash
-    # Para Windows
-    python -m venv venv
-    .\venv\Scripts\activate
+### Windows (PowerShell)
 
-    # Para macOS/Linux
-    python3 -m venv venv
-    source venv/bin/activate
-    ```
+```powershell
+git clone https://github.com/EnioJr18/Encurtador-de-Url.git
+cd Encurtador-de-Url
 
-3.  **Instale as dependências:**
-    ```bash
-    pip install -r requirements.txt
-    ```
+python -m venv venv
+.\venv\Scripts\Activate.ps1
 
-4. **Configure as variáveis de ambiente**
-Copie o arquivo `.env.example` para `.env` em desenvolvimento, ou exporte as variáveis no terminal. O `.env` é ignorado pelo Git e não deve ser commitado. Para desenvolvimento local, use `APP_ENV=development` e `DATABASE_URL=sqlite:///urls.db`; se a variável não for definida, o projeto também usa SQLite por padrão.
+pip install -r requirements.txt
+Copy-Item .env.example .env
 
-Use PostgreSQL/Neon somente em produção ou em um ambiente remoto controlado. Se `DATABASE_URL` apontar para Neon, comandos como `flask db upgrade` atuarão nesse banco. Em produção, `SECRET_KEY` e `DATABASE_URL` são obrigatórias.
+flask --app app.py db upgrade
+flask --app app.py run
+```
 
-Opcionalmente, configure `RATELIMIT_STORAGE_URI`; por padrão o projeto usa `memory://` em desenvolvimento.
+Depois, acesse `http://127.0.0.1:5000`.
 
-5.  **Prepare o Banco de Dados:**
-    ```bash
-    flask db upgrade
-    ```
-    Em uma máquina nova, este comando cria ou atualiza as tabelas usando as migrations versionadas.
-    Para futuras mudanças nos models, gere uma nova migration com `flask db migrate -m "descrição"` e aplique com `flask db upgrade`.
-    Para um banco antigo criado antes do Flask-Migrate, use `flask db stamp head` somente após confirmar que as tabelas existentes correspondem à migration inicial e que o banco é local ou de desenvolvimento.
+### Linux/macOS
 
-6.  **Execute a aplicação:**
-    ```bash
-    flask run
-    ```
+```bash
+git clone https://github.com/EnioJr18/Encurtador-de-Url.git
+cd Encurtador-de-Url
 
-7.  Abra seu navegador e acesse `http://127.0.0.1:5000`.
+python3 -m venv venv
+source venv/bin/activate
+
+pip install -r requirements.txt
+cp .env.example .env
+
+flask --app app.py db upgrade
+flask --app app.py run
+```
+
+## Variáveis de Ambiente
+
+O arquivo `.env.example` fica versionado como referência. O `.env` real é ignorado pelo Git e não deve conter segredos em commits.
+
+Exemplo seguro para desenvolvimento:
+
+```env
+APP_ENV=development
+SECRET_KEY=troque-essa-chave
+DATABASE_URL=sqlite:///urls.db
+FLASK_APP=app.py
+FLASK_DEBUG=1
+```
+
+No desenvolvimento, o projeto usa SQLite local por padrão. Em produção, `SECRET_KEY` e `DATABASE_URL` são obrigatórias. URLs antigas iniciadas por `postgres://` também são normalizadas para `postgresql://` pela configuração.
+
+Opcionalmente, `RATELIMIT_STORAGE_URI` pode ser configurada. Em desenvolvimento, o padrão é `memory://`.
+
+## Banco de Dados e Migrations
+
+As tabelas não são criadas automaticamente na inicialização. Para preparar um banco novo, use:
+
+```bash
+flask --app app.py db upgrade
+```
+
+Quando houver uma alteração real nos models no futuro:
+
+```bash
+flask --app app.py db migrate -m "descricao da alteracao"
+flask --app app.py db upgrade
+```
+
+Evite executar migrations contra o banco remoto Neon durante testes ou refatorações locais sem intenção. Para bancos locais existentes antes da adoção do Alembic, `flask db stamp head` só deve ser usado depois de conferir que o schema atual corresponde à migration inicial.
 
 ## Testes
-
-Execute a suíte com:
 
 ```bash
 pytest
 ```
 
-No ambiente de testes, a proteção CSRF fica desativada por configuração para facilitar os fluxos automatizados.
+Atualmente, a suíte possui **26 testes**. Ela cobre, entre outros fluxos:
 
-## 📄 Licença
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+- página inicial;
+- cadastro e login, incluindo credenciais inválidas;
+- criação de URL válida;
+- URLs sem `http://` ou `https://` e esquemas perigosos;
+- códigos personalizados inválidos, reservados e duplicados;
+- painel protegido e painel com links;
+- redirecionamento e contador de cliques;
+- respostas amigáveis para erros `400`, `404`, `429` e `500`;
+- CSRF e rate limit em cenários controlados.
 
-## 🤝 Contribuição
-Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou enviar pull requests.
-1.  Faça um Fork do projeto
-2.  Crie uma Branch para sua Feature (`git checkout -b feature/Incrível`)
-3.  Faça o Commit (`git commit -m 'Add some Incrível'`)
-4.  Push para a Branch (`git push origin feature/Incrível`)
-5.  Abra um Pull Request
+Nos testes, CSRF e rate limit são desativados pela configuração de teste para que os fluxos possam ser exercitados sem depender de sessão ou armazenamento externo. A proteção permanece ativa nos ambientes de desenvolvimento e produção.
 
----
+## Segurança e Validações
 
-## 👨‍💻 Autor
-Desenvolvido por Enio Jr como parte de um portfólio de Engenharia de Software Backend.
+- Senhas protegidas com hash via Flask-Bcrypt.
+- `SECRET_KEY` fornecida por variável de ambiente em produção.
+- CSRF aplicado aos formulários Flask-WTF.
+- Rate limit em cadastro, login, criação de links e QR Code.
+- Validação de URL apenas para `http://` e `https://`.
+- Validação de códigos personalizados e bloqueio de palavras reservadas.
+- Geração de short codes com `secrets` e tratamento de colisões no banco.
+- Erros tratados com páginas amigáveis, sem apresentar stack trace ao usuário.
 
-📧 Entre em contato: eniojr100@gmail.com <br>
-🔗 LinkedIn: https://www.linkedin.com/in/enioeduardojr/ <br>
-📷 Instagram: https://www.instagram.com/enio_juniorrr/ <br>
+## Deploy
+
+O deploy da aplicação é feito no Render. Em produção, o banco PostgreSQL é hospedado no Neon e as variáveis `SECRET_KEY` e `DATABASE_URL` precisam estar configuradas no ambiente correto.
+
+Antes de publicar uma mudança de schema, aplique as migrations no banco de destino com cuidado e confirme a `DATABASE_URL` ativa.
+
+## Aprendizados
+
+Este projeto foi uma oportunidade de ir além de rotas e templates básicos do Flask. A evolução incremental trouxe prática real com organização de aplicação, separação de responsabilidades, migrations, validações, proteção de formulários, controle de requisições, testes e melhorias de interface.
+
+Mais do que reescrever tudo de uma vez, a proposta foi entender os riscos do projeto inicial e melhorar cada parte preservando o que já funcionava.
+
+## Roadmap
+
+- [ ] CI com GitHub Actions e badge no README.
+- [ ] Analytics mais detalhado por link.
+- [ ] Expiração de links.
+- [ ] Feedback de cópia de link ainda mais completo.
+- [ ] API REST.
+- [ ] Redis para rate limit em produção.
+- [ ] Painel administrativo.
+- [ ] Melhorias adicionais de acessibilidade.
+
+## Autor
+
+**Enio Jr**
+Backend Developer em formação
+
+- [LinkedIn](https://www.linkedin.com/in/enioeduardojr/)
+- [GitHub](https://github.com/EnioJr18)
