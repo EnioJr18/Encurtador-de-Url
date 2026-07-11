@@ -55,36 +55,3 @@
     </div>
 </section>
 {% endblock %}
-
-{% block extra_js %}
-<script>
-    const botaoCopiar = document.getElementById('botao-copiar');
-    const textoParaCopiar = document.getElementById('texto-para-copiar');
-
-    if (botaoCopiar && textoParaCopiar) {
-        botaoCopiar.addEventListener('click', () => {
-            const marcarComoCopiado = () => {
-                botaoCopiar.textContent = 'Copiado';
-                botaoCopiar.classList.replace('btn-primary', 'btn-success');
-                setTimeout(() => {
-                    botaoCopiar.textContent = 'Copiar link';
-                    botaoCopiar.classList.replace('btn-success', 'btn-primary');
-                }, 2000);
-            };
-
-            if (navigator.clipboard) {
-                navigator.clipboard.writeText(textoParaCopiar.textContent).then(marcarComoCopiado);
-                return;
-            }
-
-            const textarea = document.createElement('textarea');
-            textarea.value = textoParaCopiar.textContent;
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textarea);
-            marcarComoCopiado();
-        });
-    }
-</script>
-{% endblock %}

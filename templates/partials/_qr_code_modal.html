@@ -1,0 +1,19 @@
+<div class="modal fade" id="qrCodeModal" tabindex="-1" aria-labelledby="qrCodeModalTitle" aria-describedby="qrCodeModalDescription">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header">
+                <h2 class="modal-title fs-5" id="qrCodeModalTitle">QR Code do link</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar visualização do QR Code"></button>
+            </div>
+            <div class="modal-body text-center">
+                <p id="qrCodeModalDescription" class="text-muted small mb-3">Aponte a câmera para acessar este link.</p>
+                <img id="qrCodeModalImage" class="qr-code-preview img-fluid border rounded p-2" src="" alt="QR Code do link encurtado">
+                <a id="qrCodeModalShortLink" class="d-block mt-3 small text-break" href="#" target="_blank" rel="noopener"></a>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <a id="qrCodeModalOpenLink" class="btn btn-outline-secondary" href="#" target="_blank" rel="noopener"><i class="bx bx-box-arrow-up-right" aria-hidden="true"></i> Abrir imagem</a>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>

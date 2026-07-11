@@ -18,6 +18,8 @@
     </main>
 
     {% block footer %}{% include "partials/_footer.html" %}{% endblock %}
+    {% include "partials/_qr_code_modal.html" %}
+    <div id="copyFeedback" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
@@ -58,6 +60,111 @@
                     icon.classList.toggle('bx-hide', showingPassword);
                 });
             });
+
+            const copyFeedback = document.getElementById('copyFeedback');
+
+            function announceCopyFeedback(message) {
+                if (copyFeedback) {
+                    copyFeedback.textContent = '';
+                    window.setTimeout(function() {
+                        copyFeedback.textContent = message;
+                    }, 20);
+                }
+            }
+
+            function fallbackCopy(text) {
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                textarea.setAttribute('readonly', '');
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.select();
+                const copied = document.execCommand('copy');
+                document.body.removeChild(textarea);
+                return copied;
+            }
+
+            document.querySelectorAll('[data-copy-link]').forEach(function(button) {
+                button.addEventListener('click', function() {
+                    const targetId = button.dataset.copyTarget;
+                    const target = targetId ? document.getElementById(targetId) : null;
+                    const text = button.dataset.copyText || (target ? target.textContent.trim() : '');
+                    const label = button.querySelector('[data-copy-label]');
+                    const icon = button.querySelector('[data-copy-icon]');
+
+                    if (!text) return;
+
+                    const setButtonState = function(message, success) {
+                        if (label) label.textContent = message;
+                        if (icon) {
+                            icon.classList.toggle('bx-copy', !success);
+                            icon.classList.toggle('bx-check', success);
+                        }
+                        button.classList.toggle('btn-success', success);
+                        button.classList.toggle('btn-primary', !success && button.dataset.copyVariant !== 'outline');
+                        button.classList.toggle('btn-outline-secondary', !success && button.dataset.copyVariant === 'outline');
+                    };
+
+                    const resetButton = function() {
+                        if (label) label.textContent = 'Copiar link';
+                        if (icon) {
+                            icon.classList.add('bx-copy');
+                            icon.classList.remove('bx-check');
+                        }
+                        button.classList.remove('btn-success');
+                        button.classList.toggle('btn-primary', button.dataset.copyVariant !== 'outline');
+                        button.classList.toggle('btn-outline-secondary', button.dataset.copyVariant === 'outline');
+                    };
+
+                    const copied = function() {
+                        setButtonState('Copiado!', true);
+                        announceCopyFeedback('Link copiado para a área de transferência.');
+                        window.setTimeout(resetButton, 2000);
+                    };
+
+                    const failed = function() {
+                        setButtonState('Não foi possível copiar', false);
+                        announceCopyFeedback('Não foi possível copiar o link. Copie o endereço manualmente.');
+                        window.setTimeout(resetButton, 2500);
+                    };
+
+                    if (navigator.clipboard && window.isSecureContext) {
+                        navigator.clipboard.writeText(text).then(copied).catch(function() {
+                            fallbackCopy(text) ? copied() : failed();
+                        });
+                    } else if (fallbackCopy(text)) {
+                        copied();
+                    } else {
+                        failed();
+                    }
+                });
+            });
+
+            const qrCodeModal = document.getElementById('qrCodeModal');
+            if (qrCodeModal) {
+                qrCodeModal.addEventListener('show.bs.modal', function(event) {
+                    const trigger = event.relatedTarget;
+                    if (!trigger) return;
+
+                    const qrUrl = trigger.dataset.qrUrl;
+                    const shortUrl = trigger.dataset.shortUrl;
+                    const image = document.getElementById('qrCodeModalImage');
+                    const shortLink = document.getElementById('qrCodeModalShortLink');
+                    const openLink = document.getElementById('qrCodeModalOpenLink');
+
+                    image.src = qrUrl;
+                    image.alt = 'QR Code para ' + shortUrl;
+                    shortLink.href = shortUrl;
+                    shortLink.textContent = shortUrl;
+                    openLink.href = qrUrl;
+                });
+
+                qrCodeModal.addEventListener('hidden.bs.modal', function() {
+                    const image = document.getElementById('qrCodeModalImage');
+                    image.src = '';
+                });
+            }
         });
     </script>
     {% block extra_js %}{% endblock %}

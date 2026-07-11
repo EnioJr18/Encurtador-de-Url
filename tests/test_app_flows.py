@@ -84,6 +84,9 @@ def test_valid_url_creates_short_link(client):
     response = shorten(client, custom_url="valido")
     assert response.status_code == 200
     assert URL.query.filter_by(short_code="valido").first() is not None
+    assert b"data-copy-link" in response.data
+    assert b'aria-live="polite"' in response.data
+    assert b"qrCodeModal" in response.data
 
 
 def test_url_without_http_or_https_is_rejected(client):
@@ -144,6 +147,18 @@ def test_urls_with_links_render_dashboard_components(client):
     assert response.status_code == 200
     assert b"painel" in response.data
     assert b"QR Code" in response.data
+    assert b"data-copy-link" in response.data
+    assert b"data-qr-url" in response.data
+    assert b"qrCodeModal" in response.data
+
+
+def test_qrcode_route_returns_png(client):
+    shorten(client, custom_url="imagem-qr")
+
+    response = client.get("/qrcode/imagem-qr")
+
+    assert response.status_code == 200
+    assert response.mimetype == "image/png"
 
 
 def test_existing_short_code_redirects(client):

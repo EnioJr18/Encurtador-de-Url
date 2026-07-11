@@ -27,7 +27,12 @@
                     <td class="url-table__original"><a href="{{ url.original_url }}" target="_blank" rel="noopener" title="{{ url.original_url }}">{{ url.original_url }}</a></td>
                     <td><a class="url-table__short" href="{{ request.host_url }}{{ url.short_code }}" target="_blank" rel="noopener">{{ request.host_url }}{{ url.short_code }}</a></td>
                     <td class="text-center"><span class="badge text-bg-primary">{{ url.click_count }}</span></td>
-                    <td class="text-end"><a class="btn btn-outline-secondary btn-sm" href="{{ url_for('urls.serve_qrcode', short_code=url.short_code) }}" target="_blank" rel="noopener"><i class="bx bx-qr" aria-hidden="true"></i> QR Code</a></td>
+                    <td class="text-end">
+                        <div class="d-inline-flex flex-wrap justify-content-end gap-2">
+                            <button type="button" class="btn btn-outline-secondary btn-sm" data-copy-link data-copy-variant="outline" data-copy-text="{{ request.host_url }}{{ url.short_code }}"><i class="bx bx-copy" data-copy-icon aria-hidden="true"></i> <span data-copy-label>Copiar link</span></button>
+                            <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#qrCodeModal" data-qr-url="{{ url_for('urls.serve_qrcode', short_code=url.short_code) }}" data-short-url="{{ request.host_url }}{{ url.short_code }}"><i class="bx bx-qr" aria-hidden="true"></i> QR Code</button>
+                        </div>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>

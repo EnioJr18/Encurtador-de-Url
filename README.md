@@ -224,14 +224,11 @@ Mais do que reescrever tudo de uma vez, a proposta foi entender os riscos do pro
 
 ## 🗺️ Roadmap
 
-- [ ] CI com GitHub Actions e badge no README.
 - [ ] Analytics mais detalhado por link.
 - [ ] Expiração de links.
-- [ ] Feedback de cópia de link ainda mais completo.
 - [ ] API REST.
 - [ ] Redis para rate limit em produção.
 - [ ] Painel administrativo.
-- [ ] Melhorias adicionais de acessibilidade.
 
 
 ## 📄 Licença
