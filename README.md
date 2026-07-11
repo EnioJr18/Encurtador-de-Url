@@ -1,22 +1,27 @@
-# EncurtarJR - Encurtador de URLs com Flask
+# 🔗 EncurtarJR - Encurtador de URLs com Flask
+- [Python](https://www.python.org/)
+- [Flask](https://flask.palletsprojects.com/)
+- [PostgreSQL](https://www.postgresql.org/)
+- [Neon](https://neon.com/)
+- [CI](https://github.com/EnioJr18/Encurtador-de-Url/actions/workflows/ci.yml/badge.svg?branch=main)
+- [HTML5](https://developer.mozilla.org/pt-BR/docs/Web/HTML)
+- [CSS3](https://developer.mozilla.org/pt-BR/docs/Web/CSS)
+- [Bootstrap](https://getbootstrap.com/)
+- [Pytest](https://docs.pytest.org/)
+- [Render](https://render.com/)
 
-![CI](https://github.com/EnioJr18/Encurtador-de-Url/actions/workflows/ci.yml/badge.svg)
-
-O EncurtarJR nasceu como um dos meus primeiros projetos Flask: um encurtador de links direto ao ponto. Ao longo das refatorações, ele se tornou uma aplicação mais organizada para praticar arquitetura backend, segurança básica, migrations, testes e experiência de uso, sem perder a proposta original.
+## 📌 Sobre o Projeto
+O **EncurtarJR** nasceu como um dos meus primeiros projetos Flask: um encurtador de links direto ao ponto. Ao longo das refatorações, ele se tornou uma aplicação mais organizada para praticar arquitetura backend, segurança básica, migrations, testes e experiência de uso, sem perder a proposta original.
 
 O foco deste repositório é mostrar essa evolução com decisões técnicas incrementais e uma aplicação web funcional, não se apresentar como uma solução enterprise ou um SaaS completo.
 
-## Status
+## 📊 Status Atual
 
 - Projeto em evolução e preparado para portfólio backend.
 - Testes automatizados locais com Pytest.
 - Demo publicada no Render: [encurtador-de-url-8ris.onrender.com](https://encurtador-de-url-8ris.onrender.com)
 
-## Demonstração
-
-![Tela do EncurtarJR](https://github.com/user-attachments/assets/44767606-6ed7-45f9-a1d7-43b39ee4d26d)
-
-## Funcionalidades
+## ✅ Funcionalidades
 
 - Encurtamento de URLs com validação no backend.
 - Links personalizados com regras de formato e bloqueio de slugs reservados.
@@ -42,7 +47,7 @@ O foco deste repositório é mostrar essa evolução com decisões técnicas inc
 - Logging básico e tratamento centralizado de erros.
 - Testes de fluxos reais usando cliente Flask e SQLite em memória.
 
-## Tecnologias
+## 🛠️ Tecnologias
 
 **Backend**
 
@@ -75,7 +80,7 @@ O foco deste repositório é mostrar essa evolução com decisões técnicas inc
 - Git e GitHub
 - Render
 
-## Arquitetura
+## 🧱 Arquitetura
 
 ```text
 .
@@ -99,7 +104,7 @@ O foco deste repositório é mostrar essa evolução com decisões técnicas inc
 
 As rotas ficam finas e delegam a criação de links ao service. A factory inicializa as extensões e registra os blueprints, enquanto as configurações de ambiente ficam fora da regra de negócio.
 
-## Como Rodar Localmente
+## 🚀 Como Rodar Localmente
 
 ### Pré-requisitos
 
@@ -140,7 +145,7 @@ flask --app app.py db upgrade
 flask --app app.py run
 ```
 
-## Variáveis de Ambiente
+## 🧩 Variáveis de Ambiente
 
 O arquivo `.env.example` fica versionado como referência. O `.env` real é ignorado pelo Git e não deve conter segredos em commits.
 
@@ -158,7 +163,7 @@ No desenvolvimento, o projeto usa SQLite local por padrão. Em produção, `SECR
 
 Opcionalmente, `RATELIMIT_STORAGE_URI` pode ser configurada. Em desenvolvimento, o padrão é `memory://`.
 
-## Banco de Dados e Migrations
+## 🗄️ Banco de Dados e Migrations
 
 As tabelas não são criadas automaticamente na inicialização. Para preparar um banco novo, use:
 
@@ -175,7 +180,7 @@ flask --app app.py db upgrade
 
 Evite executar migrations contra o banco remoto Neon durante testes ou refatorações locais sem intenção. Para bancos locais existentes antes da adoção do Alembic, `flask db stamp head` só deve ser usado depois de conferir que o schema atual corresponde à migration inicial.
 
-## Testes
+## 🧪 Testes automatizados
 
 ```bash
 pytest
@@ -195,7 +200,7 @@ Atualmente, a suíte possui **26 testes**. Ela cobre, entre outros fluxos:
 
 Nos testes, CSRF e rate limit são desativados pela configuração de teste para que os fluxos possam ser exercitados sem depender de sessão ou armazenamento externo. A proteção permanece ativa nos ambientes de desenvolvimento e produção.
 
-## Segurança e Validações
+## 🔐 Segurança e Validações
 
 - Senhas protegidas com hash via Flask-Bcrypt.
 - `SECRET_KEY` fornecida por variável de ambiente em produção.
@@ -218,7 +223,7 @@ Este projeto foi uma oportunidade de ir além de rotas e templates básicos do F
 
 Mais do que reescrever tudo de uma vez, a proposta foi entender os riscos do projeto inicial e melhorar cada parte preservando o que já funcionava.
 
-## Roadmap
+## 🗺️ Roadmap
 
 - [ ] CI com GitHub Actions e badge no README.
 - [ ] Analytics mais detalhado por link.
@@ -229,10 +234,22 @@ Mais do que reescrever tudo de uma vez, a proposta foi entender os riscos do pro
 - [ ] Painel administrativo.
 - [ ] Melhorias adicionais de acessibilidade.
 
-## Autor
 
-**Enio Jr**
-Backend Developer em formação
+## 📄 Licença
 
-- [LinkedIn](https://www.linkedin.com/in/enioeduardojr/)
-- [GitHub](https://github.com/EnioJr18)
+Este projeto está sob a licença MIT. Consulte o arquivo [LICENSE](LICENSE) para mais detalhes.
+
+## 🤝 Contribuição
+
+Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou enviar pull requests focados em melhorias de arquitetura, segurança, testes, documentação ou regras de negócio.
+
+## 👨‍💻 Autor
+
+Desenvolvido por **Enio Jr.** para estudo, evolução técnica e portfólio backend/Engenharia de Software.
+
+**Contato:**
+- LinkedIn: https://www.linkedin.com/in/enioeduardojr
+- Portfólio: https://eniojr18.github.io
+- Email: eniojr100@gmail.com
+- Instagram: https://www.instagram.com/eniojuniorrr
+
