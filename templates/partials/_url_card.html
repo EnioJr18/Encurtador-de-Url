@@ -1,13 +1,19 @@
 <article class="url-card card border-0 shadow-sm h-100">
     <div class="card-body">
-        <div class="d-flex justify-content-between align-items-start gap-3 mb-3">
+        <div class="url-card__header">
             {% include "partials/_click_badge.html" %}
-            <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#qrCodeModal" data-qr-url="{{ url_for('urls.serve_qrcode', short_code=url_entry.short_code) }}" data-short-url="{{ request.host_url }}{{ url_entry.short_code }}"><i class="bx bx-qr" aria-hidden="true"></i> QR Code</button>
+            <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#qrCodeModal" data-qr-url="{{ url_for('urls.serve_qrcode', short_code=url_entry.short_code) }}" data-short-url="{{ request.host_url }}{{ url_entry.short_code }}" aria-label="Abrir QR Code do link {{ url_entry.short_code }}"><i class="bx bx-qr" aria-hidden="true"></i> QR Code</button>
         </div>
-        <p class="text-muted small mb-1">Link curto</p>
-        <a class="url-card__short-link" href="{{ request.host_url }}{{ url_entry.short_code }}" target="_blank" rel="noopener">{{ request.host_url }}{{ url_entry.short_code }}</a>
-        <button type="button" class="btn btn-outline-secondary btn-sm mt-3" data-copy-link data-copy-variant="outline" data-copy-text="{{ request.host_url }}{{ url_entry.short_code }}"><i class="bx bx-copy" data-copy-icon aria-hidden="true"></i> <span data-copy-label>Copiar link</span></button>
-        <p class="text-muted small mb-1 mt-4">Destino</p>
-        <a class="url-card__original-link" href="{{ url_entry.original_url }}" target="_blank" rel="noopener" title="{{ url_entry.original_url }}">{{ url_entry.original_url }}</a>
+        <div class="url-card__section">
+            <p class="text-muted small mb-1">Link curto</p>
+            <a class="url-card__short-link" href="{{ request.host_url }}{{ url_entry.short_code }}" target="_blank" rel="noopener">{{ request.host_url }}{{ url_entry.short_code }}</a>
+        </div>
+        <div class="url-card__actions">
+            <button type="button" class="btn btn-outline-secondary btn-sm" data-copy-link data-copy-variant="outline" data-copy-text="{{ request.host_url }}{{ url_entry.short_code }}" aria-label="Copiar link curto {{ url_entry.short_code }}"><i class="bx bx-copy" data-copy-icon aria-hidden="true"></i> <span data-copy-label>Copiar link</span></button>
+        </div>
+        <div class="url-card__section">
+            <p class="text-muted small mb-1">Destino</p>
+            <a class="url-card__original-link" href="{{ url_entry.original_url }}" target="_blank" rel="noopener" title="{{ url_entry.original_url }}">{{ url_entry.original_url }}</a>
+        </div>
     </div>
 </article>

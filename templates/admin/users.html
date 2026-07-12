@@ -32,7 +32,7 @@
 </form>
 
 {% if users %}
-<div class="table-responsive url-table-wrapper">
+<div class="table-responsive url-table-wrapper d-none d-md-block">
     <table class="table table-hover align-middle mb-0">
         <thead>
             <tr>
@@ -60,13 +60,42 @@
                     <a class="btn btn-outline-secondary btn-sm" href="{{ url_for('admin.user_edit', user_id=user.id) }}">Editar</a>
                     <form method="post" action="{{ url_for('admin.user_delete', user_id=user.id) }}" class="d-inline" onsubmit="return confirm('Remover este usuario?');">
                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                        <button class="btn btn-outline-danger btn-sm">Excluir</button>
+                        <button class="btn btn-outline-danger btn-sm" aria-label="Excluir usuario {{ user.username }}">Excluir</button>
                     </form>
                 </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
+</div>
+
+<div class="admin-card-list d-md-none">
+    {% for user in users %}
+    <article class="admin-mobile-card">
+        <div class="admin-mobile-card__header">
+            <div>
+                <span class="admin-mobile-card__label">Usuario</span>
+                <strong>{{ user.username }}</strong>
+            </div>
+            {% if user.is_admin %}
+            <span class="admin-role">Administrador</span>
+            {% else %}
+            <span class="text-muted small fw-semibold">Usuario</span>
+            {% endif %}
+        </div>
+        <dl class="admin-mobile-card__metrics">
+            <div><dt>Links</dt><dd>{{ user.link_count }}</dd></div>
+            <div><dt>Cliques</dt><dd>{{ user.total_clicks }}</dd></div>
+        </dl>
+        <div class="admin-mobile-card__actions">
+            <a class="btn btn-outline-secondary btn-sm" href="{{ url_for('admin.user_edit', user_id=user.id) }}">Editar</a>
+            <form method="post" action="{{ url_for('admin.user_delete', user_id=user.id) }}" onsubmit="return confirm('Remover este usuario?');">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <button class="btn btn-outline-danger btn-sm" aria-label="Excluir usuario {{ user.username }}">Excluir</button>
+            </form>
+        </div>
+    </article>
+    {% endfor %}
 </div>
 
 {% include "partials/_pagination.html" %}

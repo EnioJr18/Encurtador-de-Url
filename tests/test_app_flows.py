@@ -158,8 +158,13 @@ def test_admin_can_access_admin_pages_and_navbar(client):
     login(client, username="admin")
 
     assert client.get("/admin/").status_code == 200
-    assert client.get("/admin/users").status_code == 200
-    assert client.get("/admin/links").status_code == 200
+    users_page = client.get("/admin/users")
+    links_page = client.get("/admin/links")
+    assert users_page.status_code == 200
+    assert links_page.status_code == 200
+    assert b"Buscar usuario" in users_page.data
+    assert b"Buscar link" in links_page.data
+    assert b"admin-card-list" in users_page.data
     assert b"Admin" in client.get("/").data
 
 
@@ -228,6 +233,7 @@ def test_admin_users_list_renders_pagination_and_filters_username(client):
 
     assert page.status_code == 200
     assert b"Paginacao administrativa" in page.data
+    assert b"admin-card-list" in page.data
     assert b"usuario-11" in search.data
     assert b"usuario-10" not in search.data
 
@@ -262,6 +268,7 @@ def test_admin_links_list_renders_pagination_and_filters_short_code(client):
 
     assert page.status_code == 200
     assert b"Paginacao administrativa" in page.data
+    assert b"admin-card-list" in page.data
     assert b"link-11" in search.data
     assert b"link-10" not in search.data
 
@@ -301,6 +308,8 @@ def test_urls_with_login_returns_200(client):
     assert b"Nenhum link criado ainda" in response.data
     assert b"Links criados" in response.data
     assert b"Total de acessos" in response.data
+    assert b"Buscar link" in response.data
+    assert b"Ordenar por" in response.data
 
 
 def test_urls_with_links_render_dashboard_components(client):
@@ -319,6 +328,8 @@ def test_urls_with_links_render_dashboard_components(client):
     assert b"data-copy-link" in response.data
     assert b"data-qr-url" in response.data
     assert b"qrCodeModal" in response.data
+    assert b"aria-label=\"Copiar link curto mais-acessado\"" in response.data
+    assert b"aria-label=\"Abrir QR Code do link mais-acessado\"" in response.data
     assert b"Links criados" in response.data
     assert b"Total de acessos" in response.data
     assert b"Mais acessado" in response.data

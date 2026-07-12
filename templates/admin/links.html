@@ -32,7 +32,7 @@
 </form>
 
 {% if links %}
-<div class="table-responsive url-table-wrapper">
+<div class="table-responsive url-table-wrapper d-none d-md-block">
     <table class="table table-hover align-middle mb-0">
         <thead>
             <tr>
@@ -52,16 +52,46 @@
                 <td>{{ link.click_count }}</td>
                 <td class="text-end">
                     <a class="btn btn-outline-secondary btn-sm" href="{{ url_for('admin.link_edit', link_id=link.id) }}">Editar</a>
-                    <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#qrCodeModal" data-qr-url="{{ url_for('urls.serve_qrcode', short_code=link.short_code) }}" data-short-url="{{ request.host_url }}{{ link.short_code }}">QR</button>
+                    <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#qrCodeModal" data-qr-url="{{ url_for('urls.serve_qrcode', short_code=link.short_code) }}" data-short-url="{{ request.host_url }}{{ link.short_code }}" aria-label="Abrir QR Code do link {{ link.short_code }}">QR</button>
                     <form method="post" action="{{ url_for('admin.link_delete', link_id=link.id) }}" class="d-inline" onsubmit="return confirm('Remover este link?');">
                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                        <button class="btn btn-outline-danger btn-sm">Excluir</button>
+                        <button class="btn btn-outline-danger btn-sm" aria-label="Excluir link {{ link.short_code }}">Excluir</button>
                     </form>
                 </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
+</div>
+
+<div class="admin-card-list d-md-none">
+    {% for link in links %}
+    <article class="admin-mobile-card">
+        <div class="admin-mobile-card__header">
+            <div>
+                <span class="admin-mobile-card__label">Codigo</span>
+                <a class="url-table__short" href="{{ request.host_url }}{{ link.short_code }}" target="_blank" rel="noopener">{{ link.short_code }}</a>
+            </div>
+            <span class="click-badge{% if link.click_count == 0 %} click-badge--empty{% endif %}">{{ link.click_count }} acesso{% if link.click_count != 1 %}s{% endif %}</span>
+        </div>
+        <div class="admin-mobile-card__section">
+            <span class="admin-mobile-card__label">Destino</span>
+            <a class="url-card__original-link" href="{{ link.original_url }}" target="_blank" rel="noopener" title="{{ link.original_url }}">{{ link.original_url }}</a>
+        </div>
+        <div class="admin-mobile-card__section">
+            <span class="admin-mobile-card__label">Dono</span>
+            <span>{{ link.user.username if link.user else 'Anonimo' }}</span>
+        </div>
+        <div class="admin-mobile-card__actions">
+            <a class="btn btn-outline-secondary btn-sm" href="{{ url_for('admin.link_edit', link_id=link.id) }}">Editar</a>
+            <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#qrCodeModal" data-qr-url="{{ url_for('urls.serve_qrcode', short_code=link.short_code) }}" data-short-url="{{ request.host_url }}{{ link.short_code }}" aria-label="Abrir QR Code do link {{ link.short_code }}">QR</button>
+            <form method="post" action="{{ url_for('admin.link_delete', link_id=link.id) }}" onsubmit="return confirm('Remover este link?');">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <button class="btn btn-outline-danger btn-sm" aria-label="Excluir link {{ link.short_code }}">Excluir</button>
+            </form>
+        </div>
+    </article>
+    {% endfor %}
 </div>
 
 {% include "partials/_pagination.html" %}
