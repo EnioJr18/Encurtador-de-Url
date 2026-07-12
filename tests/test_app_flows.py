@@ -139,6 +139,13 @@ def test_urls_without_login_redirects_to_login(client):
     assert "/login" in response.headers["Location"]
 
 
+def test_protected_page_shows_translated_login_message(client):
+    response = client.get("/urls", follow_redirects=True)
+
+    assert response.status_code == 200
+    assert "Faça login para acessar esta página.".encode() in response.data
+
+
 def test_admin_requires_login(client):
     response = client.get("/admin/")
     assert response.status_code == 302
